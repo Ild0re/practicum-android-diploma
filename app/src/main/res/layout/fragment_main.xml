@@ -52,6 +52,7 @@
         android:drawableEnd="@drawable/search_icon"
         android:background="@drawable/et_search_shape"
         android:textColor="@color/TeamTextColorLightMode"
+        android:inputType="text"
         android:imeOptions="actionDone"
         android:singleLine="true" />
     <ImageView
