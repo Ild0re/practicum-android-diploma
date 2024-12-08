@@ -39,6 +39,7 @@
         android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="#E6E8EB"
         app:layout_constraintBottom_toTopOf="@id/iv_main_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
