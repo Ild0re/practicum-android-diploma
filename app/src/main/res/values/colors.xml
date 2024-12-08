@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="TeamBackgroundLightMode">#FDFDFD</color>
+    <color name="TeamBackgroundNightMode">#1A1B22</color>
+    <color name="TeamTextColorLightMode">#1A1B22</color>
+    <color name="TeamTextColorNightMode">#FDFDFD</color>
+    <color name="main_search_hint_color_lightMode">#AEAFB4</color>
+    <color name="main_search_hint_color_nightMode">#FDFDFD</color>
 </resources>

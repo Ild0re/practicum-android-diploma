@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/TeamBackgroundLightMode">
+
+    <TextView
+        android:id="@+id/tv_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/et_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/tv_main"
+        android:textSize="22sp"
+        android:textColor="@color/TeamTextColorLightMode"
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingTop="19dp"
+        android:paddingBottom="19dp"
+        android:layout_marginEnd="4dp"/>
+    <ImageView
+        android:id="@+id/iv_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/filter_icon"
+        app:layout_constraintBottom_toTopOf="@id/et_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        />
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/iv_main_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_main"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:hint="@string/et_search"
+        android:textColorHint="@color/main_search_hint_color_lightMode"
+        android:drawableEnd="@drawable/search_icon"
+        android:background="@drawable/et_search_shape"
+        android:textColor="@color/TeamTextColorLightMode"
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
+    <ImageView
+        android:id="@+id/iv_main_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        android:layout_marginTop="156dp"
+        android:layout_marginHorizontal="16dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
