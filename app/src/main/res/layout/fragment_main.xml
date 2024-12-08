@@ -18,6 +18,7 @@
         android:textColor="@color/TeamTextColorLightMode"
         android:textStyle="bold"
         android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:paddingTop="19dp"
         android:paddingBottom="19dp"
         android:layout_marginEnd="4dp"/>
