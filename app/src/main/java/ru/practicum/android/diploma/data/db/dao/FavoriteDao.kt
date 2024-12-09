@@ -1,11 +1,11 @@
-package ru.practicum.android.diploma.data.dao
+package ru.practicum.android.diploma.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.practicum.android.diploma.data.entity.FavoriteEntity
+import ru.practicum.android.diploma.data.db.entities.FavoriteEntity
 
 @Dao
 interface FavoriteDao {
