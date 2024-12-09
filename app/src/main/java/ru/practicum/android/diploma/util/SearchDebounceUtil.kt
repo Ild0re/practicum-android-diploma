@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
-object SearchDebounce {
+object SearchDebounceUtil {
 
-    private const val SEARCH_DEBOUNCE_DELAY = 2000L //задержка поиска
+    private const val SEARCH_DEBOUNCE_DELAY = 2000L // задержка поиска
 
     private val debounceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 

@@ -5,9 +5,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 
-object ClickDebounce {
+object ClickDebounceUtil {
 
-    private const val CLICK_DEBOUNCE_DELAY = 1000L //задержка после нажатия
+    private const val CLICK_DEBOUNCE_DELAY = 1000L // задержка после нажатия
 
     private val clickDebounceScope = CoroutineScope(Dispatchers.Default)
 
