@@ -17,7 +17,7 @@ object ClickDebounce {
         button.postDelayed({ button.isEnabled = true }, CLICK_DEBOUNCE_DELAY)
     }
 
-    fun cancel(){
+    fun cancel() {
         clickDebounceScope.cancel()
     }
 }
