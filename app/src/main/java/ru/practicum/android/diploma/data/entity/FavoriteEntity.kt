@@ -6,6 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "favorite")
 data class FavoriteEntity(
     @PrimaryKey
-    val id : Long
+    val id: Long
 )
 

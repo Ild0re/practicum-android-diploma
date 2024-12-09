@@ -7,9 +7,11 @@ import ru.practicum.android.diploma.AppDataBase
 
 val dataModule = module {
     single {
-        Room.databaseBuilder(androidContext(),
+        Room.databaseBuilder(
+            androidContext(),
             AppDataBase::class.java,
-            "database.db")
+            "database.db"
+        )
             .build()
     }
 }
