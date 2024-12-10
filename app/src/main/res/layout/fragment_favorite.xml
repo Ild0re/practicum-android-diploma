@@ -16,12 +16,12 @@
         android:text="@string/tv_favorite"
         android:textSize="22sp"
         android:textColor="?attr/colorOnPrimary"
-        android:textStyle="bold"
         android:paddingStart="16dp"
         android:paddingTop="19dp"
         android:paddingBottom="19dp"
         android:paddingEnd="16dp"
-        android:layout_marginEnd="8dp"/>
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/ys_display_medium"/>
 
     <ImageView
         android:id="@+id/iv_favorite"
