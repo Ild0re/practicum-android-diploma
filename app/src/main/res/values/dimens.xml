@@ -5,4 +5,6 @@
     <dimen name="Team_developerPaddingStartEnd">16dp</dimen>
     <dimen name="Team_developerPaddingEndTopBottom">8dp</dimen>
     <dimen name="Team_developerPaddingTopBottom">19dp</dimen>
+    <dimen name="Team_developerTextSize_tvTeam22">22sp</dimen>
+    <dimen name="size32">32sp</dimen>
 </resources>

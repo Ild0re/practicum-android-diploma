@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/TeamBackgroundLightMode">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/tv_main"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/tv_main"
         android:textSize="22sp"
-        android:textColor="@color/TeamTextColorLightMode"
+        android:textColor="?attr/colorOnPrimary"
         android:textStyle="bold"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
@@ -50,10 +50,10 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:hint="@string/et_search"
-        android:textColorHint="@color/main_search_hint_color_lightMode"
+        android:textColorHint="?attr/colorPrimaryVariant"
         android:drawableEnd="@drawable/search_icon"
         android:background="@drawable/et_search_shape"
-        android:textColor="@color/TeamTextColorLightMode"
+        android:textColor="?attr/colorOnPrimary"
         android:inputType="text"
         android:imeOptions="actionDone"
         android:singleLine="true" />
