@@ -112,5 +112,4 @@
         android:layout_marginEnd="@dimen/Team_developerMarginTopStartEnd"
         android:fontFamily="@font/ys_display_medium"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

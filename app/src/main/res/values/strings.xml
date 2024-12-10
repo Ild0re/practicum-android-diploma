@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Practicum-Android-Diploma</string>
+    <string name="tv_main">Поиск вакансий</string>
+    <string name="et_search">Введите запрос</string>
+    <string name="tv_favorite">Избранное</string>
+    <string name="tv_favorite_empty">Список пуст</string>
     <string name="tv_team">Команда</string>
     <string name="tv_developer">Над приложением работали</string>
     <string name="tv_developer1">Теплов Евгений Дмитриевич</string>
