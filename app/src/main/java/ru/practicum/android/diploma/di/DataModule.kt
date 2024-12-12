@@ -13,16 +13,17 @@ import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
 val dataModule = module {
     single<HhApi> {
         Retrofit.Builder()
-        .baseUrl("https://api.hh.ru/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(HhApi::class.java)
+            .baseUrl("https://api.hh.ru/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(HhApi::class.java)
     }
 
     single<NetworkClient> {
         RetrofitNetworkClient(
             get(),
-            androidContext())
+            androidContext()
+        )
     }
 
     single {

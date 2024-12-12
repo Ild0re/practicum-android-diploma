@@ -6,5 +6,5 @@ import ru.practicum.android.diploma.data.dto.VacancyResponse
 
 interface HhApi {
     @GET("/vacancies?text=")
-    suspend fun search(@Query("term")text:String) : VacancyResponse
+    suspend fun search(@Query("term")text: String) : VacancyResponse
 }
