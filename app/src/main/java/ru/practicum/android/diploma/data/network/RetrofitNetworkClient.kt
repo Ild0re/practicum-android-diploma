@@ -36,8 +36,6 @@ class RetrofitNetworkClient(
                 Response().apply { resultCode = INTERNAL_SERVER_ERROR }
             } catch (e: HttpException) {
                 Response().apply { resultCode = INCORRECT_VACANCY }
-            } catch (e: Throwable) {
-                Response().apply { resultCode = INTERNAL_SERVER_ERROR }
             }
         }
     }
