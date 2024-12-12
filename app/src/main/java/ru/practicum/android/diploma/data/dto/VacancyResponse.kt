@@ -5,4 +5,3 @@ data class VacancyResponse(
     val expression: String,
     val results: List<VacancyDto>
 ) : Response()
-

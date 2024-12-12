@@ -8,4 +8,3 @@ data class FavoriteEntity(
     @PrimaryKey
     val id: Long
 )
-
