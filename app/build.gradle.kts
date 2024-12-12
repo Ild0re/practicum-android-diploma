@@ -65,4 +65,6 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.koin.android)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
 }
