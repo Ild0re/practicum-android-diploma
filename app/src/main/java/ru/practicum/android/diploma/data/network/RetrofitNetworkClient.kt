@@ -11,18 +11,19 @@ class RetrofitNetworkClient(
     private val hhApi: HhApi,
     private val context: Context
 ) : NetworkClient {
-    companion object{
+    companion object {
         const val SUCCESS_REQUEST = 200
         const val BAD_REQUEST = 400
         const val INTERNAL_SERVER_ERROR = 500
         const val NO_CONNECT = -1
     }
     override suspend fun doRequest(dto: Any): Response {
-        if (!isConnected(context)) {
-            return Response().apply { resultCode = NO_CONNECT }
-        }
-        if (dto !is VacancySearchRequest) {
-            return Response().apply { resultCode = BAD_REQUEST }
+
+        if (!isConnected(context) || dto !is VacancySearchRequest) {
+            return when {
+                !isConnected(context) -> Response().apply { resultCode = NO_CONNECT }
+                else -> Response().apply { resultCode = BAD_REQUEST }
+            }
         }
         return withContext(Dispatchers.IO) {
             try {
