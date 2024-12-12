@@ -5,7 +5,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class RetrofitNetworkClient: NetworkClient {
+class RetrofitNetworkClient : NetworkClient {
     override suspend fun <T> executeRequest(request: suspend () -> T): Result<T> {
         return withContext(Dispatchers.IO) {
             try {
