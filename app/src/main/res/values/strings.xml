@@ -10,4 +10,7 @@
     <string name="tv_developer2">Нуруллин Ильдар Камилович</string>
     <string name="tv_developer3">Черкасов Сергей Анатольевич</string>
     <string name="tv_developer4">Гришин Иван Юрьевич</string>
+    <string name="bottom_nav_main">Главная</string>
+    <string name="bottom_nav_favorite">Избранное</string>
+    <string name="bottom_nav_team">Команда</string>
 </resources>
