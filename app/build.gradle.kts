@@ -67,4 +67,5 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
+    implementation(libs.glide)
 }

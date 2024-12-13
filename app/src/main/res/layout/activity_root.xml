@@ -25,7 +25,7 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dim1"
         android:background="@color/lightGray"
         android:autofillHints="#00000"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
