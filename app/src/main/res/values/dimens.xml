@@ -11,4 +11,5 @@
     <dimen name="dim156">156dp</dimen>
     <dimen name="dim174">174dp</dimen>
     <dimen name="dim24">24dp</dimen>
+    <dimen name="dim1">1dp</dimen>
 </resources>
