@@ -13,4 +13,22 @@
     <string name="bottom_nav_main">Главная</string>
     <string name="bottom_nav_favorite">Избранное</string>
     <string name="bottom_nav_team">Команда</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="vacancy_name">Android-разработчик</string>
+    <string name="salary">от 100 000 ₽</string>
+    <string name="employer_name">AndroSpace Production</string>
+    <string name="city">Москва</string>
+    <string name="required_experience">Требуемый опыт</string>
+    <string name="years_of_experience">От 1 года до 3 лет</string>
+    <string name="type_of_employment">Полная занятость, Удаленная работа</string>
+    <string name="description_vacancy">Описание вакансии</string>
+    <string name="responsibilities">Обязанности</string>
+    <string name="description_of_responsibilities"> ∙ Разрабатывать новую функциональность приложения</string>
+    <string name="requirements">Требования</string>
+    <string name="description_of_requirements"> ∙ 100% Kotlin</string>
+    <string name="conditions">Условия</string>
+    <string name="description_of_conditions"> ∙ сильная команда, с которой можно расти</string>
+    <string name="key_skills">Ключевые навыки</string>
+    <string name="description_of_key_skills"> ∙ Знание классических алгоритмов и структуры данных</string>
+    <string name="vacancy_not_found">Вакансия не найдена или\n удалена</string>
 </resources>
