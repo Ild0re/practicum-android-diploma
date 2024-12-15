@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="App.Custom.BNW" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:paddingTop">@null</item>
+        <item name="android:paddingBottom">@null</item>
+    </style>
+</resources>
