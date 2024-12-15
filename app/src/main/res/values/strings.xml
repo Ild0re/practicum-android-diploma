@@ -13,4 +13,7 @@
     <string name="bottom_nav_main">Главная</string>
     <string name="bottom_nav_favorite">Избранное</string>
     <string name="bottom_nav_team">Команда</string>
+    <string name="tv_main_no_connect">Нет интернета</string>
+    <string name="tv_main_empty">Не удалось получить\n список вакансий</string>
+    <string name="tv_main_vacancy_no_search">Таких вакансий нет</string>
 </resources>
