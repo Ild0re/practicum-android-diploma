@@ -56,7 +56,9 @@
         android:textColor="?attr/colorOnPrimary"
         android:inputType="text"
         android:imeOptions="actionDone"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textCursorDrawable="@drawable/cursor_color_search"
+        />
     <ImageView
         android:id="@+id/image_search_or_clear"
         android:layout_width="wrap_content"
