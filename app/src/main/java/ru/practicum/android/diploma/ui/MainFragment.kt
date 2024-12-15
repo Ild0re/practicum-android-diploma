@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 
@@ -32,6 +31,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            //в данный момент не используется
             }
 
             override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
@@ -42,6 +42,7 @@ class MainFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                //в данный момент не используется
             }
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
