@@ -31,18 +31,18 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            //в данный момент не используется
+                // в данный момент не используется
             }
 
             override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.etSearch.text.isNotBlank()) {
                     binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
-                    //добавить debounce() как появятся интеракторы
+                    // добавить debounce() как появятся интеракторы
                 }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                //в данный момент не используется
+                // в данный момент не используется
             }
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
         }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                //добавить debounce() как появятся интеракторы
+                // добавить debounce() как появятся интеракторы
                 true
             }
             false
