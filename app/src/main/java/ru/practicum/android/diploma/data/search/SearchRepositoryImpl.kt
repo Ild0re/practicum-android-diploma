@@ -11,6 +11,11 @@ class SearchRepositoryImpl(
     private val networkClient: NetworkClient,
     private val hhApi: HhApi,
 ) : SearchRepository {
+
+    companion object {
+        private const val VACANCIES_PER_PAGE = 20
+    }
+
     override suspend fun getAllVacancies(expression: String, page: Int): Flow<Resource<List<VacancyDto>>> = flow {
         // заменить VacancyDto на модель Vacancy
         val pages: HashMap<String, Int> = HashMap()
@@ -18,7 +23,7 @@ class SearchRepositoryImpl(
 
         options["text"] = expression
         pages["page"] = page
-        pages["per_page"] = 20
+        pages["per_page"] = VACANCIES_PER_PAGE
 
         val response = networkClient.executeRequest {
             hhApi.getAllVacancies(pages, options)

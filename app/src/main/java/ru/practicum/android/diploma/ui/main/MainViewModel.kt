@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,10 +13,16 @@ class MainViewModel(
     private val searchInteractor: SearchInteractor
 ) : ViewModel() {
 
+    companion object {
+        const val SERVER_ERROR = "Ошибка сервера"
+        const val NO_INTERNET = "Нет интернета"
+        const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
+        const val NOTHING_FOUND = "Ничего не нашлось"
+    }
+
     private val state = MutableLiveData<ScreenState>()
 
     fun getState(): LiveData<ScreenState> = state
-
 
     fun loadData(expression: String, page: Int) {
         state.value = ScreenState.Loading
@@ -31,7 +36,6 @@ class MainViewModel(
         }
     }
 
-
     private fun processResult(data: List<VacancyDto>?, errorMessage: String?) {
         // заменить VacancyDto на модель Vacancy
         val vacancies = mutableListOf<VacancyDto>()
@@ -39,26 +43,23 @@ class MainViewModel(
             vacancies.addAll(data)
         }
         when {
-            errorMessage == "Ошибка сервера" -> {
-                val error = ScreenState.Error("Ошибка сервера")
-                Log.e("ERROR", errorMessage)
+            errorMessage == SERVER_ERROR -> {
+                val error = ScreenState.Error(SERVER_ERROR)
                 state.postValue(error)
             }
 
-            errorMessage == "Нет интернета" -> {
-                val error = ScreenState.Error("Нет интернета")
-                Log.e("ERROR", errorMessage)
+            errorMessage == NO_INTERNET -> {
+                val error = ScreenState.Error(NO_INTERNET)
                 state.postValue(error)
             }
 
-            errorMessage == "Не удалось получить список вакансий" -> {
-                val error = ScreenState.Error("Не удалось получить список вакансий")
-                Log.e("ERROR", errorMessage)
+            errorMessage == VACANCIES_LOAD_ERROR -> {
+                val error = ScreenState.Error(VACANCIES_LOAD_ERROR)
                 state.postValue(error)
             }
 
             vacancies.isEmpty() -> {
-                val empty = ScreenState.Empty("Ничего не нашлось")
+                val empty = ScreenState.Empty(NOTHING_FOUND)
                 state.postValue(empty)
             }
 
