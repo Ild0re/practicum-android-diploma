@@ -19,8 +19,9 @@ import ru.practicum.android.diploma.util.ScreenState
 
 class MainFragment : Fragment() {
     companion object {
-    const val TEMP_PAGE = 10
+        const val TEMP_PAGE = 10
     }
+
     // не забыть убрать вместе со страницами TEMP_PAGE
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
