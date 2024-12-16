@@ -6,4 +6,4 @@ class EmployerDto(
     val name: String,
     @SerializedName("logo_urls")
     val logoUrls: LogoDto
-): Response()
+) : Response()

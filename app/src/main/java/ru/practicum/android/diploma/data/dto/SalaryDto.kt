@@ -5,4 +5,4 @@ class SalaryDto(
     val from: Int?,
     val gross: Boolean?,
     val to: Int?
-): Response()
+) : Response()
