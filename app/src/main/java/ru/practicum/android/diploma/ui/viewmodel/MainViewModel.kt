@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui.viewModel
+package ru.practicum.android.diploma.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.domain.search.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
-import ru.practicum.android.diploma.util.SearchDebounceUtil
 
 class MainViewModel(
     private val searchInteractor: SearchInteractor
