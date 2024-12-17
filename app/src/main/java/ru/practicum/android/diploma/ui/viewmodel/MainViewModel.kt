@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.data.dto.VacancyDto
+import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.domain.search.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -21,11 +23,17 @@ class MainViewModel(
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val START_PAGE = 0
+        private const val START_MAX_PAGE = 1
     }
+
+    var currentPage = START_PAGE
+    var maxPage = START_MAX_PAGE
 
     private val state = MutableLiveData<ScreenState>()
     private var textInput = ""
     private var searchJob: Job? = null
+    private var isNextPageLoading = false
 
     fun getState(): LiveData<ScreenState> = state
 
@@ -41,11 +49,12 @@ class MainViewModel(
         }
     }
 
-    private fun processResult(data: List<VacancyDto>?, errorMessage: String?) {
+    private fun processResult(data: VacancyResponse?, errorMessage: String?) {
         // заменить VacancyDto на модель Vacancy
         val vacancies = mutableListOf<VacancyDto>()
         if (data != null) {
-            vacancies.addAll(data)
+            vacancies.addAll(data.items)
+            maxPage = data.pages
         }
         when {
             errorMessage == SERVER_ERROR -> {
@@ -74,7 +83,8 @@ class MainViewModel(
             }
         }
     }
-    fun searchDebounce(expression: String, page: Int) {
+
+    fun searchDebounce(expression: String) {
         if (textInput == expression) {
             return
         }
@@ -83,7 +93,20 @@ class MainViewModel(
         if (expression.isNotBlank()) {
             searchJob = viewModelScope.launch {
                 delay(SEARCH_DEBOUNCE_DELAY)
-                loadData(expression, page)
+                loadData(expression, currentPage)
+            }
+        }
+    }
+
+    fun searchVacancies(expression: String) {
+        if (currentPage != maxPage && !isNextPageLoading) {
+            isNextPageLoading = true
+            viewModelScope.launch {
+                currentPage ++
+                delay(SEARCH_DEBOUNCE_DELAY)
+                val searching = async { loadData(expression, currentPage) }
+                searching.await()
+                isNextPageLoading = false
             }
         }
     }
