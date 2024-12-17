@@ -138,7 +138,7 @@ class MainFragment : Fragment() {
         binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
         binding.rvVacancy.isVisible = false
-        if (text == SERVER_ERROR){
+        if (text == SERVER_ERROR) {
             binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_error_server)
             binding.ivMainImage.setImageResource(R.drawable.main_image_error_server)
         } else {
