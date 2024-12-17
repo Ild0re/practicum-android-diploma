@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.data.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.practicum.android.diploma.data.dto.VacancyDto
+import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.util.Resource
@@ -16,7 +16,7 @@ class SearchRepositoryImpl(
         private const val VACANCIES_PER_PAGE = 20
     }
 
-    override suspend fun getAllVacancies(expression: String, page: Int): Flow<Resource<List<VacancyDto>>> = flow {
+    override suspend fun getAllVacancies(expression: String, page: Int): Flow<Resource<VacancyResponse>> = flow {
         // заменить VacancyDto на модель Vacancy
         val pages: HashMap<String, Int> = HashMap()
         val options: HashMap<String, String> = HashMap()
@@ -30,11 +30,10 @@ class SearchRepositoryImpl(
         }
 
         if (response.isSuccess) {
-            val vacancies = response.getOrNull()?.items
-            if (vacancies.isNullOrEmpty()) {
+            if (response.getOrNull() == null) {
                 emit(Resource.Error("Не удалось получить список вакансий"))
             } else {
-                emit(Resource.Success(vacancies))
+                emit(Resource.Success(response.getOrNull()!!))
             }
         } else {
             val exception = response.exceptionOrNull()?.message!!

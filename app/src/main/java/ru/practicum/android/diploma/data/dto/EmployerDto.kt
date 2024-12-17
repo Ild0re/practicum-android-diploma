@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 class EmployerDto(
     val name: String,
     @SerializedName("logo_urls")
-    val logoUrls: LogoDto
+    val logoUrls: LogoDto?
 ) : Response()
