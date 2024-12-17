@@ -16,6 +16,10 @@ import java.util.Locale
 class MainViewHolder(private val binding: VacancyItemBinding, private val context: Context) :
     RecyclerView.ViewHolder(binding.root) {
 
+    companion object {
+        private const val INT_GROUP_SIZE = 3
+    }
+
     @SuppressLint("SetTextI18n")
     fun bind(item: VacancyDto) {
         // заменить VacancyDto на Vacancy
@@ -56,7 +60,7 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     private fun formatNumberWithSpaces(number: Int): String {
         val df = DecimalFormat()
         df.isGroupingUsed = true
-        df.groupingSize = 3
+        df.groupingSize = INT_GROUP_SIZE
 
         val symbols = DecimalFormatSymbols(Locale.getDefault())
         symbols.groupingSeparator = ' '

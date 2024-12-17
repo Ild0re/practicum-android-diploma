@@ -56,7 +56,7 @@ class MainFragment : Fragment() {
                 if (dy > 0) {
                     val pos = (binding.rvVacancy.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     val itemsCount = vacanciesAdapter.itemCount
-                    if (itemsCount > 0 && pos >= itemsCount-1) {
+                    if (itemsCount > 0 && pos >= itemsCount - 1) {
                         viewModel.searchVacancies(inputText)
                     }
                 }

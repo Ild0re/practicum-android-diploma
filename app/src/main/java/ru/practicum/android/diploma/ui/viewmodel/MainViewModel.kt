@@ -102,7 +102,7 @@ class MainViewModel(
         if (currentPage != maxPage && !isNextPageLoading) {
             isNextPageLoading = true
             viewModelScope.launch {
-                currentPage ++
+                currentPage++
                 delay(SEARCH_DEBOUNCE_DELAY)
                 val searching = async { loadData(expression, currentPage) }
                 searching.await()
