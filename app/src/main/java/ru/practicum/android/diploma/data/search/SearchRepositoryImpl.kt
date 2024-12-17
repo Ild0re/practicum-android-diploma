@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.data.search
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.dto.VacancyResponse

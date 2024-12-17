@@ -23,6 +23,10 @@ import ru.practicum.android.diploma.util.ScreenState
 
 class MainFragment : Fragment() {
 
+    companion object {
+        const val SERVER_ERROR = "Ошибка сервера"
+    }
+
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
         get() = _binding!!
@@ -86,7 +90,7 @@ class MainFragment : Fragment() {
             when (state) {
                 is ScreenState.Loading -> showLoading()
                 is ScreenState.Empty -> showEmpty()
-                is ScreenState.Error -> showError()
+                is ScreenState.Error -> showError(state.message)
                 is ScreenState.Content -> {
                     showData(state.data)
                 }
@@ -124,16 +128,23 @@ class MainFragment : Fragment() {
         binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_empty)
         binding.ivMainImage.setImageResource(R.drawable.main_image_empty)
         binding.tvMainEmptyOrNoConnect.isVisible = true
+        binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
         binding.rvVacancy.isVisible = false
     }
 
-    private fun showError() {
-        binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
-        binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+    private fun showError(text: String) {
         binding.tvMainEmptyOrNoConnect.isVisible = true
+        binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
         binding.rvVacancy.isVisible = false
+        if (text == SERVER_ERROR){
+            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_error_server)
+            binding.ivMainImage.setImageResource(R.drawable.main_image_error_server)
+        } else {
+            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
+            binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+        }
     }
 
     // заменить VacancyDto на Vacancy
