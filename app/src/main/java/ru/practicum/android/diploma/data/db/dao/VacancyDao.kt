@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 
-
 @Dao
 interface VacancyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
