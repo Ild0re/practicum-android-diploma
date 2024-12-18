@@ -13,6 +13,6 @@ class DetailedInformationViewModel(
     // LiveData
     fun shareVacancyUrl() {
         if (vacancy != null) {
-            interactor.shareUrlVacancy(vacancy.url) }
+            interactor.shareUrlVacancy(vacancy!!.url) }
     }
 }
