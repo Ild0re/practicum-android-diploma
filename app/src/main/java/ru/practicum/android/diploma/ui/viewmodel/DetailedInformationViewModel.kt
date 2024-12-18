@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.domain.api.DetailedInformationInteractor
 import ru.practicum.android.diploma.domain.models.Vacancy
 
 class DetailedInformationViewModel(
-    private val interactor : DetailedInformationInteractor
+    private val interactor: DetailedInformationInteractor
 ) : ViewModel() {
 
     private val vacancy: Vacancy? = null

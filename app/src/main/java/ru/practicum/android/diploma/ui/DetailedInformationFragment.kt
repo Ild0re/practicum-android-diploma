@@ -10,14 +10,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentDetailedInformationBinding
 import ru.practicum.android.diploma.ui.viewmodel.DetailedInformationViewModel
 
-class DetailedInformationFragment: Fragment() {
-
+class DetailedInformationFragment : Fragment() {
     private val viewModel by viewModel<DetailedInformationViewModel>()
-
-
     private var _binding: FragmentDetailedInformationBinding? = null
     val binding: FragmentDetailedInformationBinding get() = _binding!!
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDetailedInformationBinding.inflate(inflater, container, false)
         return binding.root
@@ -26,19 +22,16 @@ class DetailedInformationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backArrow.setOnClickListener{
+        binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        //Делаем кликер для кнопки "Добавить в избранное"
-        binding.lickedIcon.setOnClickListener {  }
+        // Делаем кликер для кнопки "Добавить в избранное"
+        binding.lickedIcon.setOnClickListener { }
 
-        //Делаем кликер для кнопки "Поделиться"
+        // Делаем кликер для кнопки "Поделиться"
         binding.shareButton.setOnClickListener {
             viewModel.shareVacancyUrl()
         }
-
-
     }
-
 }
