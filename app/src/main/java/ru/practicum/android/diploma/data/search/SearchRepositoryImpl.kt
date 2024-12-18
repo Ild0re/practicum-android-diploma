@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.data.search
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.dto.VacancyResponse
@@ -22,6 +23,7 @@ class SearchRepositoryImpl(
         val options: HashMap<String, String> = HashMap()
 
         options["text"] = expression
+        options["search_field"] = "name"
         pages["page"] = page
         pages["per_page"] = VACANCIES_PER_PAGE
 
@@ -36,11 +38,16 @@ class SearchRepositoryImpl(
                 emit(Resource.Success(response.getOrNull()!!))
             }
         } else {
-            val exception = response.exceptionOrNull()?.message!!
-            if (exception == "timeout") {
+            if (response.exceptionOrNull()?.message == null) {
                 emit(Resource.Error("Нет интернета"))
             } else {
-                emit(Resource.Error("Ошибка сервера"))
+                val exception = response.exceptionOrNull()!!.message
+                when (exception) {
+                    "Нет интернета" -> emit(Resource.Error("Нет интернета"))
+                    "timeout" -> emit(Resource.Error("Нет интернета"))
+                    "bad_argument" -> emit(Resource.Error("Не удалось получить список вакансий"))
+                    else -> emit(Resource.Error("Ошибка сервера"))
+                }
             }
         }
     }

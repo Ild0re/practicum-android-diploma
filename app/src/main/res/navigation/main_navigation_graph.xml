@@ -10,7 +10,11 @@
         android:id="@+id/mainFragment"
         android:name="ru.practicum.android.diploma.ui.main.MainFragment"
         tools:layout="@layout/fragment_main"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         tools:layout="@layout/fragment_favorite"
@@ -21,4 +25,8 @@
         android:name="ru.practicum.android.diploma.ui.TeamDeveloperFragment"
         android:label="TeamDeveloperFragment"
         />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="ru.practicum.android.diploma.ui.DetailsFragment"
+        android:label="DetailsFragment" />
 </navigation>

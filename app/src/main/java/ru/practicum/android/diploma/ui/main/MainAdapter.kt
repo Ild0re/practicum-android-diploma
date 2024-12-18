@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.databinding.VacancyItemBinding
 
 class MainAdapter(
     private var data: List<VacancyDto>,
+    private val onItemClickListener: (VacancyDto) -> Unit,
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -18,6 +19,9 @@ class MainAdapter(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val vacancy = data[position]
         holder.bind(vacancy)
+        holder.itemView.setOnClickListener {
+            onItemClickListener.invoke(vacancy)
+        }
     }
 
     override fun getItemCount(): Int {
