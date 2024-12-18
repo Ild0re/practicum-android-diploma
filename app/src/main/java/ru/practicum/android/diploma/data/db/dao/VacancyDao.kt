@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
-import ru.practicum.android.diploma.domain.models.Vacancy
+
 
 @Dao
 interface VacancyDao {
