@@ -2,7 +2,7 @@ package ru.practicum.android.diploma.domain.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.practicum.android.diploma.data.search.SearchRepository
+import ru.practicum.android.diploma.domain.repository.SearchRepository
 import ru.practicum.android.diploma.domain.models.VacancyList
 import ru.practicum.android.diploma.util.Resource
 

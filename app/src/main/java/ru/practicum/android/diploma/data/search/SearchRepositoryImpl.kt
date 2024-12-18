@@ -8,6 +8,7 @@ import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyList
+import ru.practicum.android.diploma.domain.repository.SearchRepository
 import ru.practicum.android.diploma.util.Resource
 
 class SearchRepositoryImpl(
