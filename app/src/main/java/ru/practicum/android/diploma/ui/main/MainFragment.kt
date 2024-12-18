@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.models.VacancyItem
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
 
     private val viewModel by viewModel<MainViewModel>()
 
-    private val vacanciesList = ArrayList<VacancyDto>()
+    private val vacanciesList = ArrayList<VacancyItem>()
 
     // заменить VacancyDto на Vacancy
     private val vacanciesAdapter = MainAdapter(vacanciesList)
@@ -138,7 +138,7 @@ class MainFragment : Fragment() {
 
     // заменить VacancyDto на Vacancy
     @SuppressLint("NotifyDataSetChanged")
-    private fun showData(data: List<VacancyDto>) {
+    private fun showData(data: List<VacancyItem>) {
         binding.progressBar.isVisible = false
         binding.ivMainImage.isVisible = false
         binding.rvVacancy.isVisible = true

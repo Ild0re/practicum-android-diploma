@@ -3,11 +3,11 @@ package ru.practicum.android.diploma.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
+import ru.practicum.android.diploma.domain.models.VacancyItem
 
 class MainAdapter(
-    private var data: List<VacancyDto>,
+    private var data: List<VacancyItem>,
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

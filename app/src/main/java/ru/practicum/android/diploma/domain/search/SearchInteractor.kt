@@ -1,9 +1,9 @@
 package ru.practicum.android.diploma.domain.search
 
 import kotlinx.coroutines.flow.Flow
-import ru.practicum.android.diploma.data.dto.VacancyResponse
+import ru.practicum.android.diploma.domain.models.Vacancy
 
 interface SearchInteractor {
-    suspend fun getAllVacancies(expression: String, page: Int): Flow<Pair<VacancyResponse?, String?>>
+    suspend fun getAllVacancies(expression: String, page: Int): Flow<Pair<Vacancy?, String?>>
     // заменить VacancyDto на модель Vacancy
 }

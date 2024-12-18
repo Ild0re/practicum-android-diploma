@@ -8,8 +8,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.data.dto.VacancyDto
-import ru.practicum.android.diploma.data.dto.VacancyResponse
+import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.domain.models.VacancyItem
 import ru.practicum.android.diploma.domain.search.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -49,11 +49,10 @@ class MainViewModel(
         }
     }
 
-    private fun processResult(data: VacancyResponse?, errorMessage: String?) {
-        // заменить VacancyDto на модель Vacancy
-        val vacancies = mutableListOf<VacancyDto>()
+    private fun processResult(data: Vacancy?, errorMessage: String?) {
+        val vacancies = mutableListOf<VacancyItem>()
         if (data != null) {
-            vacancies.addAll(data.items)
+            vacancies.forEach { vacancies.add(it) }
             maxPage = data.pages
         }
         when {

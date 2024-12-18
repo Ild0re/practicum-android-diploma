@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
+import ru.practicum.android.diploma.domain.models.VacancyItem
 import ru.practicum.android.diploma.util.getCurrencySymbol
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -21,7 +21,7 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     }
 
     @SuppressLint("SetTextI18n")
-    fun bind(item: VacancyDto) {
+    fun bind(item: VacancyItem) {
         // заменить VacancyDto на Vacancy
         binding.tvItemVacancyCity.text = "${item.name}, ${item.area.name}"
         binding.tvItemCompany.text = item.employer.name
@@ -37,7 +37,7 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getPrice(item: VacancyDto) {
+    private fun getPrice(item: VacancyItem) {
         // заменить VacancyDto на Vacancy
         if (item.salary?.from == null && item.salary?.to == null) {
             binding.tvItemPrice.text = context.resources.getString(R.string.no_salary)
