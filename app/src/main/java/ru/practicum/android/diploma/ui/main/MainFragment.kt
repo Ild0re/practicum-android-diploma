@@ -160,8 +160,7 @@ class MainFragment : Fragment() {
         vacanciesAdapter.notifyDataSetChanged()
     }
 
-    private fun onItemClickListener(vacancy: VacancyDto) {
-        // заменить VacancyDto а модель
+    private fun onItemClickListener(vacancy: VacancyItem) {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)
         findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
