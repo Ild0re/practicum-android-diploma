@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
+import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -35,9 +35,8 @@ class MainFragment : Fragment() {
 
     private val viewModel by viewModel<MainViewModel>()
 
-    private val vacanciesList = ArrayList<VacancyDto>()
+    private val vacanciesList = ArrayList<Vacancy>()
 
-    // заменить VacancyDto на Vacancy
     private val vacanciesAdapter = MainAdapter(vacanciesList, ::onItemClickListener)
 
     override fun onCreateView(
@@ -149,9 +148,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    // заменить VacancyDto на Vacancy
     @SuppressLint("NotifyDataSetChanged")
-    private fun showData(data: List<VacancyDto>) {
+    private fun showData(data: List<Vacancy>) {
         binding.progressBar.isVisible = false
         binding.ivMainImage.isVisible = false
         binding.rvVacancy.isVisible = true
@@ -160,8 +158,7 @@ class MainFragment : Fragment() {
         vacanciesAdapter.notifyDataSetChanged()
     }
 
-    private fun onItemClickListener(vacancy: VacancyDto) {
-        // заменить VacancyDto а модель
+    private fun onItemClickListener(vacancy: Vacancy) {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)
         findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
