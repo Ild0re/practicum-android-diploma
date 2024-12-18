@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.data.search
 
-import android.widget.ViewAnimator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.dto.VacancyDto
