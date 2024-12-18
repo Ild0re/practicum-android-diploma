@@ -9,8 +9,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
+import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.util.getCurrencySymbol
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -24,13 +24,12 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     }
 
     @SuppressLint("SetTextI18n")
-    fun bind(item: VacancyDto) {
-        // заменить VacancyDto на Vacancy
-        binding.tvItemVacancyCity.text = "${item.name}, ${item.area.name}"
-        binding.tvItemCompany.text = item.employer.name
+    fun bind(item: Vacancy) {
+        binding.tvItemVacancyCity.text = "${item.name}, ${item.areaName}"
+        binding.tvItemCompany.text = item.employerName
         getPrice(item)
         Glide.with(itemView)
-            .load(item.employer.logoUrls?.original)
+            .load(item.employerLogo)
             .placeholder(R.drawable.logo_placeholder)
             .apply(
                 RequestOptions().transform(
@@ -44,27 +43,24 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getPrice(item: VacancyDto) {
-        // заменить VacancyDto на Vacancy
-        if (item.salary?.from == null && item.salary?.to == null) {
+    private fun getPrice(item: Vacancy) {
+        if (item.salaryFrom == "null" && item.salaryTo == "null") {
             binding.tvItemPrice.text = context.resources.getString(R.string.no_salary)
-        } else if (item.salary.from != null && item.salary.to == null) {
+        } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
             binding.tvItemPrice.text =
-                "От ${formatNumberWithSpaces(item.salary.from)} ${getCurrencySymbol(item.salary.currency.toString())}"
-        } else if (item.salary.from == null && item.salary.to != null) {
+                "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
+        } else if (item.salaryFrom == "null" && item.salaryTo != "null") {
             binding.tvItemPrice.text =
-                "До ${formatNumberWithSpaces(item.salary.to)} ${getCurrencySymbol(item.salary.currency.toString())}"
+                "До ${formatNumberWithSpaces(item.salaryTo)} ${getCurrencySymbol(item.salaryCurrency)}"
         } else {
             binding.tvItemPrice.text =
-                "От ${formatNumberWithSpaces(item.salary.from!!)} до ${formatNumberWithSpaces(item.salary.to!!)} ${
-                    getCurrencySymbol(
-                        item.salary.currency.toString()
-                    )
+                "От ${formatNumberWithSpaces(item.salaryFrom)} до ${formatNumberWithSpaces(item.salaryTo)} ${
+                    getCurrencySymbol(item.salaryCurrency)
                 }"
         }
     }
 
-    private fun formatNumberWithSpaces(number: Int): String {
+    private fun formatNumberWithSpaces(number: String): String {
         val df = DecimalFormat()
         df.isGroupingUsed = true
         df.groupingSize = INT_GROUP_SIZE
@@ -73,6 +69,6 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
         symbols.groupingSeparator = ' '
         df.decimalFormatSymbols = symbols
 
-        return df.format(number)
+        return df.format(number.toInt())
     }
 }

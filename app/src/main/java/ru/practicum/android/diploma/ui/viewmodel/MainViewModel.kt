@@ -8,8 +8,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.data.dto.VacancyDto
-import ru.practicum.android.diploma.data.dto.VacancyResponse
+import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.domain.models.VacancyList
 import ru.practicum.android.diploma.domain.search.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -27,8 +27,9 @@ class MainViewModel(
         private const val START_MAX_PAGE = 1
     }
 
-    var currentPage = START_PAGE
-    var maxPage = START_MAX_PAGE
+    private var currentPage = START_PAGE
+    private var maxPage = START_MAX_PAGE
+    var vacanciesCount = START_PAGE
 
     private val state = MutableLiveData<ScreenState>()
     private var textInput = ""
@@ -50,12 +51,12 @@ class MainViewModel(
         }
     }
 
-    private fun processResult(data: VacancyResponse?, errorMessage: String?) {
-        // заменить VacancyDto на модель Vacancy
-        val vacancies = mutableListOf<VacancyDto>()
+    private fun processResult(data: VacancyList?, errorMessage: String?) {
+        val vacancies = mutableListOf<Vacancy>()
         if (data != null) {
-            vacancies.addAll(data.items)
+            vacancies.addAll(data.item)
             maxPage = data.pages
+            vacanciesCount = data.found
         }
         when {
             errorMessage == SERVER_ERROR -> {
