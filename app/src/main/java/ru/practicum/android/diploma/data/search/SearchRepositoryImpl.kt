@@ -85,8 +85,8 @@ class SearchRepositoryImpl(
             keySkill = ""
         )
     }
-    private suspend fun saveDbVacancy(vacancies: List<Vacancy>){
-        val vacancyEntities = vacancies.map { vacancy -> vacancyDbConverter.map(vacancy)}
+    private suspend fun saveDbVacancy(vacancies: List<Vacancy>) {
+        val vacancyEntities = vacancies.map { vacancy -> vacancyDbConverter.map(vacancy) }
         appDataBase.vacancyDao().insertVacancy(vacancyEntities)
     }
 }
