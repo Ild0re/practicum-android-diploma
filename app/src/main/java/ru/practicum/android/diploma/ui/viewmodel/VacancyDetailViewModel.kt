@@ -1,3 +1,4 @@
+@file:Suppress("all")
 package ru.practicum.android.diploma.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
