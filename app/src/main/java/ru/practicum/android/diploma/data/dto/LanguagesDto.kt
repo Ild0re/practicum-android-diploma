@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.data.dto
 
-data class LanguagesDto (var id: String? = null,
-                         var level: LevelDto?  = LevelDto(),
-                         var name: String? = null): Response()
+data class LanguagesDto(
+    val id: String? = null,
+    val level: LevelDto? = LevelDto(),
+    val name: String? = null
+) : Response()

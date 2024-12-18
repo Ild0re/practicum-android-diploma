@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.domain.models
 
-data class Contacts (var email: String? = null,
-                     var name: String? = null,
-                     var phones : ArrayList<Phones> = arrayListOf())
+data class Contacts(
+    val email: String? = null,
+    val name: String? = null,
+    val phones: ArrayList<Phones> = arrayListOf()
+)

@@ -7,7 +7,7 @@ import ru.practicum.android.diploma.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.domain.usecases.base.VacancyDetailInteractor
 import ru.practicum.android.diploma.util.Resource
 
-class VacancyDetailInteractorImpl(private val repository: VacancyRepository): VacancyDetailInteractor {
+class VacancyDetailInteractorImpl(private val repository: VacancyRepository) : VacancyDetailInteractor {
     override suspend fun getVacancyById(id: String): Flow<Pair<VacancyDetail?, String?>> {
         return repository.getVacancyById(id).map { result ->
             when (result) {

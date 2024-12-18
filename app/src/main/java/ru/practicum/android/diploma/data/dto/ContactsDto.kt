@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.data.dto
 
-data class ContactsDto (var email: String? = null,
-                        var name: String? = null,
-                        var phones : ArrayList<PhonesDto> = arrayListOf())
+data class ContactsDto(
+    val email: String? = null,
+    val name: String? = null,
+    val phones: ArrayList<PhonesDto> = arrayListOf()
+)

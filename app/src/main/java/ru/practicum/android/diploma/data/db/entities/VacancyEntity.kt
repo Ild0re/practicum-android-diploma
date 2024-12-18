@@ -22,4 +22,3 @@ data class VacancyEntity(
     val inFavorite: Boolean,
     val keySkill: String
 )
-

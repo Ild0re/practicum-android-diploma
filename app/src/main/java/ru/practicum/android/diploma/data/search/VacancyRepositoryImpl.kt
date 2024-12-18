@@ -75,7 +75,6 @@ class VacancyRepositoryImpl(
         return vacancyDetailDto.toVacancyDetail()
     }
 
-
     private fun toVacancyResponse(vacancyResponse: VacancyResponse): VacancyList {
         val vacancies = vacancyResponse.items.map { item ->
             mapToVacancy(item)

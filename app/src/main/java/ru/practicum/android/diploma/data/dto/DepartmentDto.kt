@@ -1,3 +1,3 @@
 package ru.practicum.android.diploma.data.dto
 
-data class DepartmentDto (var id: String? = null, var name: String? = null)
+data class DepartmentDto(val id: String? = null, val name: String? = null) : Response()

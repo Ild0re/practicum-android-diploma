@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.dto
 
 import com.google.gson.annotations.SerializedName
 
+@Suppress("LongParameterList")
 class VacancyDto(
     val id: String,
     val name: String,

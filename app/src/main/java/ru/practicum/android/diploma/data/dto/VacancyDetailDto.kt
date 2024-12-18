@@ -1,8 +1,9 @@
+@file:Suppress("all")
 package ru.practicum.android.diploma.data.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class VacancyDetailDto (
+data class VacancyDetailDto(
     @SerializedName("accept_handicapped")
     val acceptHandicapped: Boolean,
     @SerializedName("accept_incomplete_resumes")

@@ -51,84 +51,84 @@ class MainFragment : Fragment() {
     var inputText = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    setupRecyclerView()
-    setupTextWatcher()
-    setupObservers()
-    setupEventHandlers()
-}
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupTextWatcher()
+        setupObservers()
+        setupEventHandlers()
+    }
 
-private fun setupRecyclerView() {
-    binding.rvVacancy.adapter = vacanciesAdapter
-    binding.rvVacancy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            if (dy > 0) {
-                val pos = (binding.rvVacancy.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                val itemsCount = vacanciesAdapter.itemCount
-                if (itemsCount > 0 && pos >= itemsCount - 1) {
-                    viewModel.searchVacancies(inputText)
+    private fun setupRecyclerView() {
+        binding.rvVacancy.adapter = vacanciesAdapter
+        binding.rvVacancy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val pos = (binding.rvVacancy.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    val itemsCount = vacanciesAdapter.itemCount
+                    if (itemsCount > 0 && pos >= itemsCount - 1) {
+                        viewModel.searchVacancies(inputText)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setupTextWatcher() {
+        val simpleTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // в данный момент не используется
+            }
+
+            override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.etSearch.text.isNotBlank()) {
+                    binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
+                    viewModel.searchDebounce(p0.toString())
+                    // убрать страницы
+                } else {
+                    inputText = p0.toString()
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // в данный момент не используется
+            }
+        }
+        binding.etSearch.addTextChangedListener(simpleTextWatcher)
+    }
+
+    private fun setupObservers() {
+        viewModel.getState().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ScreenState.Loading -> showLoading()
+                is ScreenState.Empty -> showEmpty()
+                is ScreenState.Error -> showError(state.message)
+                is ScreenState.Content -> {
+                    showData(state.data)
                 }
             }
         }
-    })
-}
+    }
 
-private fun setupTextWatcher() {
-    val simpleTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            // в данный момент не используется
+    private fun setupEventHandlers() {
+        binding.imageSearchOrClear.setOnClickListener {
+            binding.etSearch.setText("")
+            if (binding.etSearch.text.isBlank()) {
+                binding.imageSearchOrClear.setImageResource(R.drawable.search_icon)
+            }
+            val inputMethodManager =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
         }
-
-        override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
-            if (binding.etSearch.text.isNotBlank()) {
-                binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
-                viewModel.searchDebounce(p0.toString())
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                viewModel.loadData(binding.etSearch.text.toString(), ZERO)
                 // убрать страницы
-            } else {
-                inputText = p0.toString()
+                true
             }
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            // в данный момент не используется
+            false
         }
     }
-    binding.etSearch.addTextChangedListener(simpleTextWatcher)
-}
-
-private fun setupObservers() {
-    viewModel.getState().observe(viewLifecycleOwner) { state ->
-        when (state) {
-            is ScreenState.Loading -> showLoading()
-            is ScreenState.Empty -> showEmpty()
-            is ScreenState.Error -> showError(state.message)
-            is ScreenState.Content -> {
-                showData(state.data)
-            }
-        }
-    }
-}
-
-private fun setupEventHandlers() {
-    binding.imageSearchOrClear.setOnClickListener {
-        binding.etSearch.setText("")
-        if (binding.etSearch.text.isBlank()) {
-            binding.imageSearchOrClear.setImageResource(R.drawable.search_icon)
-        }
-        val inputMethodManager =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
-    }
-    binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            viewModel.loadData(binding.etSearch.text.toString(), ZERO)
-            // убрать страницы
-            true
-        }
-        false
-    }
-}
 
     private fun showLoading() {
         binding.progressBar.isVisible = true
