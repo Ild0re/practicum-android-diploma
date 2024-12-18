@@ -37,7 +37,8 @@ class MainViewModel(
 
     fun getState(): LiveData<ScreenState> = state
 
-    private fun loadData(expression: String, page: Int) {
+    fun loadData(expression: String, page: Int) {
+        searchJob?.cancel()
         state.value = ScreenState.Loading
 
         viewModelScope.launch {
