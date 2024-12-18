@@ -1,3 +1,5 @@
+@file:Suppress("all")
+
 package ru.practicum.android.diploma.util.mappers
 
 import ru.practicum.android.diploma.data.dto.ContactsDto
