@@ -10,7 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyList
-import ru.practicum.android.diploma.domain.search.SearchInteractor
+import ru.practicum.android.diploma.domain.usecases.base.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
 
 class MainViewModel(
