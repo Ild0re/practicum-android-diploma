@@ -24,6 +24,8 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible =
+            false
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
@@ -37,9 +39,9 @@ class DetailsFragment : Fragment() {
             viewModel.shareVacancyUrl()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible =
-            true
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
     }
 }
