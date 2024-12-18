@@ -1,12 +1,12 @@
 package ru.practicum.android.diploma.di
 
 import org.koin.dsl.module
-import ru.practicum.android.diploma.data.search.SearchRepository
-import ru.practicum.android.diploma.data.search.SearchRepositoryImpl
+import ru.practicum.android.diploma.data.converter.VacancyDbConverter
+import ru.practicum.android.diploma.data.search.VacancyRepositoryImpl
+import ru.practicum.android.diploma.domain.repository.VacancyRepository
+
 
 val repositoryModule = module {
-    single<SearchRepository> {
-        SearchRepositoryImpl(get(), get())
-    }
+    single<VacancyRepository> { VacancyRepositoryImpl(get(), get(), get(), get()) }
     factory { VacancyDbConverter() }
 }
