@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@id/et_search"
         android:layout_marginTop="@dimen/dim156"
         android:layout_marginHorizontal="@dimen/dim16"
-        android:background="@drawable/main_image"
+        android:src="@drawable/main_image"
         />
     <TextView
         android:id="@+id/tv_main_empty_or_no_connect"
@@ -104,7 +104,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_vacancy"
-        android:layout_marginTop="@dimen/dim16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/dim244"
         android:visibility="gone"
        />
     <TextView
@@ -136,7 +137,6 @@
         android:orientation="vertical"
         tools:listitem="@layout/vacancy_item"
         android:layout_marginTop="@dimen/dim8"
-        tools:itemCount="5"
         android:foreground="?attr/selectableItemBackground"
         android:visibility="gone"
         />

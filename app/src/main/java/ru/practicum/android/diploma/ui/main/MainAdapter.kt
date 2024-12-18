@@ -3,11 +3,13 @@ package ru.practicum.android.diploma.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.databinding.VacancyItemBinding
 import ru.practicum.android.diploma.domain.models.VacancyItem
 
 class MainAdapter(
     private var data: List<VacancyItem>,
+    private val onItemClickListener: (VacancyItem) -> Unit,
 ) : RecyclerView.Adapter<MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -18,6 +20,9 @@ class MainAdapter(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val vacancy = data[position]
         holder.bind(vacancy)
+        holder.itemView.setOnClickListener {
+            onItemClickListener.invoke(vacancy)
+        }
     }
 
     override fun getItemCount(): Int {

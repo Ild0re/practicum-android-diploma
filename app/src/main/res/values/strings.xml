@@ -32,6 +32,7 @@
     <string name="description_of_key_skills"> ∙ Знание классических алгоритмов и структуры данных</string>
     <string name="vacancy_not_found">Вакансия не найдена или\n удалена</string>
     <string name="tv_main_no_connect">Нет интернета</string>
+    <string name="tv_main_error_server">Ошибка сервера</string>
     <string name="tv_main_empty">Не удалось получить\n список вакансий</string>
     <string name="tv_main_vacancy_no_search">Таких вакансий нет</string>
     <string name="no_salary">Зарплата не указана</string>

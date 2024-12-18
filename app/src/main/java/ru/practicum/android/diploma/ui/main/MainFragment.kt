@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +24,11 @@ import ru.practicum.android.diploma.util.ScreenState
 
 class MainFragment : Fragment() {
 
+    companion object {
+        const val SERVER_ERROR = "Ошибка сервера"
+        private const val ZERO = 0
+    }
+
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
         get() = _binding!!
@@ -32,7 +38,7 @@ class MainFragment : Fragment() {
     private val vacanciesList = ArrayList<VacancyItem>()
 
     // заменить VacancyDto на Vacancy
-    private val vacanciesAdapter = MainAdapter(vacanciesList)
+    private val vacanciesAdapter = MainAdapter(vacanciesList, ::onItemClickListener)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,7 +92,7 @@ class MainFragment : Fragment() {
             when (state) {
                 is ScreenState.Loading -> showLoading()
                 is ScreenState.Empty -> showEmpty()
-                is ScreenState.Error -> showError()
+                is ScreenState.Error -> showError(state.message)
                 is ScreenState.Content -> {
                     showData(state.data)
                 }
@@ -101,11 +107,11 @@ class MainFragment : Fragment() {
             }
             val inputMethodManager =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+            inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
         }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                viewModel.searchDebounce(binding.etSearch.text.toString())
+                viewModel.loadData(binding.etSearch.text.toString(), ZERO)
                 // убрать страницы
                 true
             }
@@ -124,16 +130,23 @@ class MainFragment : Fragment() {
         binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_empty)
         binding.ivMainImage.setImageResource(R.drawable.main_image_empty)
         binding.tvMainEmptyOrNoConnect.isVisible = true
+        binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
         binding.rvVacancy.isVisible = false
     }
 
-    private fun showError() {
-        binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
-        binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+    private fun showError(text: String) {
         binding.tvMainEmptyOrNoConnect.isVisible = true
+        binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
         binding.rvVacancy.isVisible = false
+        if (text == SERVER_ERROR) {
+            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_error_server)
+            binding.ivMainImage.setImageResource(R.drawable.main_image_error_server)
+        } else {
+            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
+            binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+        }
     }
 
     // заменить VacancyDto на Vacancy
@@ -142,8 +155,15 @@ class MainFragment : Fragment() {
         binding.progressBar.isVisible = false
         binding.ivMainImage.isVisible = false
         binding.rvVacancy.isVisible = true
+        vacanciesList.clear()
         vacanciesList.addAll(data)
         vacanciesAdapter.notifyDataSetChanged()
     }
 
+    private fun onItemClickListener(vacancy: VacancyDto) {
+        // заменить VacancyDto а модель
+        val bundle = Bundle()
+        bundle.putString("id", vacancy.id)
+        findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
+    }
 }
