@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.data.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.AppDataBase
+import ru.practicum.android.diploma.data.converter.VacancyDbConverter
 import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HhApi
@@ -13,6 +15,8 @@ import ru.practicum.android.diploma.util.Resource
 class SearchRepositoryImpl(
     private val networkClient: NetworkClient,
     private val hhApi: HhApi,
+    private val appDataBase: AppDataBase,
+    private val vacancyDbConverter: VacancyDbConverter
 ) : SearchRepository {
 
     companion object {
@@ -35,12 +39,13 @@ class SearchRepositoryImpl(
         emit(handleResponse(response))
     }
 
-    private fun handleResponse(response: Result<VacancyResponse?>): Resource<VacancyList> {
+    private suspend fun handleResponse(response: Result<VacancyResponse?>): Resource<VacancyList> {
         return if (response.isSuccess) {
             response.getOrNull()?.let { apiResponse ->
                 val vacancies = apiResponse.items.map { item ->
                     mapToVacancy(item)
                 }
+                saveDbVacancy(vacancies)
                 Resource.Success(
                     VacancyList(
                         vacancies,
@@ -80,5 +85,8 @@ class SearchRepositoryImpl(
             keySkill = ""
         )
     }
-
+    private suspend fun saveDbVacancy(vacancies: List<Vacancy>) {
+        val vacancyEntities = vacancies.map { vacancy -> vacancyDbConverter.map(vacancy) }
+        appDataBase.vacancyDao().insertVacancy(vacancyEntities)
+    }
 }
