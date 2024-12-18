@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.Vacancy
@@ -30,50 +31,49 @@ class SearchRepositoryImpl(
             hhApi.getAllVacancies(pages, options)
         }
 
-        if (response.isSuccess) {
-            if (response.getOrNull() == null) {
-                emit(Resource.Error("Не удалось получить список вакансий"))
-            } else {
+        emit(handleResponse(response))
+    }
 
-                val vacancyList = VacancyList(
-                    item = response.getOrNull()!!.items.map {
-                        Vacancy(
-                            it.id,
-                            it.name,
-                            it.area.name,
-                            it.employer.name,
-                            it.employer.logoUrls?.original ?: "",
-                            it.url,
-                            it.salary?.from.toString(),
-                            it.salary?.to.toString(),
-                            it.salary?.currency ?: "",
-                            it.schedule?.name ?: "",
-                            it.snippet.requirement ?: "",
-                            it.snippet.responsibility ?: "",
-                            it.experience?.name ?: "",
-                            inFavorite = false,
-                            keySkill = ""
-                        )
-                    },
-                    found = response.getOrNull()!!.found,
-                    page = response.getOrNull()!!.page,
-                    pages = response.getOrNull()!!.pages,
-                    perPages = VACANCIES_PER_PAGE
-                )
-                emit(Resource.Success(vacancyList))
-            }
-        } else {
-            if (response.exceptionOrNull()?.message == null) {
-                emit(Resource.Error("Нет интернета"))
-            } else {
-                val exception = response.exceptionOrNull()!!.message
-                when (exception) {
-                    "Нет интернета" -> emit(Resource.Error("Нет интернета"))
-                    "timeout" -> emit(Resource.Error("Нет интернета"))
-                    "bad_argument" -> emit(Resource.Error("Не удалось получить список вакансий"))
-                    else -> emit(Resource.Error("Ошибка сервера"))
+    private fun handleResponse(response: Result<VacancyResponse?>): Resource<VacancyList> { //New function
+        return if (response.isSuccess) {
+            response.getOrNull()?.let { apiResponse ->
+                val vacancies = apiResponse.items.map { item ->
+                    Vacancy(
+                        id = item.id,
+                        name = item.name,
+                        areaName = item.area.name,
+                        employerName = item.employer.name,
+                        employerLogo = item.employer.logoUrls?.original ?: "",
+                        url = item.url,
+                        salaryFrom = item.salary?.from.toString(),
+                        salaryTo = item.salary?.to.toString(),
+                        salaryCurrency = item.salary?.currency ?: "",
+                        scheduleName = item.schedule?.name ?: "",
+                        snippetRequirement = item.snippet.requirement ?: "",
+                        snippetResponsibility = item.snippet.responsibility ?: "",
+                        experienceName = item.experience?.name ?: "",
+                        inFavorite = false,
+                        keySkill = ""
+                    )
                 }
+                Resource.Success(
+                    VacancyList(
+                        vacancies,
+                        apiResponse.found,
+                        apiResponse.page,
+                        apiResponse.pages,
+                        VACANCIES_PER_PAGE
+                    )
+                )
+            } ?: Resource.Error("Не удалось получить список вакансий")
+        } else {
+            val message = response.exceptionOrNull()?.message ?: "Нет интернета"
+            when (message.lowercase()) {
+                "timeout", "нет интернета" -> Resource.Error("Нет интернета")
+                "bad_argument" -> Resource.Error("Не удалось получить список вакансий")
+                else -> Resource.Error("Ошибка сервера")
             }
         }
     }
+
 }
