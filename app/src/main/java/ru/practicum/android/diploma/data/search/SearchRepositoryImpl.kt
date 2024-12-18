@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.data.search
 
+import android.widget.ViewAnimator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
@@ -34,27 +36,11 @@ class SearchRepositoryImpl(
         emit(handleResponse(response))
     }
 
-    private fun handleResponse(response: Result<VacancyResponse?>): Resource<VacancyList> { //New function
+    private fun handleResponse(response: Result<VacancyResponse?>): Resource<VacancyList> {
         return if (response.isSuccess) {
             response.getOrNull()?.let { apiResponse ->
                 val vacancies = apiResponse.items.map { item ->
-                    Vacancy(
-                        id = item.id,
-                        name = item.name,
-                        areaName = item.area.name,
-                        employerName = item.employer.name,
-                        employerLogo = item.employer.logoUrls?.original ?: "",
-                        url = item.url,
-                        salaryFrom = item.salary?.from.toString(),
-                        salaryTo = item.salary?.to.toString(),
-                        salaryCurrency = item.salary?.currency ?: "",
-                        scheduleName = item.schedule?.name ?: "",
-                        snippetRequirement = item.snippet.requirement ?: "",
-                        snippetResponsibility = item.snippet.responsibility ?: "",
-                        experienceName = item.experience?.name ?: "",
-                        inFavorite = false,
-                        keySkill = ""
-                    )
+                    mapToVacancy(item)
                 }
                 Resource.Success(
                     VacancyList(
@@ -74,6 +60,26 @@ class SearchRepositoryImpl(
                 else -> Resource.Error("Ошибка сервера")
             }
         }
+    }
+
+    private fun mapToVacancy(item: VacancyDto): Vacancy {
+        return Vacancy(
+            id = item.id,
+            name = item.name,
+            areaName = item.area.name,
+            employerName = item.employer.name,
+            employerLogo = item.employer.logoUrls?.original ?: "",
+            url = item.url,
+            salaryFrom = item.salary?.from.toString(),
+            salaryTo = item.salary?.to.toString(),
+            salaryCurrency = item.salary?.currency ?: "",
+            scheduleName = item.schedule?.name ?: "",
+            snippetRequirement = item.snippet.requirement ?: "",
+            snippetResponsibility = item.snippet.responsibility ?: "",
+            experienceName = item.experience?.name ?: "",
+            inFavorite = false,
+            keySkill = ""
+        )
     }
 
 }
