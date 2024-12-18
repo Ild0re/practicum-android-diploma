@@ -9,6 +9,9 @@ import ru.practicum.android.diploma.AppDataBase
 import ru.practicum.android.diploma.data.network.HhApi
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RetrofitNetworkClient
+import ru.practicum.android.diploma.data.impl.ExternalNavigatorImpl
+import ru.practicum.android.diploma.domain.api.ExternalNavigator
+
 
 val dataModule = module {
     single<HhApi> {
@@ -29,5 +32,9 @@ val dataModule = module {
             AppDataBase::class.java,
             "database.db"
         ).build()
+    }
+
+    single<ExternalNavigator> {
+        ExternalNavigatorImpl(androidContext())
     }
 }

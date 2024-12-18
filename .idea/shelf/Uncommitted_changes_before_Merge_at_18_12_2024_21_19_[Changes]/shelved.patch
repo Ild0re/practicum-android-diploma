@@ -1,0 +1,220 @@
+Index: app/src/main/res/layout/fragment_detailed_information.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/topPanel\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            tools:ignore=\"MissingConstraints\">\r\n\r\n            <ImageView\r\n                android:id=\"@+id/backArrow\"\r\n                android:layout_width=\"@dimen/dim48\"\r\n                android:layout_height=\"@dimen/dim48\"\r\n                android:src=\"@drawable/ic_back_arrow\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                android:paddingStart=\"@dimen/dim4\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/vacancy\"\r\n                app:layout_constraintStart_toEndOf=\"@id/backArrow\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                android:layout_marginHorizontal=\"@dimen/dim4\"\r\n                android:fontFamily=\"@font/ys_display_medium\"\r\n                android:textFontWeight=\"500\"\r\n                android:textSize=\"@dimen/text22\"\r\n                android:textColor=\"?attr/colorOnPrimary\"/>\r\n\r\n            <ImageView\r\n                android:id=\"@+id/lickedIcon\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:src=\"@drawable/ic_unliked\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                android:layout_marginEnd=\"@dimen/dim12\" />\r\n\r\n            <ImageView\r\n                android:id=\"@+id/shareButton\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:src=\"@drawable/ic_share\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                app:layout_constraintEnd_toStartOf=\"@id/lickedIcon\"\r\n                android:paddingEnd=\"@dimen/dim4\" />\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n        <FrameLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"0dp\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/topPanel\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\">\r\n\r\n            <ScrollView\r\n                android:id=\"@+id/detailInformation\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:visibility=\"visible\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"vertical\"\r\n                    android:layout_marginTop=\"@dimen/dim16\"\r\n                    android:paddingHorizontal=\"@dimen/dim16\">\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/vacancyName\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"@dimen/dim8\"\r\n                        android:text=\"@string/vacancy_name\"\r\n                        android:fontFamily=\"@font/ys_display_bold\"\r\n                        android:textSize=\"@dimen/text32\"\r\n                        android:textColor=\"?attr/colorOnPrimary\"\r\n                        android:textFontWeight=\"700\" />\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/salaryInformation\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"@dimen/dim4\"\r\n                        android:text=\"@string/salary\"\r\n                        style=\"@style/Medium_text_22\" />\r\n\r\n                    <androidx.constraintlayout.widget.ConstraintLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"80dp\"\r\n                        android:layout_marginTop=\"@dimen/dim24\"\r\n                        android:background=\"@drawable/info_company_background_rectangle\">\r\n\r\n                        <ImageView\r\n                            android:id=\"@+id/logoCompany\"\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:src=\"@drawable/ic_logo_company\"\r\n                            app:layout_constraintTop_toTopOf=\"parent\"\r\n                            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                            app:layout_constraintStart_toStartOf=\"parent\"\r\n                            android:layout_marginStart=\"@dimen/dim16\"\r\n                            tools:ignore=\"contentDescription\"/>\r\n                        <TextView\r\n                            android:id=\"@+id/employer\"\r\n                            android:layout_width=\"0dp\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            app:layout_constraintStart_toEndOf=\"@id/logoCompany\"\r\n                            app:layout_constraintTop_toTopOf=\"@id/logoCompany\"\r\n                            app:layout_constraintEnd_toEndOf=\"parent\"\r\n                            app:layout_constraintHorizontal_weight=\"1\"\r\n                            android:layout_marginStart=\"@dimen/dim8\"\r\n                            android:layout_marginEnd=\"@dimen/text16\"\r\n                            android:ellipsize=\"end\"\r\n                            android:maxLines=\"1\"\r\n                            android:text=\"@string/employer_name\"\r\n                            style=\"@style/Medium_text_22\"\r\n                            />\r\n\r\n                        <TextView\r\n                            android:id=\"@+id/address\"\r\n                            android:layout_width=\"0dp\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            app:layout_constraintStart_toStartOf=\"@id/employer\"\r\n                            app:layout_constraintTop_toBottomOf=\"@id/employer\"\r\n                            app:layout_constraintEnd_toEndOf=\"@id/employer\"\r\n                            app:layout_constraintHorizontal_weight=\"1\"\r\n                            android:ellipsize=\"end\"\r\n                            android:maxLines=\"1\"\r\n                            android:text=\"@string/city\"\r\n                            style=\"@style/Regular_text_16\"\r\n                            />\r\n\r\n                    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/tv_experience_title\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"@string/required_experience\"\r\n                        style=\"@style/Medium_text_16\"\r\n                        android:layout_marginTop=\"24dp\"/>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/tv_experience\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"@dimen/dim4\"\r\n                        tools:text=\"@string/years_of_experience\"\r\n                        style=\"@style/Regular_text_16\" />\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/type_of_employment\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_marginTop=\"@dimen/dim4\"\r\n                        tools:text=\"@string/type_of_employment\"\r\n                        style=\"@style/Regular_text_16\" />\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:orientation=\"vertical\"\r\n                        android:layout_marginTop=\"32dp\">\r\n\r\n                        <TextView\r\n                            android:id=\"@+id/description_vacancy\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            style=\"@style/Medium_text_22\"\r\n                            android:text=\"@string/description_vacancy\"/>\r\n\r\n                        <LinearLayout\r\n                            android:id=\"@+id/responsibilities\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:layout_marginTop=\"@dimen/dim16\">\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Medium_text_16\"\r\n                                android:text=\"@string/responsibilities\" />\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Regular_text_16\"\r\n                                android:layout_marginTop=\"@dimen/dim4\"\r\n                                android:text=\"@string/description_of_responsibilities\"/>\r\n                        </LinearLayout>\r\n\r\n                        <LinearLayout\r\n                            android:id=\"@+id/requirements\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:layout_marginTop=\"@dimen/dim16\">\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Medium_text_16\"\r\n                                android:text=\"@string/requirements\" />\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Regular_text_16\"\r\n                                android:layout_marginTop=\"@dimen/dim4\"\r\n                                android:text=\"@string/description_of_requirements\"/>\r\n                        </LinearLayout>\r\n\r\n                        <LinearLayout\r\n                            android:id=\"@+id/conditions\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:layout_marginTop=\"@dimen/dim16\">\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Medium_text_16\"\r\n                                android:text=\"@string/conditions\" />\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Regular_text_16\"\r\n                                android:layout_marginTop=\"@dimen/dim4\"\r\n                                android:text=\"@string/description_of_conditions\"/>\r\n                        </LinearLayout>\r\n\r\n                        <LinearLayout\r\n                            android:id=\"@+id/key_skills\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:layout_marginTop=\"@dimen/dim16\">\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Medium_text_22\"\r\n                                android:text=\"@string/key_skills\" />\r\n\r\n                            <TextView\r\n                                android:layout_width=\"match_parent\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                style=\"@style/Regular_text_16\"\r\n                                android:layout_marginTop=\"@dimen/dim4\"\r\n                                android:text=\"@string/description_of_key_skills\"/>\r\n                        </LinearLayout>\r\n                    </LinearLayout>\r\n                </LinearLayout>\r\n\r\n            </ScrollView>\r\n\r\n            <androidx.constraintlayout.widget.ConstraintLayout\r\n                android:id=\"@+id/placeholder\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:visibility=\"gone\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/vacancy_placeholder\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginHorizontal=\"@dimen/dim16\"\r\n                    android:src=\"@drawable/empty_vacancy\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"\r\n                    app:layout_constraintTop_toTopOf=\"parent\"\r\n                    app:layout_constraintBottom_toBottomOf=\"parent\"\r\n                    tools:ignore=\"contentDescription\"/>\r\n\r\n                <TextView\r\n                    android:id=\"@+id/vacancy_not_found\"\r\n                    style=\"@style/Medium_text_22\"\r\n                    android:text=\"@string/vacancy_not_found\"\r\n                    android:gravity=\"center\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    app:layout_constraintTop_toBottomOf=\"@id/vacancy_placeholder\"\r\n                    app:layout_constraintStart_toStartOf=\"parent\"\r\n                    app:layout_constraintEnd_toEndOf=\"parent\"/>\r\n\r\n            </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n            <com.google.android.material.progressindicator.CircularProgressIndicator\r\n                android:id=\"@+id/progressBar\"\r\n                android:layout_width=\"@dimen/dim48\"\r\n                android:layout_height=\"@dimen/dim48\"\r\n                android:indeterminate=\"true\"\r\n                android:progress=\"75\"\r\n                android:layout_gravity=\"center\"\r\n                android:visibility=\"visible\"/>\r\n        </FrameLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_detailed_information.xml b/app/src/main/res/layout/fragment_detailed_information.xml
+--- a/app/src/main/res/layout/fragment_detailed_information.xml	(revision 56f79dd0541dfec39bc88cbcf4d5b282bb600e45)
++++ b/app/src/main/res/layout/fragment_detailed_information.xml	(date 1734464878611)
+@@ -250,7 +250,8 @@
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:orientation="vertical"
+-                            android:layout_marginTop="@dimen/dim16">
++                            android:layout_marginTop="@dimen/dim16"
++                            android:visibility="visible">
+ 
+                             <TextView
+                                 android:layout_width="match_parent"
+Index: app/src/main/java/ru/practicum/android/diploma/ui/viewmodel/DetailedInformationViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/viewmodel/DetailedInformationViewModel.kt b/app/src/main/java/ru/practicum/android/diploma/ui/viewmodel/DetailedInformationViewModel.kt
+new file mode 100644
+--- /dev/null	(date 1734468125189)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/viewmodel/DetailedInformationViewModel.kt	(date 1734468125189)
+@@ -0,0 +1,19 @@
++package ru.practicum.android.diploma.ui.viewmodel
++
++import androidx.lifecycle.ViewModel
++import ru.practicum.android.diploma.domain.api.DetailedInformationInteractor
++
++class DetailedInformationViewModel(
++    private val interactor: DetailedInformationInteractor
++) : ViewModel() {
++
++//вытаскиваю модель данных
++//private val vacancyDetails: VacancyDetails? = null
++
++    //LiveData
++
++    fun shareVacancyUrl() {
++       // if (vacancyDetails != null) {
++    // interactor.shareUrlVacancy(vacancyDetails.URL)}
++    }
++}
+Index: app/src/main/java/ru/practicum/android/diploma/ui/DetailedInformationFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/ui/DetailedInformationFragment.kt b/app/src/main/java/ru/practicum/android/diploma/ui/DetailedInformationFragment.kt
+new file mode 100644
+--- /dev/null	(date 1734468125181)
++++ b/app/src/main/java/ru/practicum/android/diploma/ui/DetailedInformationFragment.kt	(date 1734468125181)
+@@ -0,0 +1,44 @@
++package ru.practicum.android.diploma.ui
++
++import android.os.Bundle
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import androidx.fragment.app.Fragment
++import androidx.navigation.fragment.findNavController
++import org.koin.androidx.viewmodel.ext.android.viewModel
++import ru.practicum.android.diploma.databinding.FragmentDetailedInformationBinding
++import ru.practicum.android.diploma.ui.viewmodel.DetailedInformationViewModel
++
++class DetailedInformationFragment: Fragment() {
++
++    private val viewModel by viewModel<DetailedInformationViewModel>()
++
++
++    private var _binding: FragmentDetailedInformationBinding? = null
++    val binding: FragmentDetailedInformationBinding get() = _binding!!
++
++    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
++        _binding = FragmentDetailedInformationBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        binding.backArrow.setOnClickListener{
++            findNavController().popBackStack()
++        }
++
++        //Делаем кликер для кнопки "Добавить в избранное"
++        binding.lickedIcon.setOnClickListener {  }
++
++        //Делаем кликер для кнопки "Поделиться"
++        binding.shareButton.setOnClickListener {
++            viewModel.shareVacancyUrl()
++        }
++
++
++    }
++
++}
+Index: app/src/main/java/ru/practicum/android/diploma/domain/api/ExternalNavigator.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/api/ExternalNavigator.kt b/app/src/main/java/ru/practicum/android/diploma/domain/api/ExternalNavigator.kt
+new file mode 100644
+--- /dev/null	(date 1734466800058)
++++ b/app/src/main/java/ru/practicum/android/diploma/domain/api/ExternalNavigator.kt	(date 1734466800058)
+@@ -0,0 +1,5 @@
++package ru.practicum.android.diploma.domain.api
++
++interface ExternalNavigator {
++    fun shareUrlVacancy(urlVacancy: String)
++}
+Index: app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationInteractor.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationInteractor.kt b/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationInteractor.kt
+new file mode 100644
+--- /dev/null	(date 1734467590724)
++++ b/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationInteractor.kt	(date 1734467590724)
+@@ -0,0 +1,6 @@
++package ru.practicum.android.diploma.domain.api
++
++interface DetailedInformationInteractor {
++    fun shareUrlVacancy(urlVacancy: String)//Flow с моделью данных по вакансии
++
++}
+Index: app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationRepository.kt b/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationRepository.kt
+new file mode 100644
+--- /dev/null	(date 1734466891688)
++++ b/app/src/main/java/ru/practicum/android/diploma/domain/api/DetailedInformationRepository.kt	(date 1734466891688)
+@@ -0,0 +1,5 @@
++package ru.practicum.android.diploma.domain.api
++
++interface DetailedInformationRepository {
++    fun shareUrlVacancy(urlVacancy: String)
++}
+Index: app/src/main/java/ru/practicum/android/diploma/data/impl/ExternalNavigatorImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/data/impl/ExternalNavigatorImpl.kt b/app/src/main/java/ru/practicum/android/diploma/data/impl/ExternalNavigatorImpl.kt
+new file mode 100644
+--- /dev/null	(date 1734467310071)
++++ b/app/src/main/java/ru/practicum/android/diploma/data/impl/ExternalNavigatorImpl.kt	(date 1734467310071)
+@@ -0,0 +1,17 @@
++package ru.practicum.android.diploma.data.impl
++
++import android.content.Context
++import android.content.Intent
++import android.net.Uri
++import ru.practicum.android.diploma.R
++import ru.practicum.android.diploma.domain.api.ExternalNavigator
++
++class ExternalNavigatorImpl(private val  context: Context) : ExternalNavigator {
++    override fun shareUrlVacancy(urlVacancy: String) {
++        val agreementIntent = Intent(Intent.ACTION_VIEW).apply {
++            data = Uri.parse(urlVacancy)
++            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
++        }
++        context.startActivity(agreementIntent)
++    }
++}
+Index: app/src/main/java/ru/practicum/android/diploma/data/impl/DetailedInformationRepositotyImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/data/impl/DetailedInformationRepositotyImpl.kt b/app/src/main/java/ru/practicum/android/diploma/data/impl/DetailedInformationRepositotyImpl.kt
+new file mode 100644
+--- /dev/null	(date 1734467378121)
++++ b/app/src/main/java/ru/practicum/android/diploma/data/impl/DetailedInformationRepositotyImpl.kt	(date 1734467378121)
+@@ -0,0 +1,12 @@
++package ru.practicum.android.diploma.data.impl
++
++import ru.practicum.android.diploma.domain.api.DetailedInformationRepository
++import ru.practicum.android.diploma.domain.api.ExternalNavigator
++
++class DetailedInformationRepositotyImpl(
++    private val externalNavigator: ExternalNavigator
++): DetailedInformationRepository {
++    override fun shareUrlVacancy(urlVacancy: String) {
++        externalNavigator.shareUrlVacancy(urlVacancy)
++    }
++}
+Index: app/src/main/java/ru/practicum/android/diploma/domain/impl/DetailedInformationInteractorImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/impl/DetailedInformationInteractorImpl.kt b/app/src/main/java/ru/practicum/android/diploma/domain/impl/DetailedInformationInteractorImpl.kt
+new file mode 100644
+--- /dev/null	(date 1734467563161)
++++ b/app/src/main/java/ru/practicum/android/diploma/domain/impl/DetailedInformationInteractorImpl.kt	(date 1734467563161)
+@@ -0,0 +1,10 @@
++package ru.practicum.android.diploma.domain.impl
++
++import ru.practicum.android.diploma.domain.api.DetailedInformationInteractor
++import ru.practicum.android.diploma.domain.api.DetailedInformationRepository
++
++class DetailedInformationInteractorImpl(private val repository: DetailedInformationRepository) : DetailedInformationInteractor {
++    override fun shareUrlVacancy(urlVacancy: String) {
++        repository.shareUrlVacancy(urlVacancy)
++    }
++}
+diff --git a/app/src/main/java/ru/practicum/android/diploma/domain/api/.gitkeep b/app/src/main/java/ru/practicum/android/diploma/domain/api/.gitkeep
+deleted file mode 100644
