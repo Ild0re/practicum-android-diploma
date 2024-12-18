@@ -2,13 +2,13 @@ package ru.practicum.android.diploma.data.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.practicum.android.diploma.data.dto.EmployerDto
+import ru.practicum.android.diploma.AppDataBase
+import ru.practicum.android.diploma.data.converter.VacancyDbConverter
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
 import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HeadHunterWebApiClient
 import ru.practicum.android.diploma.data.network.NetworkClient
-import ru.practicum.android.diploma.domain.models.Employer
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyDetail
 import ru.practicum.android.diploma.domain.models.VacancyList
@@ -19,6 +19,8 @@ import ru.practicum.android.diploma.util.mappers.toVacancyDetail
 class VacancyRepositoryImpl(
     private val networkClient: NetworkClient,
     private val webApiClient: HeadHunterWebApiClient,
+    private val appDataBase: AppDataBase,
+    private val vacancyDbConverter: VacancyDbConverter
 ) : VacancyRepository {
 
     companion object {
@@ -47,6 +49,11 @@ class VacancyRepositoryImpl(
         }
 
         emit(handleResponse(response, ::toVacancyDetail))
+    }
+
+    override suspend fun saveDbVacancy(vacancies: List<Vacancy>) {
+        val vacancyEntities = vacancies.map { vacancy -> vacancyDbConverter.map(vacancy) }
+        appDataBase.vacancyDao().insertVacancy(vacancyEntities)
     }
 
     private fun <T, K> handleResponse(response: Result<T?>, mapper: (T) -> K): Resource<K> {

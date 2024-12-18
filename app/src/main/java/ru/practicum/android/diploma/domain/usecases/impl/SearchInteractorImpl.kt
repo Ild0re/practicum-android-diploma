@@ -12,6 +12,7 @@ class SearchInteractorImpl(private val repository: VacancyRepository) : SearchIn
         return repository.getAllVacancies(expression, page).map { result ->
             when (result) {
                 is Resource.Success -> {
+                    repository.saveDbVacancy(result.data?.item ?: emptyList())
                     Pair(result.data, null)
                 }
 
