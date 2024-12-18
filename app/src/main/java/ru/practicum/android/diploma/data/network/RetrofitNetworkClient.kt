@@ -10,9 +10,14 @@ import ru.practicum.android.diploma.util.ApiException
 import java.io.IOException
 
 class RetrofitNetworkClient(private val context: Context) : NetworkClient {
+    companion object {
+        private const val BAD_REQUEST = 400
+        private const val NOT_FOUND = 404
+    }
+
     override suspend fun <T> executeRequest(request: suspend () -> T): Result<T> {
         if (!isConnected()) {
-            return Result.failure(ApiException.NetworkException("Нет интернета", IOException()))
+            return Result.failure(ApiException.NetworkException("Нет интернета"))
         }
         return withContext(Dispatchers.IO) {
             try {
@@ -22,8 +27,8 @@ class RetrofitNetworkClient(private val context: Context) : NetworkClient {
                 Result.failure(ApiException.NetworkException("Нет интернета", e))
             } catch (e: HttpException) {
                 when (e.code()) {
-                    400 -> Result.failure(ApiException.BadRequestException(e.message(), e))
-                    404 -> Result.failure(ApiException.NotFoundException(e.message(), e))
+                    BAD_REQUEST -> Result.failure(ApiException.BadRequestException(e.message(), e))
+                    NOT_FOUND -> Result.failure(ApiException.NotFoundException(e.message(), e))
                     else -> Result.failure(ApiException.GenericApiException(e.message(), e))
                 }
             }
