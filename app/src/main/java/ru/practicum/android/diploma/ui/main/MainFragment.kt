@@ -72,7 +72,7 @@ class MainFragment : Fragment() {
                 if (dy > ZERO) {
                     val pos = (binding.rvVacancy.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     val itemsCount = vacanciesAdapter.itemCount
-                    if (pos >= itemsCount - 1) {
+                    if (pos >= itemsCount - ONE) {
                         viewModel.searchVacancies(inputText)
                     }
                 }
@@ -90,14 +90,15 @@ class MainFragment : Fragment() {
                 if (binding.etSearch.text.isNotBlank()) {
                     binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
                     viewModel.searchDebounce(p0.toString())
-                    // убрать страницы
                 } else {
                     inputText = p0.toString()
                 }
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // в данный момент не используется
+                if (p0?.isNotEmpty() == true) {
+                    inputText = p0.toString()
+                }
             }
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
@@ -120,6 +121,7 @@ class MainFragment : Fragment() {
     private fun setupEventHandlers() {
         binding.imageSearchOrClear.setOnClickListener {
             binding.etSearch.setText("")
+            viewModel.clearJob()
             if (binding.etSearch.text.isBlank()) {
                 binding.imageSearchOrClear.setImageResource(R.drawable.search_icon)
             }
@@ -130,11 +132,11 @@ class MainFragment : Fragment() {
             vacanciesAdapter.notifyDataSetChanged()
             binding.rvVacancy.isVisible = false
             binding.ivMainImage.isVisible = true
+            binding.tvCountVacancySearch.isVisible = false
         }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.loadData(binding.etSearch.text.toString(), ZERO)
-                // убрать страницы
                 true
             }
             false
@@ -161,7 +163,7 @@ class MainFragment : Fragment() {
         binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_empty)
         binding.ivMainImage.setImageResource(R.drawable.main_image_empty)
         binding.tvCountVacancySearch.isVisible = true
-        binding.tvCountVacancySearch.text = "Таких вакансий нет"
+        binding.tvCountVacancySearch.text = getString(R.string.tv_main_vacancy_no_search)
         binding.tvMainEmptyOrNoConnect.isVisible = true
         binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
