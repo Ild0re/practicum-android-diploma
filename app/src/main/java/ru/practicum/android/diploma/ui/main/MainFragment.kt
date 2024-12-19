@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -68,10 +69,10 @@ class MainFragment : Fragment() {
         binding.rvVacancy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
+                if (dy > ZERO) {
                     val pos = (binding.rvVacancy.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                     val itemsCount = vacanciesAdapter.itemCount
-                    if (itemsCount > 0 && pos >= itemsCount - 1) {
+                    if (pos >= itemsCount - 1) {
                         viewModel.searchVacancies(inputText)
                     }
                 }
@@ -115,6 +116,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupEventHandlers() {
         binding.imageSearchOrClear.setOnClickListener {
             binding.etSearch.setText("")
@@ -124,6 +126,10 @@ class MainFragment : Fragment() {
             val inputMethodManager =
                 requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
+            vacanciesList.clear()
+            vacanciesAdapter.notifyDataSetChanged()
+            binding.rvVacancy.isVisible = false
+            binding.ivMainImage.isVisible = true
         }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -136,10 +142,19 @@ class MainFragment : Fragment() {
     }
 
     private fun showLoading() {
-        binding.progressBar.isVisible = true
-        binding.rvVacancy.isVisible = false
-        binding.tvMainEmptyOrNoConnect.isVisible = false
-        binding.ivMainImage.isVisible = false
+        if (vacanciesList.isEmpty()) {
+            binding.progressBar.isVisible = true
+            binding.progressBarUnderRV.isVisible = false
+            binding.rvVacancy.isVisible = false
+            binding.tvMainEmptyOrNoConnect.isVisible = false
+            binding.ivMainImage.isVisible = false
+        } else {
+            binding.progressBar.isVisible = false
+            binding.progressBarUnderRV.isVisible = true
+            binding.rvVacancy.isVisible = true
+            binding.tvMainEmptyOrNoConnect.isVisible = false
+            binding.ivMainImage.isVisible = false
+        }
     }
 
     private fun showEmpty() {
@@ -150,33 +165,61 @@ class MainFragment : Fragment() {
         binding.tvMainEmptyOrNoConnect.isVisible = true
         binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
+        binding.progressBarUnderRV.isVisible = false
         binding.rvVacancy.isVisible = false
     }
 
     private fun showError(text: String) {
-        binding.tvMainEmptyOrNoConnect.isVisible = true
-        binding.ivMainImage.isVisible = true
-        binding.progressBar.isVisible = false
-        binding.rvVacancy.isVisible = false
-        if (text == SERVER_ERROR) {
-            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_error_server)
-            binding.ivMainImage.setImageResource(R.drawable.main_image_error_server)
+        if (vacanciesList.isEmpty()) {
+            binding.tvMainEmptyOrNoConnect.isVisible = true
+            binding.ivMainImage.isVisible = true
+            binding.progressBar.isVisible = false
+            binding.progressBarUnderRV.isVisible = false
+            binding.rvVacancy.isVisible = false
+            if (text == SERVER_ERROR) {
+                binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_error_server)
+                binding.ivMainImage.setImageResource(R.drawable.main_image_error_server)
+            } else {
+                binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
+                binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+            }
         } else {
-            binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_no_connect)
-            binding.ivMainImage.setImageResource(R.drawable.main_image_no_connect)
+            binding.tvMainEmptyOrNoConnect.isVisible = false
+            binding.ivMainImage.isVisible = false
+            binding.progressBar.isVisible = false
+            binding.progressBarUnderRV.isVisible = false
+            binding.rvVacancy.isVisible = true
+            if (text == SERVER_ERROR) {
+                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), R.string.check_internet, Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showData(data: List<Vacancy>, found: String) {
-        binding.tvCountVacancySearch.isVisible = true
-        binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
-        binding.progressBar.isVisible = false
-        binding.ivMainImage.isVisible = false
-        binding.rvVacancy.isVisible = true
-        vacanciesList.clear()
-        vacanciesList.addAll(data)
-        vacanciesAdapter.notifyDataSetChanged()
+        if (vacanciesList.isEmpty()) {
+            binding.tvCountVacancySearch.isVisible = true
+            binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
+            binding.progressBar.isVisible = false
+            binding.progressBarUnderRV.isVisible = false
+            binding.ivMainImage.isVisible = false
+            binding.rvVacancy.isVisible = true
+            vacanciesList.clear()
+            vacanciesList.addAll(data)
+            vacanciesAdapter.notifyDataSetChanged()
+        } else {
+            binding.tvCountVacancySearch.isVisible = true
+            binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
+            binding.progressBar.isVisible = false
+            binding.progressBarUnderRV.isVisible = false
+            binding.ivMainImage.isVisible = false
+            binding.rvVacancy.isVisible = true
+            vacanciesList.addAll(data)
+            vacanciesAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun onItemClickListener(vacancy: Vacancy) {
