@@ -27,6 +27,12 @@ class MainFragment : Fragment() {
     companion object {
         const val SERVER_ERROR = "Ошибка сервера"
         private const val ZERO = 0
+        private const val ONE = 1
+        private const val TWO = 2
+        private const val THREE = 3
+        private const val FOUR = 4
+        private const val TEN = 10
+        private const val HUNDRED = 100
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -104,7 +110,7 @@ class MainFragment : Fragment() {
                 is ScreenState.Empty -> showEmpty()
                 is ScreenState.Error -> showError(state.message)
                 is ScreenState.Content -> {
-                    showData(state.data)
+                    showData(state.data,state.found)
                 }
             }
         }
@@ -140,6 +146,8 @@ class MainFragment : Fragment() {
     private fun showEmpty() {
         binding.tvMainEmptyOrNoConnect.text = getString(R.string.tv_main_empty)
         binding.ivMainImage.setImageResource(R.drawable.main_image_empty)
+        binding.tvCountVacancySearch.isVisible = true
+        binding.tvCountVacancySearch.text = "Таких вакансий нет"
         binding.tvMainEmptyOrNoConnect.isVisible = true
         binding.ivMainImage.isVisible = true
         binding.progressBar.isVisible = false
@@ -161,7 +169,9 @@ class MainFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun showData(data: List<Vacancy>) {
+    private fun showData(data: List<Vacancy>, found: String) {
+        binding.tvCountVacancySearch.isVisible = true
+        binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
         binding.progressBar.isVisible = false
         binding.ivMainImage.isVisible = false
         binding.rvVacancy.isVisible = true
@@ -174,5 +184,14 @@ class MainFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)
         findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
+    }
+    private fun checkCount(count: Int): String {
+        val word: String
+        when (count % TEN) {
+            ONE -> word = "вакансия"
+            TWO, THREE, FOUR -> word = "вакансии"
+            else -> word = "вакансий"
+        }
+        return word
     }
 }
