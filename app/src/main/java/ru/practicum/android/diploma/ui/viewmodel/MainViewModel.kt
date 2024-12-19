@@ -80,7 +80,7 @@ class MainViewModel(
             }
 
             else -> {
-                val content = ScreenState.Content(vacancies)
+                val content = ScreenState.Content(vacancies, data?.found.toString())
                 state.postValue(content)
             }
         }
