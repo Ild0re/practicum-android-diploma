@@ -18,4 +18,5 @@
     <dimen name="dim11">11dp</dimen>
     <dimen name="dim22">22dp</dimen>
     <dimen name="dim2">2dp</dimen>
+    <dimen name="dim46">46dp</dimen>
 </resources>
