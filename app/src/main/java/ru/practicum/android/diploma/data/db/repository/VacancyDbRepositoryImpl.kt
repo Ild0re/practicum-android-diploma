@@ -3,13 +3,12 @@ package ru.practicum.android.diploma.data.db.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.AppDataBase
-import ru.practicum.android.diploma.data.converter.VacancyDbConverter
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.util.mappers.toVacancy
 
 class VacancyDbRepositoryImpl(
     private val appDataBase: AppDataBase,
-    private val vacancyDbConverter: VacancyDbConverter
 ) : VacancyDbRepository {
     override suspend fun insertVacancy(vacancy: List<VacancyEntity>) {
         appDataBase.vacancyDao().insertVacancy(vacancy)
@@ -39,6 +38,6 @@ class VacancyDbRepositoryImpl(
     }
 
     private fun convertFromVacancyEntity(vacancies: List<VacancyEntity>): List<Vacancy> {
-        return vacancies.map { vacancy -> vacancyDbConverter.map(vacancy) }
+        return vacancies.map { it.toVacancy() }
     }
 }

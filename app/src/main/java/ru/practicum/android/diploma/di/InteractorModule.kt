@@ -10,6 +10,6 @@ import ru.practicum.android.diploma.domain.usecases.impl.VacancyDetailInteractor
 
 val interactorModule = module {
     single<SearchInteractor> { SearchInteractorImpl(get()) }
-    single<VacancyDbInteractor> {VacancyDbInteractorImpl(get())}
+    single<VacancyDbInteractor> { VacancyDbInteractorImpl(get()) }
     single<VacancyDetailInteractor> { VacancyDetailInteractorImpl(get()) }
 }
