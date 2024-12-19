@@ -109,7 +109,7 @@ class MainFragment : Fragment() {
                 is ScreenState.Empty -> showEmpty()
                 is ScreenState.Error -> showError(state.message)
                 is ScreenState.Content -> {
-                    showData(state.data,state.found)
+                    showData(state.data, state.found)
                 }
             }
         }
