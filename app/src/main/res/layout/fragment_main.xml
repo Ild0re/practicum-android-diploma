@@ -127,10 +127,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_vacancy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_search"
+        app:layout_constraintBottom_toTopOf="@id/progressBarUnderRV"
         android:layout_marginEnd="@dimen/dim16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
