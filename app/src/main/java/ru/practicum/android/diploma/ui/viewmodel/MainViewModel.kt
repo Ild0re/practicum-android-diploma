@@ -29,7 +29,6 @@ class MainViewModel(
 
     private var currentPage = START_PAGE
     private var maxPage = START_MAX_PAGE
-    var vacanciesCount = START_PAGE
 
     private val state = MutableLiveData<ScreenState>()
     private var textInput = ""
@@ -39,7 +38,7 @@ class MainViewModel(
     fun getState(): LiveData<ScreenState> = state
 
     fun loadData(expression: String, page: Int) {
-        searchJob?.cancel()
+        clearJob()
         state.value = ScreenState.Loading
 
         viewModelScope.launch {
@@ -56,7 +55,6 @@ class MainViewModel(
         if (data != null) {
             vacancies.addAll(data.item)
             maxPage = data.pages
-            vacanciesCount = data.found
         }
         when {
             errorMessage == SERVER_ERROR -> {
@@ -91,7 +89,7 @@ class MainViewModel(
             return
         }
         textInput = expression
-        searchJob?.cancel()
+        clearJob()
         if (expression.isNotBlank()) {
             searchJob = viewModelScope.launch {
                 delay(SEARCH_DEBOUNCE_DELAY)
@@ -111,5 +109,9 @@ class MainViewModel(
                 isNextPageLoading = false
             }
         }
+    }
+
+    fun clearJob() {
+        searchJob?.cancel()
     }
 }
