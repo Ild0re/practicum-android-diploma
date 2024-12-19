@@ -1,9 +1,12 @@
 package ru.practicum.android.diploma.domain.db.interactor
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 import ru.practicum.android.diploma.data.db.repository.VacancyDbRepository
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.domain.models.VacancyList
+import ru.practicum.android.diploma.util.Resource
 
 class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : VacancyDbInteractor {
     override suspend fun insertVacancy(vacancy: List<VacancyEntity>) {
@@ -14,8 +17,18 @@ class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : Vac
         return repository.deleteVacancy(vacancy)
     }
 
-    override suspend fun getVacancy(): Flow<List<Vacancy>> {
-        return repository.getVacancy()
+    override suspend fun getVacancy(): Flow<Pair<List<Vacancy>?, String?>> {
+        return repository.getVacancy().map { result ->
+            when (result) {
+                is Resource.Error -> {
+                    Pair(null, result.message)
+                }
+
+                is Resource.Success -> {
+                    Pair(result.data, null)
+                }
+            }
+        }
     }
 
     override suspend fun getVacancyById(vacancyId: String): Flow<VacancyEntity> {

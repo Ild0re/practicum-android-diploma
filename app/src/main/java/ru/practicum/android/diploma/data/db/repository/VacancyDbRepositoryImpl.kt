@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.AppDataBase
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.mappers.toVacancy
+import java.sql.SQLException
 
 class VacancyDbRepositoryImpl(
     private val appDataBase: AppDataBase,
@@ -18,9 +20,14 @@ class VacancyDbRepositoryImpl(
         appDataBase.vacancyDao().deleteVacancy(vacancy)
     }
 
-    override suspend fun getVacancy(): Flow<List<Vacancy>> = flow {
+    override suspend fun getVacancy(): Flow<Resource<List<Vacancy>>> = flow {
+        try {
         val vacancies = appDataBase.vacancyDao().getVacancy()
-        emit(convertFromVacancyEntity(vacancies))
+            emit(Resource.Success(convertFromVacancyEntity(vacancies)))
+        } catch (e: SQLException){
+            emit(Resource.Error(e.message!!))
+        }
+
     }
 
     override suspend fun getVacancyById(vacancyId: String): Flow<VacancyEntity> = flow {
@@ -39,5 +46,19 @@ class VacancyDbRepositoryImpl(
 
     private fun convertFromVacancyEntity(vacancies: List<VacancyEntity>): List<Vacancy> {
         return vacancies.map { it.toVacancy() }
+    }
+    private fun <T, K> handleResponse(response: Result<T?>, mapper: (T) -> K): Resource<K> {
+        return if (response.isSuccess) {
+            response.getOrNull()?.let { apiResponse ->
+                Resource.Success(mapper(apiResponse))
+            } ?: Resource.Error("Не удалось получить данные")
+        } else {
+            val message = response.exceptionOrNull()?.message ?: "Нет интернета"
+            when (message.lowercase()) {
+                "timeout", "нет интернета" -> Resource.Error("Нет интернета")
+                "bad_argument" -> Resource.Error("Не удалось получить данные")
+                else -> Resource.Error("Ошибка сервера")
+            }
+        }
     }
 }
