@@ -32,7 +32,6 @@ class MainFragment : Fragment() {
         private const val THREE = 3
         private const val FOUR = 4
         private const val TEN = 10
-        private const val HUNDRED = 100
     }
 
     private var _binding: FragmentMainBinding? = null
