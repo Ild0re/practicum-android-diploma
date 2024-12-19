@@ -36,4 +36,6 @@
     <string name="tv_main_empty">Не удалось получить\n список вакансий</string>
     <string name="tv_main_vacancy_no_search">Таких вакансий нет</string>
     <string name="no_salary">Зарплата не указана</string>
+    <string name="check_internet">Проверьте подключение к интернету</string>
+    <string name="error_happened">Произошла ошибка</string>
 </resources>
