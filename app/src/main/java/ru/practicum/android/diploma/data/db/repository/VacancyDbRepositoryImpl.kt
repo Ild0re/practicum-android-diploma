@@ -24,7 +24,7 @@ class VacancyDbRepositoryImpl(
         try {
         val vacancies = appDataBase.vacancyDao().getVacancy()
             emit(Resource.Success(convertFromVacancyEntity(vacancies)))
-        } catch (e: SQLException){
+        } catch (e: SQLException) {
             emit(Resource.Error(e.message!!))
         }
 
