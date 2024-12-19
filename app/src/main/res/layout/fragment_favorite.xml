@@ -35,6 +35,7 @@
         android:src="@drawable/favorite_image_empty"
         />
     <TextView
+        android:id="@+id/tv_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tv_favorite_empty"
@@ -58,7 +59,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         tools:listitem="@layout/vacancy_item"
-        android:layout_marginTop="@dimen/dim16"
+        android:layout_marginTop="@dimen/dim8"
         android:foreground="?attr/selectableItemBackground"
         android:visibility="gone"
         />
