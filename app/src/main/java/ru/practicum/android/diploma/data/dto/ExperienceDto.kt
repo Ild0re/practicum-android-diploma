@@ -1,6 +1,3 @@
 package ru.practicum.android.diploma.data.dto
 
-class ExperienceDto(
-    val id: String,
-    val name: String
-) : Response()
+data class ExperienceDto(val id: String? = null, val name: String? = null)

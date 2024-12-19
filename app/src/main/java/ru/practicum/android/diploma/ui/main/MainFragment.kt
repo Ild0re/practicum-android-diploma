@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,9 +52,14 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupTextWatcher()
+        setupObservers()
+        setupEventHandlers()
+    }
 
+    private fun setupRecyclerView() {
         binding.rvVacancy.adapter = vacanciesAdapter
-
         binding.rvVacancy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -67,7 +72,9 @@ class MainFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun setupTextWatcher() {
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // в данный момент не используется
@@ -87,6 +94,10 @@ class MainFragment : Fragment() {
                 // в данный момент не используется
             }
         }
+        binding.etSearch.addTextChangedListener(simpleTextWatcher)
+    }
+
+    private fun setupObservers() {
         viewModel.getState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ScreenState.Loading -> showLoading()
@@ -97,8 +108,9 @@ class MainFragment : Fragment() {
                 }
             }
         }
-        binding.etSearch.addTextChangedListener(simpleTextWatcher)
+    }
 
+    private fun setupEventHandlers() {
         binding.imageSearchOrClear.setOnClickListener {
             binding.etSearch.setText("")
             if (binding.etSearch.text.isBlank()) {
