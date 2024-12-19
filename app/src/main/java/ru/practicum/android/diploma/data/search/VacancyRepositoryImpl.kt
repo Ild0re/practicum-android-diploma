@@ -3,24 +3,21 @@ package ru.practicum.android.diploma.data.search
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.AppDataBase
-import ru.practicum.android.diploma.data.converter.VacancyDbConverter
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
-import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.data.dto.VacancyResponse
 import ru.practicum.android.diploma.data.network.HeadHunterWebApiClient
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.domain.models.VacancyDetail
 import ru.practicum.android.diploma.domain.models.VacancyList
 import ru.practicum.android.diploma.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.util.Resource
-import ru.practicum.android.diploma.util.mappers.toVacancyDetail
+import ru.practicum.android.diploma.util.mappers.toVacancy
+import ru.practicum.android.diploma.util.mappers.toVacancyEntity
 
 class VacancyRepositoryImpl(
     private val networkClient: NetworkClient,
     private val webApiClient: HeadHunterWebApiClient,
     private val appDataBase: AppDataBase,
-    private val vacancyDbConverter: VacancyDbConverter
 ) : VacancyRepository {
 
     companion object {
@@ -43,16 +40,15 @@ class VacancyRepositoryImpl(
         emit(handleResponse(response, ::toVacancyResponse))
     }
 
-    override suspend fun getVacancyById(id: String): Flow<Resource<VacancyDetail>> = flow {
+    override suspend fun getVacancyById(id: String): Flow<Resource<Vacancy>> = flow {
         val response = networkClient.executeRequest {
             webApiClient.getVacancyById(id)
         }
-
         emit(handleResponse(response, ::toVacancyDetail))
     }
 
     override suspend fun saveDbVacancy(vacancies: List<Vacancy>) {
-        val vacancyEntities = vacancies.map { vacancy -> vacancyDbConverter.map(vacancy) }
+        val vacancyEntities = vacancies.map { it.toVacancyEntity() }
         appDataBase.vacancyDao().insertVacancy(vacancyEntities)
     }
 
@@ -71,13 +67,13 @@ class VacancyRepositoryImpl(
         }
     }
 
-    private fun toVacancyDetail(vacancyDetailDto: VacancyDetailDto): VacancyDetail {
-        return vacancyDetailDto.toVacancyDetail()
+    private fun toVacancyDetail(vacancyDetailDto: VacancyDetailDto): Vacancy {
+        return vacancyDetailDto.toVacancy()
     }
 
     private fun toVacancyResponse(vacancyResponse: VacancyResponse): VacancyList {
         val vacancies = vacancyResponse.items.map { item ->
-            mapToVacancy(item)
+            item.toVacancy()
         }
         return VacancyList(
             vacancies,
@@ -87,25 +83,4 @@ class VacancyRepositoryImpl(
             VACANCIES_PER_PAGE
         )
     }
-
-    private fun mapToVacancy(item: VacancyDto): Vacancy {
-        return Vacancy(
-            id = item.id,
-            name = item.name,
-            areaName = item.area.name,
-            employerName = item.employer.name,
-            employerLogo = item.employer.logoUrls?.original ?: "",
-            url = item.url,
-            salaryFrom = item.salary?.from.toString(),
-            salaryTo = item.salary?.to.toString(),
-            salaryCurrency = item.salary?.currency ?: "",
-            scheduleName = item.schedule?.name ?: "",
-            snippetRequirement = item.snippet.requirement ?: "",
-            snippetResponsibility = item.snippet.responsibility ?: "",
-            experienceName = item.experience?.name ?: "",
-            inFavorite = false,
-            keySkill = ""
-        )
-    }
-
 }
