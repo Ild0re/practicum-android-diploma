@@ -29,6 +29,11 @@ class VacancyDbRepositoryImpl(
         emit(vacancies)
     }
 
+    override suspend fun getVacancyIds(): Flow<List<String>> = flow {
+        val vacancies = appDataBase.vacancyDao().getVacancyIds()
+        emit(vacancies)
+    }
+
     override suspend fun updateVacancy(vacancy: VacancyEntity) {
         appDataBase.vacancyDao().updateVacancyEntity(vacancy)
     }

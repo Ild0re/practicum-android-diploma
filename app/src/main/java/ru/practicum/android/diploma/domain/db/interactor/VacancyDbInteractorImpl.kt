@@ -22,6 +22,10 @@ class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : Vac
         return repository.getVacancyById(vacancyId)
     }
 
+    override suspend fun getVacancyIds(): Flow<List<String>> {
+        return repository.getVacancyIds()
+    }
+
     override suspend fun updateVacancy(vacancy: VacancyEntity) {
         return repository.updateVacancy(vacancy)
     }

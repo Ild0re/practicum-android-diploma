@@ -9,5 +9,6 @@ interface VacancyDbInteractor {
     suspend fun deleteVacancy(vacancy: VacancyEntity)
     suspend fun getVacancy(): Flow<List<Vacancy>>
     suspend fun getVacancyById(vacancyId: String): Flow<VacancyEntity>
+    suspend fun getVacancyIds(): Flow<List<String>>
     suspend fun updateVacancy(vacancy: VacancyEntity)
 }
