@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 import ru.practicum.android.diploma.data.db.repository.VacancyDbRepository
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.domain.models.VacancyList
 import ru.practicum.android.diploma.util.Resource
 
 class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : VacancyDbInteractor {

@@ -47,18 +47,4 @@ class VacancyDbRepositoryImpl(
     private fun convertFromVacancyEntity(vacancies: List<VacancyEntity>): List<Vacancy> {
         return vacancies.map { it.toVacancy() }
     }
-    private fun <T, K> handleResponse(response: Result<T?>, mapper: (T) -> K): Resource<K> {
-        return if (response.isSuccess) {
-            response.getOrNull()?.let { apiResponse ->
-                Resource.Success(mapper(apiResponse))
-            } ?: Resource.Error("Не удалось получить данные")
-        } else {
-            val message = response.exceptionOrNull()?.message ?: "Нет интернета"
-            when (message.lowercase()) {
-                "timeout", "нет интернета" -> Resource.Error("Нет интернета")
-                "bad_argument" -> Resource.Error("Не удалось получить данные")
-                else -> Resource.Error("Ошибка сервера")
-            }
-        }
-    }
 }
