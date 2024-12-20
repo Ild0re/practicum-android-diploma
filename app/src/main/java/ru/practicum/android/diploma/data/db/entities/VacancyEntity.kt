@@ -19,6 +19,7 @@ data class VacancyEntity(
     val snippetRequirement: String,
     val snippetResponsibility: String,
     val experienceName: String,
+    val employmentForm: String,
     val inFavorite: Boolean,
     val description: String,
     val keySkill: String

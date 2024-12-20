@@ -87,9 +87,9 @@ class MainFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
-                if (binding.etSearch.text.isNotBlank()) {
+                if (!binding.etSearch.text.isNullOrEmpty()) {
                     binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
-                    viewModel.searchDebounce(p0.toString())
+                    viewModel.searchDebounce(p0?.toString() ?: "")
                 } else {
                     inputText = p0.toString()
                 }
@@ -98,6 +98,8 @@ class MainFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.isNotEmpty() == true) {
                     inputText = p0.toString()
+                } else {
+                    binding.rvVacancy.isVisible = false
                 }
             }
         }
@@ -137,7 +139,6 @@ class MainFragment : Fragment() {
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.loadData(binding.etSearch.text.toString(), ZERO)
-                true
             }
             false
         }
@@ -227,8 +228,11 @@ class MainFragment : Fragment() {
     private fun onItemClickListener(vacancy: Vacancy) {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)
+        bundle.putString("requirements", vacancy.snippetRequirement)
+        bundle.putString("responsibility", vacancy.snippetResponsibility)
         findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
     }
+
     private fun checkCount(count: Int): String {
         val word: String
         when (count % TEN) {

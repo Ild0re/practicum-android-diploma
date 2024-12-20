@@ -27,6 +27,6 @@
         />
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="ru.practicum.android.diploma.ui.DetailsFragment"
+        android:name="ru.practicum.android.diploma.ui.details.DetailsFragment"
         android:label="DetailsFragment" />
 </navigation>

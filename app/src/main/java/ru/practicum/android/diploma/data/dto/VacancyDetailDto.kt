@@ -29,7 +29,7 @@ data class VacancyDetailDto(
     val name: String,
     @SerializedName("response_url")
     val responseUrl: Any?,
-    val salary: SalaryDto,
+    val salary: SalaryDto?,
     val schedule: ScheduleDto,
     @SerializedName("work_format")
     val workFormat: List<WorkFormatDto>)
