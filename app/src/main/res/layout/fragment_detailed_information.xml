@@ -127,7 +127,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             tools:text="@string/employer_name"
-                            style="@style/Medium_text_22"
+                            style="@style/Medium_text_22_converted"
                             />
 
                         <TextView
@@ -141,7 +141,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             tools:text="@string/city"
-                            style="@style/Regular_text_16"
+                            style="@style/Regular_text_16_converted"
                             />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
