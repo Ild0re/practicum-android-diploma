@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dim8"
-                        android:text="@string/vacancy_name"
+                        tools:text="@string/vacancy_name"
                         android:fontFamily="@font/ys_display_bold"
                         android:textSize="@dimen/text32"
                         android:textColor="?attr/colorOnPrimary"
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dim4"
-                        android:text="@string/salary"
+                        tools:text="@string/salary"
                         style="@style/Medium_text_22" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,7 +126,7 @@
                             android:layout_marginEnd="@dimen/text16"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="@string/employer_name"
+                            tools:text="@string/employer_name"
                             style="@style/Medium_text_22"
                             />
 
@@ -140,7 +140,7 @@
                             app:layout_constraintHorizontal_weight="1"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="@string/city"
+                            tools:text="@string/city"
                             style="@style/Regular_text_16"
                             />
 
@@ -202,7 +202,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/Regular_text_16"
                                 android:layout_marginTop="@dimen/dim4"
-                                android:text="@string/description_of_responsibilities"/>
+                                tools:text="@string/description_of_responsibilities"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -224,7 +224,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/Regular_text_16"
                                 android:layout_marginTop="@dimen/dim4"
-                                android:text="@string/description_of_requirements"/>
+                                tools:text="@string/description_of_requirements"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -246,7 +246,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/Regular_text_16"
                                 android:layout_marginTop="@dimen/dim4"
-                                android:text="@string/description_of_conditions"/>
+                                tools:text="@string/description_of_conditions"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -260,7 +260,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/Medium_text_22"
-                                android:text="@string/key_skills" />
+                                tools:text="@string/key_skills" />
 
                             <TextView
                                 android:id="@+id/key_list"
@@ -268,7 +268,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/Regular_text_16"
                                 android:layout_marginTop="@dimen/dim4"
-                                android:text="@string/description_of_key_skills"/>
+                                tools:text="@string/description_of_key_skills"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

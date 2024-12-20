@@ -6,16 +6,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.di.viewModelModule
+import ru.practicum.android.diploma.domain.db.interactor.VacancyDbInteractor
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.usecases.base.VacancyDetailInteractor
+import ru.practicum.android.diploma.ui.viewmodel.FavoriteViewModel.Companion
+import ru.practicum.android.diploma.ui.viewmodel.FavoriteViewModel.Companion.NOTHING_FOUND
+import ru.practicum.android.diploma.ui.viewmodel.FavoriteViewModel.Companion.NOT_USE
+import ru.practicum.android.diploma.util.ScreenState
 import ru.practicum.android.diploma.util.VacancyState
 
-class VacancyDetailViewModel(private val interactor: VacancyDetailInteractor, val id: String) : ViewModel() {
+class VacancyDetailViewModel(
+    private val interactor: VacancyDetailInteractor,
+    val id: String,
+    private val favouritesInteractor: VacancyDbInteractor,
+) : ViewModel() {
 
     init {
-        loadData()
+        getFavouritesIds()
     }
+
+    private lateinit var vacancy: Vacancy
+    private var vacanciesIdsListFromDb: List<String> = emptyList()
 
     companion object {
         const val SERVER_ERROR = "Ошибка сервера"
@@ -24,10 +39,12 @@ class VacancyDetailViewModel(private val interactor: VacancyDetailInteractor, va
     }
 
     private val vacancyState = MutableLiveData<VacancyState>()
+    private val favouriteState = MutableLiveData<Boolean>()
 
     fun observeVacancyState(): LiveData<VacancyState> = vacancyState
+    fun observeFavourites(): LiveData<Boolean> = favouriteState
 
-    fun loadData() {
+    private fun loadData() {
         viewModelScope.launch {
             interactor.getVacancyById(id)
                 .collect { pair ->
@@ -37,27 +54,94 @@ class VacancyDetailViewModel(private val interactor: VacancyDetailInteractor, va
     }
 
     private fun processResult(data: Vacancy?, errorMessage: String?) {
-        lateinit var vacancy: Vacancy
         if (data != null) {
             vacancy = data
+            favouriteCheck()
         }
         when (errorMessage) {
             SERVER_ERROR -> {
-                val error = VacancyState.Error(SERVER_ERROR)
-                vacancyState.postValue(error)
+                if (id in vacanciesIdsListFromDb) {
+                    loadDataFromDb()
+                } else {
+                    val error = VacancyState.Error(SERVER_ERROR)
+                    vacancyState.postValue(error)
+                }
             }
+
             NO_INTERNET -> {
-                val error = VacancyState.Error(NO_INTERNET)
-                vacancyState.postValue(error)
+                if (id in vacanciesIdsListFromDb) {
+                    loadDataFromDb()
+                } else {
+                    val error = VacancyState.Error(NO_INTERNET)
+                    vacancyState.postValue(error)
+                }
             }
+
             VACANCIES_LOAD_ERROR -> {
                 val error = VacancyState.Error(VACANCIES_LOAD_ERROR)
+                deleteVacancy()
                 vacancyState.postValue(error)
             }
+
             else -> {
                 val content = VacancyState.Content(vacancy)
                 vacancyState.postValue(content)
             }
         }
+    }
+
+    fun onFavouriteClicked() {
+        viewModelScope.launch {
+            if (!vacancy.inFavorite) {
+                favouritesInteractor.insertVacancy(vacancy.copy(inFavorite = true))
+                favouriteState.postValue(true)
+            } else {
+                favouritesInteractor.deleteVacancy(vacancy.copy(inFavorite = false))
+                favouriteState.postValue(false)
+            }
+        }
+    }
+
+    private fun favouriteCheck() {
+        if (!vacancy.inFavorite) {
+            favouriteState.postValue(false)
+        } else {
+            favouriteState.postValue(true)
+        }
+    }
+
+    private fun deleteVacancy() {
+        viewModelScope.launch {
+            favouritesInteractor.deleteVacancy(vacancy.copy(inFavorite = false))
+            favouriteState.postValue(false)
+        }
+    }
+
+    private fun loadDataFromDb() {
+        viewModelScope.launch {
+            favouritesInteractor.getVacancyById(id).collect { data ->
+                processFromDb(data)
+            }
+        }
+    }
+
+    private fun processFromDb(data: Vacancy) {
+        vacancy = data
+        favouriteCheck()
+        val content = VacancyState.Content(vacancy)
+        vacancyState.postValue(content)
+    }
+
+    private fun getFavouritesIds() {
+        viewModelScope.launch {
+            favouritesInteractor.getVacancyIds().collect { data ->
+                getIdsFromDb(data)
+                loadData()
+            }
+        }
+    }
+
+    private fun getIdsFromDb(data: List<String>) {
+        vacanciesIdsListFromDb = data
     }
 }

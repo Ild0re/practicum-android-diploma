@@ -8,11 +8,11 @@ import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.util.Resource
 
 class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : VacancyDbInteractor {
-    override suspend fun insertVacancy(vacancy: List<VacancyEntity>) {
+    override suspend fun insertVacancy(vacancy: Vacancy) {
         return repository.insertVacancy(vacancy)
     }
 
-    override suspend fun deleteVacancy(vacancy: VacancyEntity) {
+    override suspend fun deleteVacancy(vacancy: Vacancy) {
         return repository.deleteVacancy(vacancy)
     }
 
@@ -30,7 +30,7 @@ class VacancyDbInteractorImpl(private val repository: VacancyDbRepository) : Vac
         }
     }
 
-    override suspend fun getVacancyById(vacancyId: String): Flow<VacancyEntity> {
+    override suspend fun getVacancyById(vacancyId: String): Flow<Vacancy> {
         return repository.getVacancyById(vacancyId)
     }
 

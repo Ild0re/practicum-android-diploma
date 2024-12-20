@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.domain.db.interactor.VacancyDbInteractor
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.util.ScreenState
 
-class FavoriteViewModel(val vacancyDbInteractor: VacancyDbInteractor) : ViewModel() {
+class FavoriteViewModel(private val vacancyDbInteractor: VacancyDbInteractor) : ViewModel() {
     companion object {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"

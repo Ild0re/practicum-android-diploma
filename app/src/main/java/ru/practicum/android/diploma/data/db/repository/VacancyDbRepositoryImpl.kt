@@ -7,17 +7,18 @@ import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.mappers.toVacancy
+import ru.practicum.android.diploma.util.mappers.toVacancyEntity
 import java.sql.SQLException
 
 class VacancyDbRepositoryImpl(
     private val appDataBase: AppDataBase,
 ) : VacancyDbRepository {
-    override suspend fun insertVacancy(vacancy: List<VacancyEntity>) {
-        appDataBase.vacancyDao().insertVacancy(vacancy)
+    override suspend fun insertVacancy(vacancy: Vacancy) {
+        appDataBase.vacancyDao().insertVacancy(convertFromVacancyToEntity(vacancy))
     }
 
-    override suspend fun deleteVacancy(vacancy: VacancyEntity) {
-        appDataBase.vacancyDao().deleteVacancy(vacancy)
+    override suspend fun deleteVacancy(vacancy: Vacancy) {
+        appDataBase.vacancyDao().deleteVacancy(convertFromVacancyToEntity(vacancy))
     }
 
     override suspend fun getVacancy(): Flow<Resource<List<Vacancy>>> = flow {
@@ -30,9 +31,9 @@ class VacancyDbRepositoryImpl(
 
     }
 
-    override suspend fun getVacancyById(vacancyId: String): Flow<VacancyEntity> = flow {
-        val vacancies = appDataBase.vacancyDao().getVacancyById(vacancyId)
-        emit(vacancies)
+    override suspend fun getVacancyById(vacancyId: String): Flow<Vacancy> = flow {
+        val vacancy = appDataBase.vacancyDao().getVacancyById(vacancyId)
+        emit(convertFromEntityToVacancy(vacancy))
     }
 
     override suspend fun getVacancyIds(): Flow<List<String>> = flow {
@@ -46,5 +47,13 @@ class VacancyDbRepositoryImpl(
 
     private fun convertFromVacancyEntity(vacancies: List<VacancyEntity>): List<Vacancy> {
         return vacancies.map { it.toVacancy() }
+    }
+
+    private fun convertFromVacancyToEntity(vacancy: Vacancy): VacancyEntity {
+        return vacancy.toVacancyEntity()
+    }
+
+    private fun convertFromEntityToVacancy(vacancy: VacancyEntity): Vacancy {
+        return vacancy.toVacancy()
     }
 }

@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.data.db.entities.VacancyEntity
 @Dao
 interface VacancyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVacancy(vacancy: List<VacancyEntity>)
+    suspend fun insertVacancy(vacancy: VacancyEntity)
     @Query("SELECT * FROM vacancy_table")
     suspend fun getVacancy(): List<VacancyEntity>
     @Query("SELECT * FROM vacancy_table WHERE id LIKE :vacancyId")
