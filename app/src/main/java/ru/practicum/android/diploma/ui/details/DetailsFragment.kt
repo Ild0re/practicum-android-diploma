@@ -2,8 +2,6 @@ package ru.practicum.android.diploma.ui.details
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
