@@ -94,7 +94,8 @@ class VacancyDetailViewModel(
 
     fun onFavouriteClicked() {
         viewModelScope.launch {
-            if (!vacancy.inFavorite) {
+            getFavouritesIds()
+            if (id !in vacanciesIdsListFromDb) {
                 favouritesInteractor.insertVacancy(vacancy.copy(inFavorite = true))
                 favouriteState.postValue(true)
             } else {
