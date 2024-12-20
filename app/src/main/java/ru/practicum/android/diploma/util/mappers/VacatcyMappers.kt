@@ -23,6 +23,8 @@ fun VacancyDetailDto.toVacancy(): Vacancy {
         snippetResponsibility = "",
         experienceName = this.experience.name ?: "",
         employmentForm = this.employment.name ?: "",
+        contacts = this.contacts.email,
+        phones = this.phones.country+this.phones.city+this.phones.number,
         inFavorite = false,
         description = this.description,
         keySkill = this.keySkills.filter { !it.name.isNullOrBlank()  }.joinToString(";") { it.name ?: "" }
@@ -45,6 +47,8 @@ fun VacancyEntity.toVacancy(): Vacancy {
         snippetResponsibility = this.snippetResponsibility,
         experienceName = this.experienceName,
         employmentForm = this.employmentForm,
+        contacts = this.contacts,
+        phones = this.phones,
         inFavorite = this.inFavorite,
         description = this.description,
         keySkill = this.keySkill
@@ -67,6 +71,8 @@ fun Vacancy.toVacancyEntity(): VacancyEntity {
         snippetResponsibility = this.snippetResponsibility,
         experienceName = this.experienceName,
         employmentForm = this.employmentForm,
+        contacts = this.contacts,
+        phones = this.phones,
         inFavorite = this.inFavorite,
         description = this.description,
         keySkill = this.keySkill
@@ -89,6 +95,8 @@ fun VacancyDto.toVacancy(): Vacancy {
         snippetResponsibility = this.snippet.responsibility ?: "",
         experienceName = this.experience?.name ?: "",
         employmentForm = this.employmentForm?.name ?: "",
+        contacts = this.contactsDto?.email ?: "",
+        phones = this.phonesDto?.country+this.phonesDto?.city+this.phonesDto?.number,
         inFavorite = false,
         description = "",
         keySkill = ""

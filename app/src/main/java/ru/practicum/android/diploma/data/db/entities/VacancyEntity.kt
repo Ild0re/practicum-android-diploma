@@ -20,6 +20,8 @@ data class VacancyEntity(
     val snippetResponsibility: String,
     val experienceName: String,
     val employmentForm: String,
+    val contacts: String,
+    val phones: String,
     val inFavorite: Boolean,
     val description: String,
     val keySkill: String

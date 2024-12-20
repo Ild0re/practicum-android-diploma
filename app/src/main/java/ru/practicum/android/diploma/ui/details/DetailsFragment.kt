@@ -2,6 +2,8 @@ package ru.practicum.android.diploma.ui.details
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -41,6 +43,9 @@ class DetailsFragment : Fragment() {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         private const val INT_GROUP_SIZE = 3
     }
+    private var url: String = ""
+    private var number: String = ""
+    private var email: String = ""
 
     private var _binding: FragmentDetailedInformationBinding? = null
     val binding: FragmentDetailedInformationBinding
@@ -63,6 +68,10 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupEventHandler()
+
+        binding.shareButton.setOnClickListener{
+            shareVacancy(url, email, number)
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -82,6 +91,9 @@ class DetailsFragment : Fragment() {
                 is VacancyState.Error -> showError(state.message)
                 is VacancyState.Content -> {
                     showData(state.data)
+                    url = state.data.url
+                    email = state.data.contacts
+                    number = state.data.phones
                 }
             }
         }
@@ -188,5 +200,21 @@ class DetailsFragment : Fragment() {
         } else {
             binding.responsibilities.isVisible = false
         }
+    }
+    private fun shareVacancy(url: String, email: String,number: String){
+        Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$email")
+        }
+        Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$number.")
+        }
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            url
+        )
+        shareIntent.setType("text/plain")
+        val intentChooser = Intent.createChooser(shareIntent, "")
+        startActivity(intentChooser)
     }
 }

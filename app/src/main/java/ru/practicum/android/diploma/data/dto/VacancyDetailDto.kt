@@ -32,4 +32,6 @@ data class VacancyDetailDto(
     val salary: SalaryDto?,
     val schedule: ScheduleDto,
     @SerializedName("work_format")
-    val workFormat: List<WorkFormatDto>)
+    val workFormat: List<WorkFormatDto>,
+    val contacts:ContactsDto,
+    val phones: PhonesDto)

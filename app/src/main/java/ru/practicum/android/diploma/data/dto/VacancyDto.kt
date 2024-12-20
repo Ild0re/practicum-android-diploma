@@ -14,5 +14,7 @@ class VacancyDto(
     val experience: ExperienceDto?,
     @SerializedName("employment_form")
     val employmentForm: EmploymentFormDto?,
-    val schedule: ScheduleDto?
+    val schedule: ScheduleDto?,
+    val contactsDto: ContactsDto?,
+    val phonesDto: PhonesDto?
 )
