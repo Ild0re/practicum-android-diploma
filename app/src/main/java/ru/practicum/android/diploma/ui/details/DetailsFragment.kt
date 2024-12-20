@@ -97,6 +97,9 @@ class DetailsFragment : Fragment() {
         binding.lickedIcon.setOnClickListener {
             viewModel.onFavouriteClicked()
         }
+        binding.shareButton.setOnClickListener {
+            startActivity(viewModel.shareVacancy())
+        }
     }
 
     private fun showLoading() {

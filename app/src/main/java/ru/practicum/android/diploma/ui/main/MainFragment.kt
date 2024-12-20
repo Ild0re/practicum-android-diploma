@@ -13,9 +13,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
@@ -33,6 +36,7 @@ class MainFragment : Fragment() {
         private const val THREE = 3
         private const val FOUR = 4
         private const val TEN = 10
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -55,6 +59,7 @@ class MainFragment : Fragment() {
     }
 
     var inputText = ""
+    private var isClickAllowed = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -228,11 +233,13 @@ class MainFragment : Fragment() {
     }
 
     private fun onItemClickListener(vacancy: Vacancy) {
-        val bundle = Bundle()
-        bundle.putString("id", vacancy.id)
-        bundle.putString("requirements", vacancy.snippetRequirement)
-        bundle.putString("responsibility", vacancy.snippetResponsibility)
-        findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
+        if (clickDebounce()) {
+            val bundle = Bundle()
+            bundle.putString("id", vacancy.id)
+            bundle.putString("requirements", vacancy.snippetRequirement)
+            bundle.putString("responsibility", vacancy.snippetResponsibility)
+            findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
+        }
     }
 
     private fun checkCount(count: Int): String {
@@ -243,5 +250,14 @@ class MainFragment : Fragment() {
             else -> word = "вакансий"
         }
         return word
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(CLICK_DEBOUNCE_DELAY)
+            isClickAllowed = true
+        }
+        return current
     }
 }
