@@ -8,5 +8,5 @@ import ru.practicum.android.diploma.util.Resource
 interface VacancyRepository {
     suspend fun getAllVacancies(expression: String, page: Int): Flow<Resource<VacancyList>>
     suspend fun getVacancyById(id: String): Flow<Resource<Vacancy>>
-    suspend fun saveDbVacancy(vacancies: List<Vacancy>)
+    suspend fun getFavouritesFromIds(data: Vacancy): Vacancy
 }

@@ -132,9 +132,11 @@ class MainFragment : Fragment() {
             inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
             vacanciesList.clear()
             vacanciesAdapter.notifyDataSetChanged()
+            binding.ivMainImage.setImageResource(R.drawable.main_image)
             binding.rvVacancy.isVisible = false
             binding.ivMainImage.isVisible = true
             binding.tvCountVacancySearch.isVisible = false
+            binding.tvMainEmptyOrNoConnect.isVisible = false
         }
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {

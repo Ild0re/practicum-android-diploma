@@ -97,11 +97,17 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+        viewModel.observeFavourites().observe(viewLifecycleOwner) { boolean ->
+            renderBoolean(boolean)
+        }
     }
 
     private fun setupEventHandler() {
         binding.backArrow.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+        binding.lickedIcon.setOnClickListener {
+            viewModel.onFavouriteClicked()
         }
     }
 
@@ -201,6 +207,7 @@ class DetailsFragment : Fragment() {
             binding.responsibilities.isVisible = false
         }
     }
+
     private fun shareVacancy(url: String, email: String, number: String) {
         Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:$email")
@@ -216,5 +223,11 @@ class DetailsFragment : Fragment() {
         shareIntent.setType("text/plain")
         val intentChooser = Intent.createChooser(shareIntent, "")
         startActivity(intentChooser)
+
+    private fun renderBoolean(boolean: Boolean) {
+        when (boolean) {
+            true -> binding.lickedIcon.setImageResource(R.drawable.ic_liked)
+            else -> binding.lickedIcon.setImageResource(R.drawable.ic_unliked)
+        }
     }
 }
