@@ -47,11 +47,6 @@ class VacancyRepositoryImpl(
         emit(handleResponse(response, ::toVacancyDetail))
     }
 
-    override suspend fun saveDbVacancy(vacancies: List<Vacancy>) {
-        val vacancyEntities = vacancies.map { it.toVacancyEntity() }
-        appDataBase.vacancyDao().insertVacancy(vacancyEntities)
-    }
-
     private fun <T, K> handleResponse(response: Result<T?>, mapper: (T) -> K): Resource<K> {
         return if (response.isSuccess) {
             response.getOrNull()?.let { apiResponse ->
@@ -82,5 +77,12 @@ class VacancyRepositoryImpl(
             vacancyResponse.pages,
             VACANCIES_PER_PAGE
         )
+    }
+
+    override suspend fun getFavouritesFromIds(data: Vacancy) {
+        val idList = appDataBase.vacancyDao().getVacancyIds()
+        if (data.id in idList) {
+            data.inFavorite = true
+        }
     }
 }

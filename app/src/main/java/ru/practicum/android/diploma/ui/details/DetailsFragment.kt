@@ -85,11 +85,17 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+        viewModel.observeFavourites().observe(viewLifecycleOwner) { boolean ->
+            renderBoolean(boolean)
+        }
     }
 
     private fun setupEventHandler() {
         binding.backArrow.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+        binding.lickedIcon.setOnClickListener {
+            viewModel.onFavouriteClicked()
         }
     }
 
@@ -187,6 +193,13 @@ class DetailsFragment : Fragment() {
             binding.responsibilitiesText.text = requireArguments().getString(RESPONSIBILITY)
         } else {
             binding.responsibilities.isVisible = false
+        }
+    }
+
+    private fun renderBoolean(boolean: Boolean) {
+        when (boolean) {
+            true -> binding.lickedIcon.setImageResource(R.drawable.ic_liked)
+            else -> binding.lickedIcon.setImageResource(R.drawable.ic_unliked)
         }
     }
 }

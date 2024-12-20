@@ -55,7 +55,7 @@ class FavoriteFragment : Fragment() {
     private fun onItemClickListener(vacancy: Vacancy) {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)
-        findNavController().navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
+        findNavController().navigate(R.id.action_favoriteFragment_to_detailsFragment, bundle)
     }
 
     private fun showEmpty() {
