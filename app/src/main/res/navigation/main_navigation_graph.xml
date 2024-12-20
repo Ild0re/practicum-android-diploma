@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/favoriteFragment"
         tools:layout="@layout/fragment_favorite"
-        android:name="ru.practicum.android.diploma.ui.FavoriteFragment"
+        android:name="ru.practicum.android.diploma.ui.favorite.FavoriteFragment"
         android:label="FavoriteFragment" />
     <fragment
         android:id="@+id/teamDeveloperFragment"
