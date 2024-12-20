@@ -43,9 +43,6 @@ class DetailsFragment : Fragment() {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         private const val INT_GROUP_SIZE = 3
     }
-    private var url: String = ""
-    private var number: String = ""
-    private var email: String = ""
 
     private var _binding: FragmentDetailedInformationBinding? = null
     val binding: FragmentDetailedInformationBinding
@@ -68,10 +65,6 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupEventHandler()
-
-        binding.shareButton.setOnClickListener {
-            shareVacancy(url, email, number)
-        }
     }
 
     override fun onAttach(context: Context) {
@@ -91,9 +84,6 @@ class DetailsFragment : Fragment() {
                 is VacancyState.Error -> showError(state.message)
                 is VacancyState.Content -> {
                     showData(state.data)
-                    url = state.data.url
-                    email = state.data.contacts
-                    number = state.data.phones
                 }
             }
         }
@@ -108,6 +98,9 @@ class DetailsFragment : Fragment() {
         }
         binding.lickedIcon.setOnClickListener {
             viewModel.onFavouriteClicked()
+        }
+        binding.shareButton.setOnClickListener {
+            startActivity(viewModel.shareVacancy())
         }
     }
 
@@ -208,42 +201,10 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun shareVacancy(url: String, email: String, number: String) {
-        Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$email")
-        }
-        Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$number")
-        }
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.putExtra(
-            Intent.EXTRA_TEXT,
-            url
-        )
-        shareIntent.setType("text/plain")
-        val intentChooser = Intent.createChooser(shareIntent, "")
-        startActivity(intentChooser)
-
     private fun renderBoolean(boolean: Boolean) {
         when (boolean) {
             true -> binding.lickedIcon.setImageResource(R.drawable.ic_liked)
             else -> binding.lickedIcon.setImageResource(R.drawable.ic_unliked)
         }
-    }
-    private fun shareVacancy(url: String, email: String, number: String) {
-        Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$email")
-        }
-        Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$number")
-        }
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.putExtra(
-            Intent.EXTRA_TEXT,
-            url
-        )
-        shareIntent.setType("text/plain")
-        val intentChooser = Intent.createChooser(shareIntent, "")
-        startActivity(intentChooser)
     }
 }

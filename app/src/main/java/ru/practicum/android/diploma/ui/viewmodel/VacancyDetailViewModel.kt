@@ -2,6 +2,8 @@
 
 package ru.practicum.android.diploma.ui.viewmodel
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -143,5 +145,22 @@ class VacancyDetailViewModel(
 
     private fun getIdsFromDb(data: List<String>) {
         vacanciesIdsListFromDb = data
+    }
+
+    fun shareVacancy(): Intent {
+        Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:${vacancy.contacts}")
+        }
+        Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:${vacancy.phones}")
+        }
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            vacancy.url
+        )
+        shareIntent.setType("text/plain")
+        val intentChooser = Intent.createChooser(shareIntent, "")
+        return intentChooser
     }
 }
