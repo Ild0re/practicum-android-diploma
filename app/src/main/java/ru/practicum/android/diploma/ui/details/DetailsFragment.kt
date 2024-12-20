@@ -69,7 +69,7 @@ class DetailsFragment : Fragment() {
         setupObservers()
         setupEventHandler()
 
-        binding.shareButton.setOnClickListener{
+        binding.shareButton.setOnClickListener {
             shareVacancy(url, email, number)
         }
     }
@@ -201,7 +201,7 @@ class DetailsFragment : Fragment() {
             binding.responsibilities.isVisible = false
         }
     }
-    private fun shareVacancy(url: String, email: String,number: String){
+    private fun shareVacancy(url: String, email: String, number: String) {
         Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:$email")
         }
