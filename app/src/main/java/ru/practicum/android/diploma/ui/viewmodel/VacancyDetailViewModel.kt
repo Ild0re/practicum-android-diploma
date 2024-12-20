@@ -92,13 +92,11 @@ class VacancyDetailViewModel(
 
     fun onFavouriteClicked() {
         viewModelScope.launch {
-            if (vacancy.inFavorite == false) {
-                vacancy.inFavorite = true
-                favouritesInteractor.insertVacancy(vacancy)
+            if (!vacancy.inFavorite) {
+                favouritesInteractor.insertVacancy(vacancy.copy(inFavorite = true))
                 favouriteState.postValue(true)
             } else {
-                vacancy.inFavorite = false
-                favouritesInteractor.deleteVacancy(vacancy)
+                favouritesInteractor.deleteVacancy(vacancy.copy(inFavorite = false))
                 favouriteState.postValue(false)
             }
         }
@@ -114,8 +112,7 @@ class VacancyDetailViewModel(
 
     private fun deleteVacancy() {
         viewModelScope.launch {
-            vacancy.inFavorite = false
-            favouritesInteractor.deleteVacancy(vacancy)
+            favouritesInteractor.deleteVacancy(vacancy.copy(inFavorite = false))
             favouriteState.postValue(false)
         }
     }

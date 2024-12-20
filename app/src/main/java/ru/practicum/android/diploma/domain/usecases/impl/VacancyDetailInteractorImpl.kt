@@ -13,9 +13,10 @@ class VacancyDetailInteractorImpl(private val repository: VacancyRepository) : V
             when (result) {
                 is Resource.Success -> {
                     if (result.data != null) {
-                        repository.getFavouritesFromIds(result.data)
+                        Pair(repository.getFavouritesFromIds(result.data), null)
+                    } else {
+                        Pair(result.data, null)
                     }
-                    Pair(result.data, null)
                 }
                 is Resource.Error -> {
                     Pair(null, result.message)

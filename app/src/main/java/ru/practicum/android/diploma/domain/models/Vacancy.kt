@@ -15,7 +15,7 @@ data class Vacancy(
     val snippetResponsibility: String,
     val experienceName: String,
     val employmentForm: String,
-    var inFavorite: Boolean,
+    val inFavorite: Boolean,
     val description: String,
     val keySkill: String
 )

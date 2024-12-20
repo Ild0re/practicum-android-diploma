@@ -79,10 +79,12 @@ class VacancyRepositoryImpl(
         )
     }
 
-    override suspend fun getFavouritesFromIds(data: Vacancy) {
+    override suspend fun getFavouritesFromIds(data: Vacancy): Vacancy {
         val idList = appDataBase.vacancyDao().getVacancyIds()
-        if (data.id in idList) {
-            data.inFavorite = true
+        return if (data.id in idList) {
+            data.copy(inFavorite = true)
+        } else {
+            data
         }
     }
 }
