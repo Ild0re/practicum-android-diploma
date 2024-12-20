@@ -12,7 +12,6 @@ import ru.practicum.android.diploma.domain.models.VacancyList
 import ru.practicum.android.diploma.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.mappers.toVacancy
-import ru.practicum.android.diploma.util.mappers.toVacancyEntity
 
 class VacancyRepositoryImpl(
     private val networkClient: NetworkClient,
