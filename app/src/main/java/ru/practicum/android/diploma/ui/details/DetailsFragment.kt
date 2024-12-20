@@ -208,6 +208,22 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    private fun shareVacancy(url: String, email: String, number: String) {
+        Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:$email")
+        }
+        Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$number")
+        }
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            url
+        )
+        shareIntent.setType("text/plain")
+        val intentChooser = Intent.createChooser(shareIntent, "")
+        startActivity(intentChooser)
+
     private fun renderBoolean(boolean: Boolean) {
         when (boolean) {
             true -> binding.lickedIcon.setImageResource(R.drawable.ic_liked)
