@@ -28,6 +28,8 @@ val dataModule = module {
             androidContext(),
             AppDataBase::class.java,
             "database.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
