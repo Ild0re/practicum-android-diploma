@@ -33,5 +33,6 @@ data class VacancyDetailDto(
     val schedule: ScheduleDto,
     @SerializedName("work_format")
     val workFormat: List<WorkFormatDto>,
-    val contacts:ContactsDto,
-    val phones: PhonesDto)
+    val contacts:ContactsDto?,
+    val phones: List<PhonesDto>?
+)

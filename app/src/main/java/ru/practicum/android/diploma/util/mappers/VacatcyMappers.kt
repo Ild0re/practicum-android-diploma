@@ -3,6 +3,7 @@
 package ru.practicum.android.diploma.util.mappers
 
 import ru.practicum.android.diploma.data.db.entities.VacancyEntity
+import ru.practicum.android.diploma.data.dto.PhonesDto
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
 import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.domain.models.Vacancy
@@ -23,11 +24,11 @@ fun VacancyDetailDto.toVacancy(): Vacancy {
         snippetResponsibility = "",
         experienceName = this.experience.name ?: "",
         employmentForm = this.employment.name ?: "",
-        contacts = this.contacts.email,
-        phones = this.phones.country+this.phones.city+this.phones.number,
+        contacts = this.contacts?.email ?: "",
+        phones = getPhones(this.phones),
         inFavorite = false,
         description = this.description,
-        keySkill = this.keySkills.filter { !it.name.isNullOrBlank()  }.joinToString(";") { it.name ?: "" }
+        keySkill = this.keySkills.filter { !it.name.isNullOrBlank() }.joinToString(";") { it.name ?: "" }
     )
 }
 
@@ -96,11 +97,23 @@ fun VacancyDto.toVacancy(): Vacancy {
         experienceName = this.experience?.name ?: "",
         employmentForm = this.employmentForm?.name ?: "",
         contacts = this.contactsDto?.email ?: "",
-        phones = this.phonesDto?.country+this.phonesDto?.city+this.phonesDto?.number,
+        phones = getPhones(this.phonesDto),
         inFavorite = false,
         description = "",
         keySkill = ""
     )
+}
+
+private fun getPhones(phones: List<PhonesDto>?): String {
+    return if (phones != null) {
+        if (phones[0].country != null && phones[0].city != null && phones[0].number != null) {
+            phones[0].country + phones[0].city + phones[0].number
+        } else {
+            ""
+        }
+    } else {
+        ""
+    }
 }
 
 

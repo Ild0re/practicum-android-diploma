@@ -206,7 +206,7 @@ class DetailsFragment : Fragment() {
             data = Uri.parse("mailto:$email")
         }
         Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$number.")
+            data = Uri.parse("tel:$number")
         }
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.putExtra(

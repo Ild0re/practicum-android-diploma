@@ -16,5 +16,5 @@ class VacancyDto(
     val employmentForm: EmploymentFormDto?,
     val schedule: ScheduleDto?,
     val contactsDto: ContactsDto?,
-    val phonesDto: PhonesDto?
+    val phonesDto: List<PhonesDto>?
 )
