@@ -157,18 +157,20 @@ class DetailsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun getPrice(item: Vacancy) {
         if (item.salaryFrom == "null" && item.salaryTo == "null") {
-            binding.salaryInformation.text = getString(R.string.no_salary)
+            binding.salaryInformation.text = getString(R.string.no_salary).replaceFirstChar { it.lowercase() }
         } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
             binding.salaryInformation.text =
                 "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
+                    .replaceFirstChar { it.lowercase() }
         } else if (item.salaryFrom == "null" && item.salaryTo != "null") {
             binding.salaryInformation.text =
                 "До ${formatNumberWithSpaces(item.salaryTo)} ${getCurrencySymbol(item.salaryCurrency)}"
+                    .replaceFirstChar { it.lowercase() }
         } else {
             binding.salaryInformation.text =
                 "От ${formatNumberWithSpaces(item.salaryFrom)} до ${formatNumberWithSpaces(item.salaryTo)} ${
                     getCurrencySymbol(item.salaryCurrency)
-                }"
+                }".replaceFirstChar { it.lowercase() }
         }
     }
 
