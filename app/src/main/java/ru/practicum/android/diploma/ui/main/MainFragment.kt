@@ -109,6 +109,9 @@ class MainFragment : Fragment() {
             }
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
+        binding.ivFilter.setOnClickListener{
+            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment)
+        }
     }
 
     private fun setupObservers() {
