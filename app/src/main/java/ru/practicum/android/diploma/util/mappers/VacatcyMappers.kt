@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.data.dto.PhonesDto
 import ru.practicum.android.diploma.data.dto.VacancyDetailDto
 import ru.practicum.android.diploma.data.dto.VacancyDto
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.util.stripHtml
 
 fun VacancyDetailDto.toVacancy(): Vacancy {
     return Vacancy(
@@ -51,7 +52,7 @@ fun VacancyEntity.toVacancy(): Vacancy {
         contacts = this.contacts,
         phones = this.phones,
         inFavorite = this.inFavorite,
-        description = this.description,
+        description = this.description.stripHtml(),
         keySkill = this.keySkill
     )
 }
@@ -106,7 +107,7 @@ fun VacancyDto.toVacancy(): Vacancy {
 
 private fun getPhones(phones: List<PhonesDto>?): String {
     return if (phones != null) {
-        if (phones[0].country != null && phones[0].city != null && phones[0].number != null) {
+        if (phones[0]?.country != null && phones[0]?.city != null && phones[0]?.number != null) {
             phones[0].country + phones[0].city + phones[0].number
         } else {
             ""
