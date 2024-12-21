@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.FragmentSettingFilterBinding
+import ru.practicum.android.diploma.databinding.FragmentChoosingIndustryBinding
 
-class FilterSettingFragment : Fragment() {
-    private var _binding: FragmentSettingFilterBinding? = null
-    val binding: FragmentSettingFilterBinding
+class ChoosingIndustryFragment : Fragment() {
+    private var _binding: FragmentChoosingIndustryBinding? = null
+    val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class FilterSettingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSettingFilterBinding.inflate(inflater, container, false)
+        _binding = FragmentChoosingIndustryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,18 +32,10 @@ class FilterSettingFragment : Fragment() {
         binding.backArrow.setOnClickListener{
             findNavController().popBackStack()
         }
-        binding.industry.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
-        }
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
     }
 }
 

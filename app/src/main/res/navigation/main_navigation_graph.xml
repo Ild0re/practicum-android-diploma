@@ -40,5 +40,14 @@
         android:id="@+id/filterSettingFragment"
         tools:layout="@layout/fragment_setting_filter"
         android:name="ru.practicum.android.diploma.ui.FilterSettingFragment"
-        android:label="FilterSettingFragment" />
+        android:label="FilterSettingFragment" >
+        <action
+            android:id="@+id/action_filterSettingFragment_to_choosingIndustryFragment"
+            app:destination="@id/choosingIndustryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choosingIndustryFragment"
+        tools:layout="@layout/fragment_choosing_industry"
+        android:name="ru.practicum.android.diploma.ui.ChoosingIndustryFragment"
+        android:label="ChoosingIndustryFragment" />
 </navigation>

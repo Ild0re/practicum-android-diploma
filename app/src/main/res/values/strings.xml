@@ -43,4 +43,6 @@
     <string name="tv_industry">Отрасль</string>
     <string name="et_expected_salary">Ожидаемая зарплата\nВведите сумму</string>
     <string name="tv_salary_close">Не показывать без зарплаты</string>
+    <string name="tv_choosing_industry">Выбор отрасли</string>
+    <string name="et_choosing_industry">Введите отрасль</string>
 </resources>
