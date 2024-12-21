@@ -8,17 +8,29 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="ru.practicum.android.diploma.ui.MainFragment"
+        android:name="ru.practicum.android.diploma.ui.main.MainFragment"
         tools:layout="@layout/fragment_main"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         tools:layout="@layout/fragment_favorite"
-        android:name="ru.practicum.android.diploma.ui.FavoriteFragment"
-        android:label="FavoriteFragment" />
+        android:name="ru.practicum.android.diploma.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/teamDeveloperFragment"
         android:name="ru.practicum.android.diploma.ui.TeamDeveloperFragment"
         android:label="TeamDeveloperFragment"
         />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="ru.practicum.android.diploma.ui.details.DetailsFragment"
+        android:label="DetailsFragment" />
 </navigation>

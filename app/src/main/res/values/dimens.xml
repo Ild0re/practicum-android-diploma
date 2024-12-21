@@ -7,9 +7,17 @@
     <dimen name="text22">22sp</dimen>
     <dimen name="text32">32sp</dimen>
     <dimen name="dim12">12dp</dimen>
+    <dimen name="dim48">48dp</dimen>
     <dimen name="dim4">4dp</dimen>
     <dimen name="dim156">156dp</dimen>
     <dimen name="dim174">174dp</dimen>
     <dimen name="dim24">24dp</dimen>
     <dimen name="dim1">1dp</dimen>
+    <dimen name="dim20">20dp</dimen>
+    <dimen name="dim244">244dp</dimen>
+    <dimen name="dim11">11dp</dimen>
+    <dimen name="dim22">22dp</dimen>
+    <dimen name="dim2">2dp</dimen>
+    <dimen name="dim46">46dp</dimen>
+    <dimen name="dim9">9dp</dimen>
 </resources>
