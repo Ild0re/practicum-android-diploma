@@ -45,7 +45,8 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
     @SuppressLint("SetTextI18n")
     private fun getPrice(item: Vacancy) {
         if (item.salaryFrom == "null" && item.salaryTo == "null") {
-            binding.tvItemPrice.text = context.resources.getString(R.string.no_salary).replaceFirstChar { it.lowercase() }
+            binding.tvItemPrice.text = context.resources.getString(R.string.no_salary)
+                .replaceFirstChar { it.lowercase() }
         } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
             binding.tvItemPrice.text =
                 "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
