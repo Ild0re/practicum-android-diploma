@@ -96,27 +96,10 @@ class FilterSettingFragment : Fragment() {
     }
 
     private fun setupEventHandlers() {
-        binding.imageClear.setOnClickListener {
-            binding.etSalaryHint.setText("")
-            if (binding.etSalaryHint.text.isNullOrEmpty()) {
-                binding.imageClear.isVisible = false
-                binding.etSalaryHint.isFocusable = false
-            }
-        }
-        binding.etWorkingPlace.setEndIconOnClickListener {
-            binding.etWorkingPlaceHint.setText("")
-            if (binding.etWorkingPlaceHint.text.isNullOrEmpty()) {
-                binding.etWorkingPlace.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
-                binding.etWorkingPlaceHint.isFocusable = false
-            }
-        }
-        binding.etIndustry.setEndIconOnClickListener {
-            binding.etIndustryHint.setText("")
-            if (binding.etIndustryHint.text.isNullOrEmpty()) {
-                binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
-                binding.etIndustryHint.isFocusable = false
-            }
-        }
+        clearSalary()
+        clearWorkingPlace()
+        clearIndustry()
+
         binding.salaryClose.setOnClickListener {
             binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
                 0,
@@ -159,6 +142,33 @@ class FilterSettingFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
+    }
+
+    private fun clearSalary() {
+        binding.imageClear.setOnClickListener {
+            binding.etSalaryHint.setText("")
+            if (binding.etSalaryHint.text.isNullOrEmpty()) {
+                binding.imageClear.isVisible = false
+            }
+        }
+    }
+
+    private fun clearWorkingPlace() {
+        binding.etWorkingPlace.setEndIconOnClickListener {
+            binding.etWorkingPlaceHint.setText("")
+            if (binding.etWorkingPlaceHint.text.isNullOrEmpty()) {
+                binding.etWorkingPlace.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
+            }
+        }
+    }
+
+    private fun clearIndustry() {
+        binding.etIndustry.setEndIconOnClickListener {
+            binding.etIndustryHint.setText("")
+            if (binding.etIndustryHint.text.isNullOrEmpty()) {
+                binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
+            }
+        }
     }
 }
 
