@@ -70,7 +70,7 @@
         android:gravity="center_vertical"
         android:layout_marginEnd="@dimen/dim4"
         android:fontFamily="@font/ys_display_regular"/>
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_Salary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,13 +82,20 @@
         app:layout_constraintTop_toBottomOf="@id/industry"
         app:layout_constraintBottom_toTopOf="@id/salary_close"
         android:inputType="number"
-        android:hint="@string/et_expected_salary"
+        android:hint="@string/et_expected_salary_hint"
         android:paddingVertical="@dimen/dim8"
         android:paddingHorizontal="@dimen/dim16"
-        android:textSize="@dimen/text16"
+        android:textSize="@dimen/text12"
         android:background="@drawable/et_search_shape"
         android:fontFamily="@font/ys_display_regular"
-        />
+            style="@style/CustomOutlineBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/et_expected_salary"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
     <TextView
         android:id="@+id/salary_close"
         android:layout_width="0dp"
@@ -107,4 +114,33 @@
         android:layout_marginEnd="@dimen/dim4"
         android:layout_marginTop="@dimen/dim24"
         android:fontFamily="@font/ys_display_regular"/>
+
+    <android.widget.Button
+        android:id="@+id/bt_apply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/reset"
+        android:layout_marginBottom="@dimen/dim28"
+        android:layout_marginHorizontal="@dimen/dim16"
+        android:background="@drawable/main_tv_shape"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:text="@string/tv_apply"
+        android:textSize="@dimen/text16"
+        android:fontFamily="@font/ys_display_medium"
+        />
+    <TextView
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/tv_reset"
+        android:textColor="@color/red"
+        android:layout_marginBottom="@dimen/dim72"
+        android:fontFamily="@font/ys_display_medium"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
