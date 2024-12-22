@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -32,8 +33,10 @@ class FilterSettingFragment : Fragment() {
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.industry.setOnClickListener {
-            findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
+        binding.etIndustryHint.setOnFocusChangeListener{ _, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
+            }
         }
     }
     override fun onAttach(context: Context) {

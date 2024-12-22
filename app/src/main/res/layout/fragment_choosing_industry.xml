@@ -91,5 +91,6 @@
         android:text="@string/tv_choose"
         android:textSize="@dimen/text16"
         android:fontFamily="@font/ys_display_medium"
+        android:visibility="gone"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
