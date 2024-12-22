@@ -26,4 +26,5 @@
     <dimen name="dim72">72dp</dimen>
     <dimen name="dim28">28dp</dimen>
     <dimen name="text12">12sp</dimen>
+    <dimen name="dim0">0dp</dimen>
 </resources>

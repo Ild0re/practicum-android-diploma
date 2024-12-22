@@ -12,6 +12,24 @@
         <item name="android:textColorHint">@color/gray</item>
         <item name="hintTextColor">@color/blue</item>
         <item name="cursorColor">@color/blue</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="boxCornerRadiusTopStart">@dimen/dim12</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/dim12</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/dim12</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/dim12</item>
+        <item name="boxStrokeWidth">@dimen/dim0</item>
+        <item name="boxStrokeWidthFocused">@dimen/dim0</item>
+        <item name="android:inputType">number</item>
+        <item name="expandedHintEnabled">false</item>
+    </style>
+    <style name="input_text">
+        <item name="android:textSize">@dimen/text16</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+    </style>
+    <style name="input_text_hint">
+        <item name="android:textSize">@dimen/text12</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
     </style>
 
 </resources>
