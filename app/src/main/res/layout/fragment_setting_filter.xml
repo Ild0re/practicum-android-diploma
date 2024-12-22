@@ -40,7 +40,7 @@
         android:layout_marginTop="@dimen/dim16"
         android:layout_marginStart="@dimen/dim16"
         android:layout_marginEnd="@dimen/dim4"
-        app:layout_constraintBottom_toTopOf="@id/industry"
+        app:layout_constraintBottom_toTopOf="@id/et_industry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_setting_filter"
@@ -60,7 +60,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/industry"
+        android:id="@+id/et_industry"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dim16"
@@ -76,7 +76,6 @@
             android:id="@+id/et_industry_hint"
             android:clickable="true"
             android:textAppearance="@style/input_text"
-            app:endIconDrawable="@drawable/filter_arrow_right_icon"
             android:paddingTop="@dimen/dim8"
             android:paddingBottom="@dimen/dim8"
             android:layout_width="match_parent"
@@ -93,7 +92,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/industry"
+        app:layout_constraintTop_toBottomOf="@id/et_industry"
         app:layout_constraintBottom_toTopOf="@id/salary_close"
         android:hint="@string/et_expected_salary_hint"
         android:background="@drawable/et_search_shape"
@@ -101,7 +100,7 @@
         android:paddingTop="@dimen/dim8"
         style="@style/CustomOutlineBox">
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/userName"
+        android:id="@+id/et_salary_hint"
         android:textAppearance="@style/input_text"
         android:paddingTop="@dimen/dim8"
         android:paddingBottom="@dimen/dim8"
@@ -109,6 +108,19 @@
         android:layout_height="wrap_content"
         android:hint="@string/et_expected_salary"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <ImageView
+        android:id="@+id/image_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/et_Salary"
+        app:layout_constraintBottom_toBottomOf="@id/et_Salary"
+        android:layout_marginEnd="@dimen/dim16"
+        android:layout_marginTop="@dimen/dim14"
+        android:layout_marginBottom="@dimen/dim14"
+        android:src="@drawable/main_clear_icon"
+        android:visibility="gone"
+        />
     <TextView
         android:id="@+id/salary_close"
         android:layout_width="0dp"
