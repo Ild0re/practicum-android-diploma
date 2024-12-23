@@ -49,4 +49,12 @@
     <string name="tv_reset">Сбросить</string>
     <string name="tv_apply">Применить</string>
     <string name="tv_choose">Выбрать</string>
+    <string name="tv_choosing_working_place">Выбор места работы</string>
+    <string name="et_country">Страна</string>
+    <string name="et_region">Регион</string>
+    <string name="tv_choosing_country">Выбор страный</string>
+    <string name="tv_choosing_region">Выбор региона</string>
+    <string name="et_choosing_region">Введите регион</string>
+    <string name="tv_region_no_found">Такого региона нет</string>
+    <string name="tv_region_empty">Не удалось получить\nсписок</string>
 </resources>
