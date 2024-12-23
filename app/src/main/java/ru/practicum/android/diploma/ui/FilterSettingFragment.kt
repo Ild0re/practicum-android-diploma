@@ -99,20 +99,7 @@ class FilterSettingFragment : Fragment() {
         clearSalary()
         clearWorkingPlace()
         clearIndustry()
-
-        binding.salaryClose.setOnClickListener {
-            binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.filter_square_activated_icon,
-                0
-            )
-        }
-        binding.reset.setOnClickListener {
-            binding.etWorkingPlaceHint.setText("")
-            binding.etIndustryHint.setText("")
-            binding.etIndustryHint.setText("")
-        }
+        clickSalaryClose()
 
         binding.etSalaryHint.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -168,6 +155,28 @@ class FilterSettingFragment : Fragment() {
             if (binding.etIndustryHint.text.isNullOrEmpty()) {
                 binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
             }
+        }
+    }
+
+    private fun clickSalaryClose() {
+        var isDrawableChanged = false
+        binding.salaryClose.setOnClickListener {
+            if (isDrawableChanged) {
+                binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.filter_square_activated_icon,
+                    0
+                )
+            } else {
+                binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.filter_square_disable_icon,
+                    0
+                )
+            }
+            isDrawableChanged = !isDrawableChanged
         }
     }
 }

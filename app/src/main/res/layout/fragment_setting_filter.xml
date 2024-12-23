@@ -138,6 +138,7 @@
         android:gravity="center_vertical"
         android:layout_marginEnd="@dimen/dim4"
         android:layout_marginTop="@dimen/dim24"
+        android:clickable="true"
         android:fontFamily="@font/ys_display_regular"/>
 
     <android.widget.Button
