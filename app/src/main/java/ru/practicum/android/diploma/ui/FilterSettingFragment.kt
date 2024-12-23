@@ -58,12 +58,12 @@ class FilterSettingFragment : Fragment() {
                 } else {
                     binding.imageClear.isVisible = false
                 }
-                    visibleBottom(
-                        binding.etWorkingPlaceHint.text.toString(),
-                        binding.etIndustryHint.text.toString(),
-                        binding.etSalaryHint.text.toString(),
-                        isDrawableChanged
-                    )
+                visibleBottom(
+                    binding.etWorkingPlaceHint.text.toString(),
+                    binding.etIndustryHint.text.toString(),
+                    binding.etSalaryHint.text.toString(),
+                    isDrawableChanged
+                )
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -82,12 +82,12 @@ class FilterSettingFragment : Fragment() {
                 } else {
                     binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
                 }
-                    visibleBottom(
-                        binding.etWorkingPlaceHint.text.toString(),
-                        binding.etIndustryHint.text.toString(),
-                        binding.etSalaryHint.text.toString(),
-                        isDrawableChanged
-                    )
+                visibleBottom(
+                    binding.etWorkingPlaceHint.text.toString(),
+                    binding.etIndustryHint.text.toString(),
+                    binding.etSalaryHint.text.toString(),
+                    isDrawableChanged
+                )
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -106,12 +106,12 @@ class FilterSettingFragment : Fragment() {
                 } else {
                     binding.etWorkingPlace.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
                 }
-                    visibleBottom(
-                        binding.etWorkingPlaceHint.text.toString(),
-                        binding.etIndustryHint.text.toString(),
-                        binding.etSalaryHint.text.toString(),
-                        isDrawableChanged
-                    )
+                visibleBottom(
+                    binding.etWorkingPlaceHint.text.toString(),
+                    binding.etIndustryHint.text.toString(),
+                    binding.etSalaryHint.text.toString(),
+                    isDrawableChanged
+                )
             }
 
             override fun afterTextChanged(p0: Editable?) {
