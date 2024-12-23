@@ -156,22 +156,26 @@ class DetailsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun getPrice(item: Vacancy) {
-        if (item.salaryFrom == "null" && item.salaryTo == "null") {
-            binding.salaryInformation.text = getString(R.string.no_salary).replaceFirstChar { it.lowercase() }
-        } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
-            binding.salaryInformation.text =
+        val salaryText = when {
+            item.salaryFrom == "null" && item.salaryTo == "null" -> {
+                getString(R.string.no_salary)
+            }
+
+            item.salaryFrom != "null" && item.salaryTo == "null" -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
-                    .replaceFirstChar { it.lowercase() }
-        } else if (item.salaryFrom == "null" && item.salaryTo != "null") {
-            binding.salaryInformation.text =
+            }
+
+            item.salaryFrom == "null" && item.salaryTo != "null" -> {
                 "До ${formatNumberWithSpaces(item.salaryTo)} ${getCurrencySymbol(item.salaryCurrency)}"
-                    .replaceFirstChar { it.lowercase() }
-        } else {
-            binding.salaryInformation.text =
+            }
+
+            else -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} до ${formatNumberWithSpaces(item.salaryTo)} ${
                     getCurrencySymbol(item.salaryCurrency)
-                }".replaceFirstChar { it.lowercase() }
+                }"
+            }
         }
+        binding.salaryInformation.text = salaryText.replace("От ", "от ").replace("До ", "до ")
     }
 
     private fun formatNumberWithSpaces(number: String): String {
