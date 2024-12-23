@@ -10,12 +10,20 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSettingFilterBinding
 
 class FilterSettingFragment : Fragment() {
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
+    private var isClickAllowed = true
     private var _binding: FragmentSettingFilterBinding? = null
     val binding: FragmentSettingFilterBinding
         get() = _binding!!
@@ -145,6 +153,9 @@ class FilterSettingFragment : Fragment() {
             }
             false
         }
+        binding.btApply.setOnClickListener {
+            clickApply()
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -214,8 +225,10 @@ class FilterSettingFragment : Fragment() {
     private fun visibleBottom(workplace: String, industry: String, salary: String, click: Boolean) {
         if (listOf(workplace, industry, salary).any { it.isNotBlank() } || click) {
             binding.reset.isVisible = true
+            binding.btApply.isVisible = true
         } else {
             binding.reset.isVisible = false
+            binding.btApply.isVisible = false
         }
     }
 
@@ -232,7 +245,28 @@ class FilterSettingFragment : Fragment() {
             )
             isDrawableChanged = !isDrawableChanged
             binding.reset.isVisible = false
+            binding.btApply.isVisible = false
         }
+    }
+
+    private fun clickApply() {
+        if (clickDebounce()) {
+            val bundle = Bundle()
+            bundle.putString("working", binding.etWorkingPlaceHint.text.toString())
+            bundle.putString("industry", binding.etIndustryHint.text.toString())
+            bundle.putString("salary", binding.etSalaryHint.text.toString())
+            bundle.putString("salaryClose", isDrawableChanged.toString())
+            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment, bundle)
+        }
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(CLICK_DEBOUNCE_DELAY)
+            isClickAllowed = true
+        }
+        return current
     }
 }
 

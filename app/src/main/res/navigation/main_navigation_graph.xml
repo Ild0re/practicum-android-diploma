@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_filterSettingFragment_to_choosingIndustryFragment"
             app:destination="@id/choosingIndustryFragment" />
+        <action
+            android:id="@+id/action_filterSettingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/choosingIndustryFragment"
