@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.FragmentChoosingCountryBinding
 import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
 
 class ChoosingRegionFragment : Fragment() {
