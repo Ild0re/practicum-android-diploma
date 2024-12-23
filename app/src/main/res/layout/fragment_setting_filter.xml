@@ -104,6 +104,7 @@
         android:textAppearance="@style/input_text"
         android:paddingTop="@dimen/dim8"
         android:paddingBottom="@dimen/dim8"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/et_expected_salary"/>
