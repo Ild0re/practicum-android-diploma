@@ -44,20 +44,26 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
 
     @SuppressLint("SetTextI18n")
     private fun getPrice(item: Vacancy) {
-        if (item.salaryFrom == "null" && item.salaryTo == "null") {
-            binding.tvItemPrice.text = context.resources.getString(R.string.no_salary)
-        } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
-            binding.tvItemPrice.text =
+        val salaryText = when {
+            item.salaryFrom == "null" && item.salaryTo == "null" -> {
+                context.getString(R.string.no_salary)
+            }
+
+            item.salaryFrom != "null" && item.salaryTo == "null" -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
-        } else if (item.salaryFrom == "null" && item.salaryTo != "null") {
-            binding.tvItemPrice.text =
+            }
+
+            item.salaryFrom == "null" && item.salaryTo != "null" -> {
                 "До ${formatNumberWithSpaces(item.salaryTo)} ${getCurrencySymbol(item.salaryCurrency)}"
-        } else {
-            binding.tvItemPrice.text =
+            }
+
+            else -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} до ${formatNumberWithSpaces(item.salaryTo)} ${
                     getCurrencySymbol(item.salaryCurrency)
                 }"
+            }
         }
+        binding.tvItemPrice.text = salaryText.replace("От ", "от ").replace("До ", "до ")
     }
 
     private fun formatNumberWithSpaces(number: String): String {
