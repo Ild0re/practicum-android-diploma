@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.ui.FilterSettingFragment
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -37,6 +39,20 @@ class MainFragment : Fragment() {
         private const val FOUR = 4
         private const val TEN = 10
         private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val WORKING = "working"
+        private const val INDUSTRY = "industry"
+        private const val SALARY = "salary"
+        private const val SALARY_CLOSE = "salaryClose"
+        fun newInstance(working: String, industry: String, salary: String, salaryClose: String) =
+            FilterSettingFragment().apply {
+                arguments =
+                    bundleOf(
+                        WORKING to working,
+                        INDUSTRY to industry,
+                        SALARY to salary,
+                        SALARY_CLOSE to salaryClose
+                    )
+            }
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -109,6 +125,9 @@ class MainFragment : Fragment() {
             }
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
+        binding.ivFilter.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment)
+        }
     }
 
     private fun setupObservers() {

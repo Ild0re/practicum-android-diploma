@@ -20,4 +20,11 @@
     <dimen name="dim2">2dp</dimen>
     <dimen name="dim46">46dp</dimen>
     <dimen name="dim9">9dp</dimen>
+    <dimen name="dim6">6dp</dimen>
+    <dimen name="dim14">14dp</dimen>
+    <dimen name="dim32">32dp</dimen>
+    <dimen name="dim72">72dp</dimen>
+    <dimen name="dim28">28dp</dimen>
+    <dimen name="text12">12sp</dimen>
+    <dimen name="dim0">0dp</dimen>
 </resources>

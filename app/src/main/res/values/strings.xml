@@ -38,4 +38,15 @@
     <string name="no_salary">Зарплата не указана</string>
     <string name="check_internet">Проверьте подключение к интернету</string>
     <string name="error_happened">Произошла ошибка</string>
+    <string name="tv_setting_filter">Настройки фильтрации</string>
+    <string name="tv_working_place">Место работы</string>
+    <string name="tv_industry">Отрасль</string>
+    <string name="et_expected_salary_hint">Ожидаемая зарплата</string>
+    <string name="et_expected_salary">Введите сумму</string>
+    <string name="tv_salary_close">Не показывать без зарплаты</string>
+    <string name="tv_choosing_industry">Выбор отрасли</string>
+    <string name="et_choosing_industry">Введите отрасль</string>
+    <string name="tv_reset">Сбросить</string>
+    <string name="tv_apply">Применить</string>
+    <string name="tv_choose">Выбрать</string>
 </resources>

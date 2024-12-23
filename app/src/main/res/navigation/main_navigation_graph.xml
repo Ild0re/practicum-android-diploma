@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_filterSettingFragment"
+            app:destination="@id/filterSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -33,4 +36,21 @@
         android:id="@+id/detailsFragment"
         android:name="ru.practicum.android.diploma.ui.details.DetailsFragment"
         android:label="DetailsFragment" />
+    <fragment
+        android:id="@+id/filterSettingFragment"
+        tools:layout="@layout/fragment_setting_filter"
+        android:name="ru.practicum.android.diploma.ui.FilterSettingFragment"
+        android:label="FilterSettingFragment" >
+        <action
+            android:id="@+id/action_filterSettingFragment_to_choosingIndustryFragment"
+            app:destination="@id/choosingIndustryFragment" />
+        <action
+            android:id="@+id/action_filterSettingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choosingIndustryFragment"
+        tools:layout="@layout/fragment_choosing_industry"
+        android:name="ru.practicum.android.diploma.ui.ChoosingIndustryFragment"
+        android:label="ChoosingIndustryFragment" />
 </navigation>
