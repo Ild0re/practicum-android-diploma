@@ -78,6 +78,7 @@
         android:layout_marginBottom="@dimen/dim32"
         />
     <android.widget.Button
+        android:id="@+id/bt_apply"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

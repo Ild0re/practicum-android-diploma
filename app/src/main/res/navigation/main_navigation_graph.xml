@@ -51,6 +51,6 @@
     <fragment
         android:id="@+id/choosingIndustryFragment"
         tools:layout="@layout/fragment_choosing_industry"
-        android:name="ru.practicum.android.diploma.ui.ChoosingIndustryFragment"
+        android:name="ru.practicum.android.diploma.ui.industry.ChoosingIndustryFragment"
         android:label="ChoosingIndustryFragment" />
 </navigation>
