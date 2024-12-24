@@ -19,6 +19,7 @@ class ChoosingIndustryFragment : Fragment() {
     private var adapter = IndustryAdapter()
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
+    var isDrawableChanged = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,19 +58,26 @@ class ChoosingIndustryFragment : Fragment() {
     }
 
     private fun updateList(item: Industry, industry: ArrayList<Industry>) {
-        for (i in industry) {
-            if (i.id.equals(item.id)) {
-                val clickFlag = !item.click
-                val itemIndustry = listOf(Industry(item.id, item.name, clickFlag))
-                if (itemIndustry.isEmpty()) {
-                    binding.btApply.isVisible = false
-                } else {
-                    binding.btApply.isVisible = true
-                    clickApply(itemIndustry)
+        if(!isDrawableChanged) {
+            for (i in industry) {
+                if (i.id.equals(item.id)) {
+                    val clickFlag = !item.click
+                    val itemIndustry = listOf(Industry(item.id, item.name, clickFlag))
+                    if (itemIndustry.isEmpty()) {
+                        binding.btApply.isVisible = false
+                    } else {
+                        binding.btApply.isVisible = true
+                        clickApply(itemIndustry)
+                    }
+                    adapter.updateItems(itemIndustry)
+                    adapter.notifyDataSetChanged()
                 }
-                adapter.updateItems(itemIndustry)
-                adapter.notifyDataSetChanged()
             }
+            isDrawableChanged = !isDrawableChanged
+        } else {
+            adapter.updateItems(industry)
+            adapter.notifyDataSetChanged()
+            isDrawableChanged = !isDrawableChanged
         }
     }
 
