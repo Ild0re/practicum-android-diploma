@@ -146,7 +146,6 @@ class DetailsFragment : Fragment() {
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
-                        CenterCrop(),
                         RoundedCorners(requireContext().resources.getDimensionPixelSize(R.dimen.dim12))
                     )
                 )
