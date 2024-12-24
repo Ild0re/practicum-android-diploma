@@ -58,27 +58,25 @@ class ChoosingIndustryFragment : Fragment() {
     }
 
     private fun updateList(item: Industry, industry: ArrayList<Industry>) {
-        if(!isDrawableChanged) {
-            for (i in industry) {
-                if (i.id.equals(item.id)) {
-                    val clickFlag = !item.click
-                    val itemIndustry = listOf(Industry(item.id, item.name, clickFlag))
-                    if (itemIndustry.isEmpty()) {
-                        binding.btApply.isVisible = false
-                    } else {
-                        binding.btApply.isVisible = true
-                        clickApply(itemIndustry)
-                    }
-                    adapter.updateItems(itemIndustry)
-                    adapter.notifyDataSetChanged()
+        if (!isDrawableChanged) {
+            val existingItem = industry.find { it.id == item.id }
+
+            if (existingItem != null) {
+                val clickFlag = !item.click
+                val itemIndustry = listOf(Industry(item.id, item.name, clickFlag))
+
+                binding.btApply.isVisible = itemIndustry.isNotEmpty()
+                if (itemIndustry.isNotEmpty()) {
+                    clickApply(itemIndustry)
                 }
+                adapter.updateItems(itemIndustry)
             }
-            isDrawableChanged = !isDrawableChanged
         } else {
             adapter.updateItems(industry)
-            adapter.notifyDataSetChanged()
-            isDrawableChanged = !isDrawableChanged
         }
+
+        adapter.notifyDataSetChanged()
+        isDrawableChanged = !isDrawableChanged
     }
 
     private fun clickApply(item: List<Industry>) {
