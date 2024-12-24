@@ -59,8 +59,8 @@ class ChoosingIndustryFragment : Fragment() {
     private fun updateList(item: Industry, industry: ArrayList<Industry>) {
         for (i in industry) {
             if (i.id.equals(item.id)) {
-                item.click = !item.click
-                val itemIndustry = listOf(Industry(item.id, item.name, item.click))
+                val clickFlag = !item.click
+                val itemIndustry = listOf(Industry(item.id, item.name, clickFlag))
                 if (itemIndustry.isEmpty()) {
                     binding.btApply.isVisible = false
                 } else {

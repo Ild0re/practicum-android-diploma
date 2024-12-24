@@ -42,9 +42,7 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
-        holder.bind(items[position],onItemClickListener = onItemClickListener)
-
-
+        holder.bind(items[position], onItemClickListener = onItemClickListener)
     }
 
     override fun getItemCount(): Int {

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.domain.models.Industry
 
-
 class IndustryViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private val tvName: TextView = itemView.findViewById(R.id.industryName)
