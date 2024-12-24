@@ -73,6 +73,7 @@ class ChoosingIndustryFragment : Fragment() {
             }
         } else {
             adapter.updateItems(industry)
+            binding.btApply.isVisible = false
         }
 
         adapter.notifyDataSetChanged()
