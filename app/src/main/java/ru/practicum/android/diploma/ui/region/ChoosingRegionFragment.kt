@@ -39,18 +39,18 @@ class ChoosingRegionFragment : Fragment() {
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
-            // временно для подключения РВ
-            val region = arrayListOf(
-                Region("1", "Москва"),
-                Region("2", "Балашиха"),
-                Region("3", "Верея")
-            )
-            showData(region)
-            adapter.updateItems(region)
-            binding.rvRegion.adapter = adapter
-            binding.rvRegion.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter.notifyDataSetChanged()
         }
+        // временно для подключения РВ
+        val region = arrayListOf(
+            Region("1", "Москва"),
+            Region("2", "Балашиха"),
+            Region("3", "Верея")
+        )
+        showData(region)
+        adapter.updateItems(region)
+        binding.rvRegion.adapter = adapter
+        binding.rvRegion.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        adapter.notifyDataSetChanged()
     }
 
     private fun setupTextWatcher() {
@@ -89,6 +89,7 @@ class ChoosingRegionFragment : Fragment() {
             binding.etSearch.setText("")
         }
     }
+
     private fun showData(region: List<Region>) {
         if (region.isNotEmpty()) {
             binding.rvRegion.isVisible = true
