@@ -52,6 +52,11 @@ class FilterSettingFragment : Fragment() {
                 findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
             }
         }
+        binding.etWorkingPlaceHint.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingWorkingPlaceFragment)
+            }
+        }
     }
 
     private fun setupTextWatcher() {
