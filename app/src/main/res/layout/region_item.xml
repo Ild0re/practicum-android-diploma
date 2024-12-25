@@ -7,29 +7,29 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/countryName"
+        android:id="@+id/regionName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/country_image_endLine"
+        app:layout_constraintEnd_toStartOf="@id/region_image_endLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/dim16"
         android:layout_marginVertical="@dimen/dim6"
         android:paddingVertical="@dimen/dim14"
         android:fontFamily="@font/ys_display_regular"
-        tool:text="Россия"
+        tool:text="Оренбург"
         android:textSize="@dimen/text16"
         />
     <ImageView
-        android:id="@+id/country_image_endLine"
+        android:id="@+id/region_image_endLine"
         android:layout_width="@dimen/dim48"
         android:layout_height="@dimen/dim48"
         android:layout_marginStart="@dimen/dim4"
         android:layout_marginEnd="@dimen/dim4"
-        app:layout_constraintTop_toTopOf="@id/countryName"
-        app:layout_constraintBottom_toBottomOf="@id/countryName"
+        app:layout_constraintTop_toTopOf="@id/regionName"
+        app:layout_constraintBottom_toBottomOf="@id/regionName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/countryName"
+        app:layout_constraintStart_toEndOf="@id/regionName"
         android:src="@drawable/filter_arrow_right_icon"
         />
 

@@ -2,9 +2,12 @@ package ru.practicum.android.diploma.ui.industry
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,7 +35,8 @@ class ChoosingIndustryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupTextWatcher()
+        setupEventHandlers()
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -42,6 +46,7 @@ class ChoosingIndustryFragment : Fragment() {
             Industry("2", "Автошкола", false),
             Industry("3", "Агрохимия", false),
         )
+        showData(industry)
         adapter.updateItems(industry)
         binding.rvIndustry.adapter = adapter
         binding.rvIndustry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -85,6 +90,51 @@ class ChoosingIndustryFragment : Fragment() {
             for (i in item) {
                 binding.etSearch.setText(i.name)
             }
+        }
+    }
+
+    private fun setupTextWatcher() {
+        val regionTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // в данный момент не используется
+            }
+
+            override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!p0.isNullOrEmpty()) {
+                    binding.imageSearchChoosing.setImageResource(R.drawable.main_clear_icon)
+                } else {
+                    binding.imageSearchChoosing.setImageResource(R.drawable.search_icon)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // в данный момент не используется
+            }
+        }
+        binding.etSearch.addTextChangedListener(regionTextWatcher)
+    }
+
+    private fun setupEventHandlers() {
+        clearIndustry()
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // пока не используется
+            }
+            false
+        }
+    }
+
+    private fun clearIndustry() {
+        binding.imageSearchChoosing.setOnClickListener {
+            binding.etSearch.setText("")
+        }
+    }
+
+    private fun showData(industry: List<Industry>) {
+        if (!industry.isEmpty()) {
+            binding.rvIndustry.isVisible = true
+        } else {
+            binding.rvIndustry.isVisible = false
         }
     }
 }
