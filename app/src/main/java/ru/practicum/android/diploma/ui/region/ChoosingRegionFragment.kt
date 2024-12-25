@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.ui
+package ru.practicum.android.diploma.ui.region
 
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +11,15 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
+import ru.practicum.android.diploma.domain.models.Region
 
 class ChoosingRegionFragment : Fragment() {
     private var _binding: FragmentChoosingRegionBinding? = null
+    private var adapter = RegionAdapter()
     val binding: FragmentChoosingRegionBinding
         get() = _binding!!
 
@@ -36,6 +39,17 @@ class ChoosingRegionFragment : Fragment() {
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
+            // временно для подключения РВ
+            val region = arrayListOf(
+                Region("1", "Москва"),
+                Region("2", "Балашиха"),
+                Region("3", "Верея")
+            )
+            showData(region)
+            adapter.updateItems(region)
+            binding.rvRegion.adapter = adapter
+            binding.rvRegion.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -73,6 +87,13 @@ class ChoosingRegionFragment : Fragment() {
     private fun clearRegion() {
         binding.imageSearchChoosing.setOnClickListener {
             binding.etSearch.setText("")
+        }
+    }
+    private fun showData(region: List<Region>) {
+        if (region.isNotEmpty()) {
+            binding.rvRegion.isVisible = true
+        } else {
+            binding.rvRegion.isVisible = false
         }
     }
 

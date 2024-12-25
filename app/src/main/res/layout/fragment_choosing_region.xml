@@ -70,12 +70,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_search"
-        android:layout_marginTop="@dimen/dim8"
+        android:layout_marginTop="@dimen/dim16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/country_item"
+        tools:listitem="@layout/region_item"
         android:layout_marginBottom="@dimen/dim32"
-        android:visibility="gone"
         />
     <ImageView
         android:id="@+id/iv_region"
