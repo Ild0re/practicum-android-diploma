@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import ru.practicum.android.diploma.R
@@ -34,7 +33,6 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
-                        CenterCrop(),
                         RoundedCorners(context.resources.getDimensionPixelSize(R.dimen.dim12))
                     )
                 )

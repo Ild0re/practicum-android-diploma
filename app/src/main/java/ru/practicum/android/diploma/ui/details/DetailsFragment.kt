@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -146,7 +145,6 @@ class DetailsFragment : Fragment() {
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
-                        CenterCrop(),
                         RoundedCorners(requireContext().resources.getDimensionPixelSize(R.dimen.dim12))
                     )
                 )

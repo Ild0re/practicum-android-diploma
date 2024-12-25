@@ -5,8 +5,11 @@ import ru.practicum.android.diploma.data.search.VacancyRepositoryImpl
 import ru.practicum.android.diploma.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.data.db.repository.VacancyDbRepository
 import ru.practicum.android.diploma.data.db.repository.VacancyDbRepositoryImpl
+import ru.practicum.android.diploma.data.filter.FilterRepositoryImpl
+import ru.practicum.android.diploma.domain.repository.FilterRepository
 
 val repositoryModule = module {
     single<VacancyRepository> { VacancyRepositoryImpl(get(), get(), get()) }
     single<VacancyDbRepository> { VacancyDbRepositoryImpl(get()) }
+    single<FilterRepository> { FilterRepositoryImpl(get()) }
 }
