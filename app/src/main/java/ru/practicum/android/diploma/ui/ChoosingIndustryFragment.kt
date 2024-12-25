@@ -38,4 +38,3 @@ class ChoosingIndustryFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 }
-
