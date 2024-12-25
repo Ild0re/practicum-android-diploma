@@ -10,6 +10,7 @@
         android:layout_width="@dimen/dim48"
         android:layout_height="@dimen/dim48"
         android:layout_marginStart="@dimen/dim16"
+        android:scaleType="centerInside"
         android:layout_marginTop="9dp"
         app:layout_constraintEnd_toStartOf="@id/tv_item_vacancy_city"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +57,7 @@
         app:layout_constraintStart_toEndOf="@id/image_item"
         app:layout_constraintTop_toBottomOf="@id/tv_item_company"
         app:layout_constraintEnd_toEndOf="parent"
-        tool:text="От 100 000 р" />
+        tool:text="от 100 000 р" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

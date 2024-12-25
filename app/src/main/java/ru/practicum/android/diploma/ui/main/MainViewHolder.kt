@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import ru.practicum.android.diploma.R
@@ -34,7 +33,6 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
             .apply(
                 RequestOptions().transform(
                     MultiTransformation(
-                        CenterCrop(),
                         RoundedCorners(context.resources.getDimensionPixelSize(R.dimen.dim12))
                     )
                 )
@@ -44,20 +42,26 @@ class MainViewHolder(private val binding: VacancyItemBinding, private val contex
 
     @SuppressLint("SetTextI18n")
     private fun getPrice(item: Vacancy) {
-        if (item.salaryFrom == "null" && item.salaryTo == "null") {
-            binding.tvItemPrice.text = context.resources.getString(R.string.no_salary)
-        } else if (item.salaryFrom != "null" && item.salaryTo == "null") {
-            binding.tvItemPrice.text =
+        val salaryText = when {
+            item.salaryFrom == "null" && item.salaryTo == "null" -> {
+                context.getString(R.string.no_salary)
+            }
+
+            item.salaryFrom != "null" && item.salaryTo == "null" -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} ${getCurrencySymbol(item.salaryCurrency)}"
-        } else if (item.salaryFrom == "null" && item.salaryTo != "null") {
-            binding.tvItemPrice.text =
+            }
+
+            item.salaryFrom == "null" && item.salaryTo != "null" -> {
                 "До ${formatNumberWithSpaces(item.salaryTo)} ${getCurrencySymbol(item.salaryCurrency)}"
-        } else {
-            binding.tvItemPrice.text =
+            }
+
+            else -> {
                 "От ${formatNumberWithSpaces(item.salaryFrom)} до ${formatNumberWithSpaces(item.salaryTo)} ${
                     getCurrencySymbol(item.salaryCurrency)
                 }"
+            }
         }
+        binding.tvItemPrice.text = salaryText.replace("От ", "от ").replace("До ", "до ")
     }
 
     private fun formatNumberWithSpaces(number: String): String {

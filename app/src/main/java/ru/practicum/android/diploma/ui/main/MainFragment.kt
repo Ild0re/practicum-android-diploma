@@ -110,9 +110,12 @@ class MainFragment : Fragment() {
             override fun onTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!binding.etSearch.text.isNullOrEmpty()) {
                     binding.imageSearchOrClear.setImageResource(R.drawable.main_clear_icon)
+                    vacanciesList.clear()
                     viewModel.searchDebounce(p0?.toString() ?: "")
                 } else {
                     inputText = p0.toString()
+                    binding.imageSearchOrClear.setImageResource(R.drawable.search_icon)
+                    binding.tvCountVacancySearch.isVisible = false
                 }
             }
 
@@ -230,13 +233,13 @@ class MainFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun showData(data: List<Vacancy>, found: String) {
         if (vacanciesList.isEmpty()) {
+            vacanciesList.clear()
             binding.tvCountVacancySearch.isVisible = true
             binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
             binding.progressBar.isVisible = false
             binding.progressBarUnderRV.isVisible = false
             binding.ivMainImage.isVisible = false
             binding.rvVacancy.isVisible = true
-            vacanciesList.clear()
             vacanciesList.addAll(data)
             vacanciesAdapter.notifyDataSetChanged()
         } else {

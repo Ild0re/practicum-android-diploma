@@ -99,7 +99,7 @@ class MainViewModel(
     }
 
     fun searchVacancies(expression: String) {
-        if (currentPage != maxPage && !isNextPageLoading) {
+        if (currentPage < maxPage && !isNextPageLoading && maxPage != 1) {
             isNextPageLoading = true
             viewModelScope.launch {
                 currentPage++

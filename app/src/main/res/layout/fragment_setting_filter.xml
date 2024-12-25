@@ -102,6 +102,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_salary_hint"
         android:textAppearance="@style/input_text"
+        android:textColorHint="?colorOnSecondary"
         android:paddingTop="@dimen/dim8"
         android:paddingBottom="@dimen/dim8"
         android:inputType="number"
