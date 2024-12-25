@@ -10,6 +10,7 @@
         android:layout_width="@dimen/dim48"
         android:layout_height="@dimen/dim48"
         android:layout_marginStart="@dimen/dim16"
+        android:scaleType="centerInside"
         android:layout_marginTop="9dp"
         app:layout_constraintEnd_toStartOf="@id/tv_item_vacancy_city"
         app:layout_constraintStart_toStartOf="parent"
