@@ -59,20 +59,21 @@ class FilterSettingViewModel(
 
     private fun getCountryIds() {
         viewModelScope.launch {
-            referencesInteractor.getCountries().collect { data -> countryList = data }
+            referencesInteractor.getCountries().collect { pair -> countryList = pair.first }
         }
     }
 
     private fun getIndustriesIds() {
         viewModelScope.launch {
             referencesInteractor.getIndustries().collect { pair ->
-                industryList = pair.first }
+                industryList = pair.first
+            }
         }
     }
 
     private fun getRegionId(country: Area) {
         viewModelScope.launch {
-            referencesInteractor.getRegions(country).collect { data -> areaList = data }
+            referencesInteractor.getRegions(country).collect { pair -> areaList = pair.first }
         }
     }
 }
