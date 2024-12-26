@@ -57,5 +57,6 @@
     <string name="et_choosing_region">Введите регион</string>
     <string name="tv_region_no_found">Такого региона нет</string>
     <string name="tv_country_no_found">Такой страны нет</string>
+    <string name="tv_industry_no_found">Такой отрасли нет</string>
     <string name="tv_region_empty">Не удалось получить\nсписок</string>
 </resources>
