@@ -43,6 +43,12 @@ class ChoosingWorkingPlaceFragment : Fragment() {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false

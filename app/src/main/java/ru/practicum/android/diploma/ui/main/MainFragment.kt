@@ -24,7 +24,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.ui.FilterSettingFragment
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -39,20 +38,10 @@ class MainFragment : Fragment() {
         private const val FOUR = 4
         private const val TEN = 10
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        private const val WORKING = "working"
-        private const val INDUSTRY = "industry"
-        private const val SALARY = "salary"
-        private const val SALARY_CLOSE = "salaryClose"
-        fun newInstance(working: String, industry: String, salary: String, salaryClose: String) =
-            FilterSettingFragment().apply {
-                arguments =
-                    bundleOf(
-                        WORKING to working,
-                        INDUSTRY to industry,
-                        SALARY to salary,
-                        SALARY_CLOSE to salaryClose
-                    )
-            }
+        private const val FRAGMENT_CHECKER = "fromFragmentFilter"
+        fun newInstance(boolean: Boolean) = MainFragment().apply {
+            arguments = bundleOf(FRAGMENT_CHECKER to boolean)
+        }
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -83,6 +72,11 @@ class MainFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -170,6 +164,10 @@ class MainFragment : Fragment() {
                 viewModel.loadData(binding.etSearch.text.toString(), ZERO)
             }
             false
+        }
+        val isFromFragmentFilter = arguments?.getBoolean(FRAGMENT_CHECKER) ?: false
+        if (isFromFragmentFilter) {
+            viewModel.loadData(binding.etSearch.text.toString(), ZERO)
         }
     }
 

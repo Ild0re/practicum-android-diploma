@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.data.network.HeadHunterWebApiClient
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyList
+import ru.practicum.android.diploma.domain.repository.FilterRepository
 import ru.practicum.android.diploma.domain.repository.VacancyRepository
 import ru.practicum.android.diploma.util.Resource
 import ru.practicum.android.diploma.util.mappers.toVacancy
@@ -17,6 +18,7 @@ class VacancyRepositoryImpl(
     private val networkClient: NetworkClient,
     private val webApiClient: HeadHunterWebApiClient,
     private val appDataBase: AppDataBase,
+    private val filter: FilterRepository
 ) : VacancyRepository {
 
     companion object {
@@ -27,8 +29,28 @@ class VacancyRepositoryImpl(
         val pages: HashMap<String, Int> = HashMap()
         val options: HashMap<String, String> = HashMap()
 
+        val filter = filter.getFilter()
+
         options["text"] = expression
         options["search_field"] = "name"
+        if (filter.country != null) {
+            if (filter.area != null) {
+                options["area"] = filter.area.id
+            } else {
+                options["area"] = filter.country.id
+            }
+        }
+        if (filter.scope != null) {
+            options["industry"] = filter.scope.id
+        }
+        if (filter.salary != null) {
+            options["salary"] = filter.salary
+        }
+        if (filter.isOnlyWithSalary) {
+            options["only_with_salary"] = "true"
+        } else {
+            options["only_with_salary"] = "false"
+        }
         pages["page"] = page
         pages["per_page"] = VACANCIES_PER_PAGE
 

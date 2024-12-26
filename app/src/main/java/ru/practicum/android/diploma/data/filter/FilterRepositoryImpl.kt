@@ -16,7 +16,13 @@ class FilterRepositoryImpl(private val sharedPref: SharedPreferences) : FilterRe
         val filter = sharedPref.getString(FILTER, null)
 
         if (filter.isNullOrBlank()) {
-            return Filter(null, null, null, null, false)
+            return Filter(
+                null,
+                null,
+                null,
+                null,
+                false
+            )
         }
 
         val type = object : TypeToken<Filter>() {}.type

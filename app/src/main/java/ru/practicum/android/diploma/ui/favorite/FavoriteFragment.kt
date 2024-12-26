@@ -52,6 +52,11 @@ class FavoriteFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun onItemClickListener(vacancy: Vacancy) {
         val bundle = Bundle()
         bundle.putString("id", vacancy.id)

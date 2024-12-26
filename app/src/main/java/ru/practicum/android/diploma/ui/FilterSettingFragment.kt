@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -15,8 +16,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSettingFilterBinding
+import ru.practicum.android.diploma.domain.models.Filter
+import ru.practicum.android.diploma.ui.viewmodel.FilterSettingViewModel
+import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 
 class FilterSettingFragment : Fragment() {
     companion object {
@@ -30,6 +35,13 @@ class FilterSettingFragment : Fragment() {
 
     var isDrawableChanged = false
 
+    private var country: String? = null
+    private var area: String? = null
+    private var scope: String? = null
+    private var salary: String? = null
+
+    private val viewModel by viewModel<FilterSettingViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,21 +54,8 @@ class FilterSettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupTextWatcher()
+        setupObservers()
         setupEventHandlers()
-
-        binding.backArrow.setOnClickListener {
-            findNavController().popBackStack()
-        }
-        binding.etIndustryHint.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
-            }
-        }
-        binding.etWorkingPlaceHint.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingWorkingPlaceFragment)
-            }
-        }
     }
 
     private fun setupTextWatcher() {
@@ -135,6 +134,19 @@ class FilterSettingFragment : Fragment() {
     }
 
     private fun setupEventHandlers() {
+        binding.backArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.etIndustryHint.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingIndustryFragment)
+            }
+        }
+        binding.etWorkingPlaceHint.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_filterSettingFragment_to_choosingWorkingPlaceFragment)
+            }
+        }
         clearSalary()
         clearWorkingPlace()
         clearIndustry()
@@ -160,6 +172,12 @@ class FilterSettingFragment : Fragment() {
         }
         binding.btApply.setOnClickListener {
             clickApply()
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.getFilter().observe(viewLifecycleOwner) { filter ->
+            loadFilter(filter)
         }
     }
 
@@ -208,21 +226,7 @@ class FilterSettingFragment : Fragment() {
                 binding.etSalaryHint.text.toString(),
                 isDrawableChanged
             )
-            if (isDrawableChanged) {
-                binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    0,
-                    R.drawable.filter_square_activated_icon,
-                    0
-                )
-            } else {
-                binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    0,
-                    R.drawable.filter_square_disable_icon,
-                    0
-                )
-            }
+            changeDrawableSalary()
             isDrawableChanged = !isDrawableChanged
         }
     }
@@ -256,12 +260,32 @@ class FilterSettingFragment : Fragment() {
 
     private fun clickApply() {
         if (clickDebounce()) {
+                if (binding.etWorkingPlaceHint.text.toString() != "") {
+                    val listOfAreas = binding.etWorkingPlaceHint.text.toString().split(",")
+                    if (listOfAreas.size > 1) {
+                        country = listOfAreas[0]
+                        area = listOfAreas[1]
+                    } else {
+                        country = listOfAreas[0]
+                    }
+                } else {
+                    country = null
+                }
+            scope = if (binding.etIndustryHint.text.toString() != "") {
+                binding.etIndustryHint.text.toString()
+            } else {
+                null
+            }
+            salary = if (binding.etSalaryHint.text.toString() != "") {
+                binding.etSalaryHint.text.toString()
+            } else {
+                null
+            }
+            val withSalary = isDrawableChanged
+            viewModel.saveFilter(country, area, scope, salary, withSalary)
             val bundle = Bundle()
-            bundle.putString("working", binding.etWorkingPlaceHint.text.toString())
-            bundle.putString("industry", binding.etIndustryHint.text.toString())
-            bundle.putString("salary", binding.etSalaryHint.text.toString())
-            bundle.putString("salaryClose", isDrawableChanged.toString())
-            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment, bundle)
+            bundle.putBoolean("fromFragmentFilter", true)
+            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
         }
     }
 
@@ -272,5 +296,53 @@ class FilterSettingFragment : Fragment() {
             isClickAllowed = true
         }
         return current
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun loadFilter(data: Filter) {
+        if (data.country != null) {
+            if (data.area != null) {
+                binding.etWorkingPlaceHint.setText("${data.country.name}, ${data.area.name}")
+            } else {
+                binding.etWorkingPlaceHint.setText(data.country.name)
+            }
+        } else {
+            binding.etWorkingPlaceHint.setText("")
+        }
+        if (data.scope != null) {
+            binding.etIndustryHint.setText(data.scope.name)
+        } else {
+            binding.etIndustryHint.setText("")
+        }
+        if (data.salary != null) {
+            binding.etSalaryHint.setText(data.salary)
+        } else {
+            binding.etSalaryHint.setText("")
+        }
+        if (data.isOnlyWithSalary) {
+            isDrawableChanged = true
+            changeDrawableSalary()
+        } else {
+            isDrawableChanged = false
+            changeDrawableSalary()
+        }
+    }
+
+    private fun changeDrawableSalary() {
+        if (isDrawableChanged) {
+            binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.filter_square_activated_icon,
+                0
+            )
+        } else {
+            binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.filter_square_disable_icon,
+                0
+            )
+        }
     }
 }

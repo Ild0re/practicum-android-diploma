@@ -13,7 +13,7 @@ import ru.practicum.android.diploma.data.filter.FilterRepositoryImpl
 import ru.practicum.android.diploma.domain.repository.FilterRepository
 
 val repositoryModule = module {
-    single<VacancyRepository> { VacancyRepositoryImpl(get(), get(), get()) }
+    single<VacancyRepository> { VacancyRepositoryImpl(get(), get(), get(), get()) }
     single<VacancyDbRepository> { VacancyDbRepositoryImpl(get()) }
     single<ReferencesRepository> { ReferencesRepositoryImpl(get(), get()) }
     single<FilterRepository> { FilterRepositoryImpl(get()) }
