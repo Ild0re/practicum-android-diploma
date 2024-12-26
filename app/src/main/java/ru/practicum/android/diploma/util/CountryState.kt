@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.util.mappers
+package ru.practicum.android.diploma.util
 
 import ru.practicum.android.diploma.domain.models.Area
 

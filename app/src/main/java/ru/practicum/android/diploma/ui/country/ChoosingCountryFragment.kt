@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingCountryBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingCountryViewModel
-import ru.practicum.android.diploma.util.mappers.CountryState
+import ru.practicum.android.diploma.util.CountryState
 
 class ChoosingCountryFragment : Fragment() {
     private var _binding: FragmentChoosingCountryBinding? = null

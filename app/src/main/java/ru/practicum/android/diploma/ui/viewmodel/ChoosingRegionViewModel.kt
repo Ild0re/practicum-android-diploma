@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
 import ru.practicum.android.diploma.util.CountryState
 
-class ChoosingCountryViewModel(private val referencesIteractor: ReferencesIteractor) : ViewModel() {
+class ChoosingRegionViewModel(private val referencesIteractor: ReferencesIteractor) : ViewModel() {
     companion object {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
@@ -17,9 +17,9 @@ class ChoosingCountryViewModel(private val referencesIteractor: ReferencesIterac
 
     private val state = MutableLiveData<CountryState>()
     fun getState(): LiveData<CountryState> = state
-    fun loadData() {
+    fun loadData(country: Area) {
         viewModelScope.launch {
-            referencesIteractor.getCountries().collect { pair ->
+            referencesIteractor.getRegions(country).collect { pair ->
                 processResult(pair.first, pair.second)
             }
         }
