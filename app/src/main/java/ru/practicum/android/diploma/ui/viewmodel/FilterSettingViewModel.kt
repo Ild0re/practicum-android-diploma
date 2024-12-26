@@ -28,7 +28,6 @@ class FilterSettingViewModel(
     private var countryList: List<Area>? = null
     private var areaList: List<Area>? = null
     private var industryList: List<Industry>? = null
-    private lateinit var filter: Filter
 
     private val filterState = MutableLiveData<Filter>()
 
@@ -38,7 +37,7 @@ class FilterSettingViewModel(
         getCountryIds()
         getIndustriesIds()
         viewModelScope.launch {
-            filter = filterInteractor.getFilter()
+            val filter = filterInteractor.getFilter()
             delay(SEARCH_DEBOUNCE_DELAY)
             postFilter(filter)
         }
