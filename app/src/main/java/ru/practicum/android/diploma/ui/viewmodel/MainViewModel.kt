@@ -129,7 +129,13 @@ class MainViewModel(
         viewModelScope.launch {
             val filter = filterInteractor.getFilter()
             delay(FILTER_DEBOUNCE_DELAY)
-            if (listOf(filter.country, filter.area, filter.scope, filter.salary).any { it != null } || filter.isOnlyWithSalary) {
+            if (listOf(
+                    filter.country,
+                    filter.area,
+                    filter.scope,
+                    filter.salary
+                ).any { it != null } || filter.isOnlyWithSalary
+            ) {
                 filterIconFlag = true
                 filterFlagState.postValue(true)
             } else {
