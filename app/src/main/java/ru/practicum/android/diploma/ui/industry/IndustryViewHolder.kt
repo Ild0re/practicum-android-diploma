@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.ui.industry
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +12,6 @@ class IndustryViewHolder(itemView: View) :
     private val tvName: TextView = itemView.findViewById(R.id.industryName)
     private val endImage: ImageView = itemView.findViewById(R.id.image_endLine)
     fun bind(item: Industry, onItemClickListener: OnItemClickListener?) {
-        Log.d("Sprint 26", "$item")
         tvName.text = item.name
         if (item.click == false) {
             endImage.setImageResource(R.drawable.circle_disable_icon)
