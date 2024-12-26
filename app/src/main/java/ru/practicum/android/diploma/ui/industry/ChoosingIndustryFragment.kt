@@ -13,9 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingIndustryBinding
 import ru.practicum.android.diploma.domain.models.Industry
+import ru.practicum.android.diploma.ui.viewmodel.ChoosingIndustryViewModel
+import ru.practicum.android.diploma.util.IndustryState
 
 class ChoosingIndustryFragment : Fragment() {
     private var _binding: FragmentChoosingIndustryBinding? = null
@@ -23,6 +26,8 @@ class ChoosingIndustryFragment : Fragment() {
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
     var isDrawableChanged = false
+
+    private val viewModel by viewModel<ChoosingIndustryViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,23 +42,30 @@ class ChoosingIndustryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupTextWatcher()
         setupEventHandlers()
+        viewModel.loadData()
+
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
-        // временно для подключения РВ
-        val industry = arrayListOf(
-            Industry("1", "Авиаперевозки", false),
-            Industry("2", "Автошкола", false),
-            Industry("3", "Агрохимия", false),
-        )
-        showData(industry)
-        adapter.updateItems(industry)
-        binding.rvIndustry.adapter = adapter
-        binding.rvIndustry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adapter.notifyDataSetChanged()
+        viewModel.getState().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is IndustryState.Error -> {
+                    showError()
+                }
+
+                is IndustryState.Empty -> {
+                    showEmpty()
+                }
+
+                is IndustryState.Content -> {
+                    showData(state.data)
+
+                }
+            }
+        }
 
         adapter.onItemClickListener = IndustryViewHolder.OnItemClickListener { item ->
-            updateList(item, industry)
+            //updateList(item, industry)
         }
     }
 
@@ -130,12 +142,28 @@ class ChoosingIndustryFragment : Fragment() {
         }
     }
 
-    private fun showData(industry: List<Industry>) {
-        if (!industry.isEmpty()) {
-            binding.rvIndustry.isVisible = true
-        } else {
-            binding.rvIndustry.isVisible = false
-        }
+    private fun showData(country: List<Industry>?) {
+        binding.rvIndustry.isVisible = true
+        binding.ivIndustry.isVisible = false
+        binding.tvIndustry.isVisible = false
+        adapter.updateItems(country!!)
+        binding.rvIndustry.adapter = adapter
+        binding.rvIndustry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        adapter.notifyDataSetChanged()
+    }
+    private fun showEmpty() {
+        binding.ivIndustry.isVisible = true
+        binding.tvIndustry.isVisible = true
+        binding.rvIndustry.isVisible = false
+        binding.ivIndustry.setImageResource(R.drawable.main_image_empty)
+        binding.tvIndustry.text = getString(R.string.tv_industry_no_found)
+    }
+    private fun showError() {
+        binding.ivIndustry.isVisible = true
+        binding.tvIndustry.isVisible = true
+        binding.rvIndustry.isVisible = false
+        binding.ivIndustry.setImageResource(R.drawable.region_not_found)
+        binding.tvIndustry.text = getString(R.string.tv_region_empty)
     }
 }
 

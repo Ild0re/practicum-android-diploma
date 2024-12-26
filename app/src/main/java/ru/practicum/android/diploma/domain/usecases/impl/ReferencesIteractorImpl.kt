@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.repository.ReferencesRepository
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
+import ru.practicum.android.diploma.util.Resource
 
 class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) : ReferencesIteractor {
     override suspend fun getCountries(): Flow<List<Area>?> {
@@ -17,7 +18,19 @@ class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) 
         return areaRepository.getRegions(country).map { result -> flowResultHandler(result) }
     }
 
-    override suspend fun getIndustries(): Flow<List<Industry>?> {
-        return areaRepository.getIndistries().map { result -> flowResultHandler(result) }
+    override suspend fun getIndustries(): Flow<Pair<List<Industry>?, String?>> {
+        return areaRepository.getIndistries().map { result ->
+            when (result) {
+
+                is Resource.Success -> {
+                    Pair(result.data, null)
+                }
+
+                is Resource.Error -> {
+                    Pair(null, result.message)
+                }
+            }
+        }
     }
 }
+
