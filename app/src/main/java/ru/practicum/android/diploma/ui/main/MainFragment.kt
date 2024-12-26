@@ -11,13 +11,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
@@ -44,7 +42,6 @@ class MainFragment : Fragment() {
         private const val FRAGMENT_CHECKER = "fromFragmentFilter"
         private const val SAVED_INSTANCE_STATE_KEY = "text"
     }
-
 
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
