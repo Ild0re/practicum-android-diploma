@@ -10,15 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingCountryBinding
-import ru.practicum.android.diploma.domain.models.Country
+import ru.practicum.android.diploma.domain.models.Area
+import ru.practicum.android.diploma.ui.viewmodel.ChoosingCountryViewModel
+import ru.practicum.android.diploma.util.CountryState
 
 class ChoosingCountryFragment : Fragment() {
     private var _binding: FragmentChoosingCountryBinding? = null
     val adapter = CountryAdapter()
     val binding: FragmentChoosingCountryBinding
         get() = _binding!!
+
+    private val viewModel by viewModel<ChoosingCountryViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,20 +36,28 @@ class ChoosingCountryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadData()
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
-        val country = arrayListOf(
-            Country("1", "Оренбург"),
-            Country("2", "Самара"),
-            Country("3", "Челябинск"),
-        )
-        adapter.updateItems(country)
-        showData(country)
-        binding.rvCountry.adapter = adapter
-        binding.rvCountry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adapter.notifyDataSetChanged()
+        viewModel.getState().observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is CountryState.Error -> {
+                    showError()
+                }
+
+                is CountryState.Empty -> {
+                    showEmpty()
+                }
+
+                is CountryState.Content -> {
+                    showData(state.data)
+
+                }
+            }
+        }
+
         adapter.onItemClickListener = CountryViewHolder.OnItemClickListener { item ->
             // положить в SP
         }
@@ -60,11 +73,29 @@ class ChoosingCountryFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 
-    private fun showData(country: List<Country>) {
-        if (!country.isEmpty()) {
-            binding.rvCountry.isVisible = true
-        } else {
-            binding.rvCountry.isVisible = false
-        }
+    private fun showData(country: List<Area>?) {
+        binding.rvCountry.isVisible = true
+        binding.ivCountry.isVisible = false
+        binding.tvCountry.isVisible = false
+        adapter.updateItems(country!!)
+        binding.rvCountry.adapter = adapter
+        binding.rvCountry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun showEmpty() {
+        binding.ivCountry.isVisible = true
+        binding.tvCountry.isVisible = true
+        binding.rvCountry.isVisible = false
+        binding.ivCountry.setImageResource(R.drawable.main_image_empty)
+        binding.tvCountry.text = getString(R.string.tv_country_no_found)
+    }
+
+    private fun showError() {
+        binding.ivCountry.isVisible = true
+        binding.tvCountry.isVisible = true
+        binding.rvCountry.isVisible = false
+        binding.ivCountry.setImageResource(R.drawable.region_not_found)
+        binding.tvCountry.text = getString(R.string.tv_region_empty)
     }
 }
