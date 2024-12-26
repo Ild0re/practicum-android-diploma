@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -285,6 +286,7 @@ class FilterSettingFragment : Fragment() {
             viewModel.saveFilter(country, area, scope, salary, withSalary)
             val bundle = Bundle()
             bundle.putBoolean("fromFragmentFilter", true)
+            setFragmentResult("fromFilterFragment", bundle)
             findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
         }
     }

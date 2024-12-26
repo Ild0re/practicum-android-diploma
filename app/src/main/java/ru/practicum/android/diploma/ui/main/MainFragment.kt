@@ -14,8 +14,10 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
@@ -38,11 +40,11 @@ class MainFragment : Fragment() {
         private const val FOUR = 4
         private const val TEN = 10
         private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val FILTER_SEARCH_DELAY = 100L
         private const val FRAGMENT_CHECKER = "fromFragmentFilter"
-        fun newInstance(boolean: Boolean) = MainFragment().apply {
-            arguments = bundleOf(FRAGMENT_CHECKER to boolean)
-        }
+        private const val SAVED_INSTANCE_STATE_KEY = "text"
     }
+
 
     private var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
@@ -63,11 +65,12 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    var inputText = ""
+    private var inputText = ""
     private var isClickAllowed = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkSavedInstanceState(savedInstanceState)
         setupRecyclerView()
         setupTextWatcher()
         setupObservers()
@@ -82,6 +85,12 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getFilter()
+    }
+
+    private fun checkSavedInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            binding.etSearch.setText(savedInstanceState.getString(SAVED_INSTANCE_STATE_KEY))
+        }
     }
 
     private fun setupRecyclerView() {
@@ -173,9 +182,14 @@ class MainFragment : Fragment() {
             }
             false
         }
-        val isFromFragmentFilter = arguments?.getBoolean(FRAGMENT_CHECKER) ?: false
-        if (isFromFragmentFilter) {
-            viewModel.loadData(binding.etSearch.text.toString(), ZERO)
+        setFragmentResultListener("fromFilterFragment") { _, bundle ->
+            val isFromFragmentFilter = bundle.getBoolean(FRAGMENT_CHECKER)
+            if (isFromFragmentFilter) {
+                lifecycleScope.launch {
+                    delay(FILTER_SEARCH_DELAY)
+                    viewModel.loadData(binding.etSearch.text.toString(), ZERO)
+                }
+            }
         }
     }
 
@@ -295,5 +309,10 @@ class MainFragment : Fragment() {
             isClickAllowed = true
         }
         return current
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SAVED_INSTANCE_STATE_KEY, binding.etSearch.text.toString())
     }
 }
