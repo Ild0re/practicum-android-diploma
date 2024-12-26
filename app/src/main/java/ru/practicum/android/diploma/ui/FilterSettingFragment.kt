@@ -39,6 +39,7 @@ class FilterSettingFragment : Fragment() {
     private var area: String? = null
     private var scope: String? = null
     private var salary: String? = null
+    private var withSalary = false
 
     private val viewModel by viewModel<FilterSettingViewModel>()
 
@@ -282,12 +283,13 @@ class FilterSettingFragment : Fragment() {
             } else {
                 null
             }
-            val withSalary = isDrawableChanged
+            withSalary = isDrawableChanged
             viewModel.saveFilter(country, area, scope, salary, withSalary)
-            val bundle = Bundle()
-            bundle.putBoolean("fromFragmentFilter", true)
-            setFragmentResult("fromFilterFragment", bundle)
-            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
+            // val bundle = Bundle()
+            // bundle.putBoolean("fromFragmentFilter", true)
+            // setFragmentResult("fromFilterFragment", bundle)
+            // findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
+            sendArrayToMainFragment()
         }
     }
 
@@ -346,5 +348,18 @@ class FilterSettingFragment : Fragment() {
                 0
             )
         }
+    }
+
+    private fun sendArrayToMainFragment() {
+        val array =
+            arrayOf(country.toString(), area.toString(), scope.toString(), salary.toString(), withSalary.toString())
+
+        val bundle = Bundle().apply {
+            putInt("text", array.size)
+            array.forEachIndexed { index, element ->
+                putString("array_element_$index", element)
+            }
+        }
+        findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment, bundle)
     }
 }

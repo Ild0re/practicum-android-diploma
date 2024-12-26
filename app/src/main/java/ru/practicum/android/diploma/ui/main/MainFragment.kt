@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,7 @@ class MainFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+        getShare()
     }
 
     override fun onDestroyView() {
@@ -311,5 +313,17 @@ class MainFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SAVED_INSTANCE_STATE_KEY, binding.etSearch.text.toString())
+    }
+
+    private fun getShare() {
+        arguments?.let { bundle ->
+            val arraySize = bundle.getInt(SAVED_INSTANCE_STATE_KEY, 0)
+            val receivedArray = ArrayList<String>()
+            for (i in 0 until arraySize) {
+                val element = bundle.getString("array_element_$i")
+                element?.let { receivedArray.add(it) }
+            }
+            Log.d("Sprint 26", "$receivedArray")
+        }
     }
 }
