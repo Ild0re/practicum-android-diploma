@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +24,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentMainBinding
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.ui.FilterSettingFragment
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 import ru.practicum.android.diploma.util.ScreenState
 
@@ -39,20 +38,9 @@ class MainFragment : Fragment() {
         private const val FOUR = 4
         private const val TEN = 10
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        private const val WORKING = "working"
-        private const val INDUSTRY = "industry"
-        private const val SALARY = "salary"
-        private const val SALARY_CLOSE = "salaryClose"
-        fun newInstance(working: String, industry: String, salary: String, salaryClose: String) =
-            FilterSettingFragment().apply {
-                arguments =
-                    bundleOf(
-                        WORKING to working,
-                        INDUSTRY to industry,
-                        SALARY to salary,
-                        SALARY_CLOSE to salaryClose
-                    )
-            }
+        private const val FILTER_SEARCH_DELAY = 100L
+        private const val FRAGMENT_CHECKER = "fromFragmentFilter"
+        private const val SAVED_INSTANCE_STATE_KEY = "text"
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -74,15 +62,32 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    var inputText = ""
+    private var inputText = ""
     private var isClickAllowed = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkSavedInstanceState(savedInstanceState)
         setupRecyclerView()
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFilter()
+    }
+
+    private fun checkSavedInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            binding.etSearch.setText(savedInstanceState.getString(SAVED_INSTANCE_STATE_KEY))
+        }
     }
 
     private fun setupRecyclerView() {
@@ -144,6 +149,9 @@ class MainFragment : Fragment() {
                 }
             }
         }
+        viewModel.getFilterFlagState().observe(viewLifecycleOwner) { state ->
+            showFilter(state)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -170,6 +178,15 @@ class MainFragment : Fragment() {
                 viewModel.loadData(binding.etSearch.text.toString(), ZERO)
             }
             false
+        }
+        setFragmentResultListener("fromFilterFragment") { _, bundle ->
+            val isFromFragmentFilter = bundle.getBoolean(FRAGMENT_CHECKER)
+            if (isFromFragmentFilter) {
+                lifecycleScope.launch {
+                    delay(FILTER_SEARCH_DELAY)
+                    viewModel.loadData(binding.etSearch.text.toString(), ZERO)
+                }
+            }
         }
     }
 
@@ -254,6 +271,14 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun showFilter(state: Boolean) {
+        if (state) {
+            binding.ivFilter.setImageResource(R.drawable.main_filter_activated_icon)
+        } else {
+            binding.ivFilter.setImageResource(R.drawable.filter_icon)
+        }
+    }
+
     private fun onItemClickListener(vacancy: Vacancy) {
         if (clickDebounce()) {
             val bundle = Bundle()
@@ -281,5 +306,10 @@ class MainFragment : Fragment() {
             isClickAllowed = true
         }
         return current
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SAVED_INSTANCE_STATE_KEY, binding.etSearch.text.toString())
     }
 }

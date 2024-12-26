@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.di
 
+import android.content.Context
 import androidx.room.Room
+import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -31,5 +33,12 @@ val dataModule = module {
         )
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    factory { Gson() }
+
+    single {
+        androidContext()
+            .getSharedPreferences("shared_preferences", Context.MODE_PRIVATE)
     }
 }
