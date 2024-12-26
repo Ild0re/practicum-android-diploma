@@ -50,5 +50,3 @@ class ReferencesRepositoryImpl(
         return industryListDto.map { industry -> industry.toIndustry() }
     }
 }
-
-
