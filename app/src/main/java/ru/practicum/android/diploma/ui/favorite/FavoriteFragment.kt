@@ -68,6 +68,7 @@ class FavoriteFragment : Fragment() {
         binding.ivFavorite.setImageResource(R.drawable.favorite_image_empty)
         binding.ivFavorite.isVisible = true
         binding.rvVacancy.isVisible = false
+        binding.tvFavorite.isVisible = true
     }
 
     @SuppressLint("NotifyDataSetChanged")

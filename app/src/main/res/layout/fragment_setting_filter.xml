@@ -94,6 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_industry"
         app:layout_constraintBottom_toTopOf="@id/salary_close"
+        android:textColorHint="?attr/colorOnSecondary"
         android:hint="@string/et_expected_salary_hint"
         android:background="@drawable/et_search_shape"
         app:hintTextAppearance="@style/input_text_hint"
