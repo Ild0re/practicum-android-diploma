@@ -26,6 +26,7 @@ class ChoosingRegionFragment : Fragment() {
     val binding: FragmentChoosingRegionBinding
         get() = _binding!!
     private val viewModel by viewModel<ChoosingRegionViewModel>()
+    private var regionList = arrayListOf<Area>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +69,7 @@ class ChoosingRegionFragment : Fragment() {
 
                 is CountryState.Content -> {
                     showData(state.data)
+                    regionList.addAll(state.data!!)
                 }
             }
         }
@@ -94,7 +96,14 @@ class ChoosingRegionFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // в данный момент не используется
+                val query = p0.toString().lowercase()
+                val filteredList = regionList.filter { it.name.lowercase().contains(query) }
+                if (filteredList.isNotEmpty()) {
+                    adapter.updateItems(filteredList)
+                    showData(filteredList)
+                } else {
+                    showEmpty()
+                }
             }
         }
         binding.etSearch.addTextChangedListener(regionTextWatcher)
