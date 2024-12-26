@@ -24,6 +24,7 @@ class ChoosingIndustryFragment : Fragment() {
     private var _binding: FragmentChoosingIndustryBinding? = null
     private var adapter = IndustryAdapter()
     private var industryList = arrayListOf<Industry>()
+
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
     var isDrawableChanged = false
@@ -126,7 +127,13 @@ class ChoosingIndustryFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // в данный момент не используется
+                val query = p0.toString().lowercase()
+                val filteredList = industryList.filter { it.name.lowercase().contains(query) }
+                if (filteredList.isNotEmpty()) {
+                    showData(filteredList)
+                } else {
+                    showEmpty()
+                }
             }
         }
         binding.etSearch.addTextChangedListener(regionTextWatcher)
@@ -157,6 +164,7 @@ class ChoosingIndustryFragment : Fragment() {
         binding.rvIndustry.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adapter.notifyDataSetChanged()
     }
+
     private fun showEmpty() {
         binding.ivIndustry.isVisible = true
         binding.tvIndustry.isVisible = true
@@ -164,6 +172,7 @@ class ChoosingIndustryFragment : Fragment() {
         binding.ivIndustry.setImageResource(R.drawable.main_image_empty)
         binding.tvIndustry.text = getString(R.string.tv_industry_no_found)
     }
+
     private fun showError() {
         binding.ivIndustry.isVisible = true
         binding.tvIndustry.isVisible = true
