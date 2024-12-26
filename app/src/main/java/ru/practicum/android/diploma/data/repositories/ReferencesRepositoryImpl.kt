@@ -26,12 +26,12 @@ class ReferencesRepositoryImpl(
         emit(handleResponse(response, ::toAreaList))
     }
 
-    override suspend fun getRegions(country: Area): Flow<Resource<List<Area>>> = flow {
+    override suspend fun getRegions(country: Area): Flow<Resource<Area>> = flow {
         val response = networkClient.executeRequest {
             webApiClient.getRegions(country.id)
         }
 
-        emit(handleResponse(response, ::toAreaList))
+        emit(handleResponse(response, ::toArea))
     }
 
     override suspend fun getIndistries(): Flow<Resource<List<Industry>>> = flow {
@@ -40,6 +40,10 @@ class ReferencesRepositoryImpl(
         }
 
         emit(handleResponse(response, ::toIndustryList))
+    }
+
+    private fun toArea(areaListDto: AreaDto): Area {
+        return areaListDto.toArea()
     }
 
     private fun toAreaList(areaListDto: List<AreaDto>): List<Area> {

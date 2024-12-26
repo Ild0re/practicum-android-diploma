@@ -38,7 +38,7 @@ interface HeadHunterWebApiClient {
         "HH-User-Agent: job_request (gamu@bk.ru)"
     )
     @GET("/areas/{id}")
-    suspend fun getRegions(@Path("id")id: String): List<AreaDto>
+    suspend fun getRegions(@Path("id")id: String): AreaDto
     @Headers(
         "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}",
         "HH-User-Agent: job_request (gamu@bk.ru)"

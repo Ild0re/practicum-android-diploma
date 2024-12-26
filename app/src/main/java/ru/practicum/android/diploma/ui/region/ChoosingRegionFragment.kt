@@ -46,7 +46,7 @@ class ChoosingRegionFragment : Fragment() {
         val subArea1 = Area(id = "1", name = "SubArea 1", url = "http://example.com/subarea1", areas = emptyList())
         val subArea2 = Area(id = "2", name = "SubArea 2", url = "http://example.com/subarea2", areas = emptyList())
         val country = Area(
-            id = "0",
+            id = "40",
             name = "Main Area",
             url = "http://example.com/mainarea",
             areas = listOf(subArea1, subArea2)
@@ -68,7 +68,6 @@ class ChoosingRegionFragment : Fragment() {
 
                 is CountryState.Content -> {
                     showData(state.data)
-
                 }
             }
         }

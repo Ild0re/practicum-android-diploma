@@ -28,7 +28,7 @@ class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) 
         return areaRepository.getRegions(country).map { result ->
             when (result) {
                 is Resource.Success -> {
-                    Pair(result.data, null)
+                    Pair(result.data?.areas, null)
                 }
 
                 is Resource.Error -> {

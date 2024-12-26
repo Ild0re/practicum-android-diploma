@@ -7,6 +7,6 @@ import ru.practicum.android.diploma.util.Resource
 
 interface ReferencesRepository {
     suspend fun getCountries(): Flow<Resource<List<Area>>>
-    suspend fun getRegions(country: Area): Flow<Resource<List<Area>>>
+    suspend fun getRegions(country: Area): Flow<Resource<Area>>
     suspend fun getIndistries(): Flow<Resource<List<Industry>>>
 }
