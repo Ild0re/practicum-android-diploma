@@ -41,7 +41,7 @@ class ChoosingRegionFragment : Fragment() {
         setupTextWatcher()
         setupEventHandlers()
         // заглушка страны
-        val country = Area("1","Россия","url")
+        val country = Area("1", "Россия", "url")
         viewModel.loadData(country)
 
         binding.backArrow.setOnClickListener {
