@@ -10,11 +10,3 @@ data class AreaDto(
     val parentId: String?,
     val areas: List<AreaDto>?
 ) : Response()
-
-/*data class AreaRegionsDto(
-    val id: String,
-    @SerializedName("parent_id")
-    val parentId: String,
-    val name: String,
-    val areas: List<AreaRegionsDto?>,
-)*/
