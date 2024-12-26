@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.domain.models.Area
-import ru.practicum.android.diploma.domain.models.Region
 
 class RegionViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
