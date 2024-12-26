@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.domain.models.Region
+import ru.practicum.android.diploma.domain.models.Area
 
 class RegionAdapter : RecyclerView.Adapter<RegionViewHolder>() {
 
     var onItemClickListener: RegionViewHolder.OnItemClickListener? = null
 
-    private var items: List<Region> = emptyList()
-    fun updateItems(newItems: List<Region>) {
+    private var items: List<Area> = emptyList()
+    fun updateItems(newItems: List<Area>) {
         val oldItems = items
         val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int {

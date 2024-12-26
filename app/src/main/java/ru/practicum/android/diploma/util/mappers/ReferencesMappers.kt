@@ -7,9 +7,10 @@ import ru.practicum.android.diploma.domain.models.Industry
 
 fun AreaDto.toArea(): Area {
     return Area(
-        id = this.id,
+        id = this.id ?: "0",
         name = this.name ?: "",
-        url = this.url ?: ""
+        url = this.url ?: "",
+        areas = this.areas?.map { i -> i.toArea() } ?: emptyList()
     )
 }
 
