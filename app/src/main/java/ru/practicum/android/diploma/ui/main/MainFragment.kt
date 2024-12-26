@@ -79,6 +79,11 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFilter()
+    }
+
     private fun setupRecyclerView() {
         binding.rvVacancy.adapter = vacanciesAdapter
         binding.rvVacancy.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -137,6 +142,9 @@ class MainFragment : Fragment() {
                     showData(state.data, state.found)
                 }
             }
+        }
+        viewModel.getFilterFlagState().observe(viewLifecycleOwner) { state ->
+            showFilter(state)
         }
     }
 
@@ -249,6 +257,14 @@ class MainFragment : Fragment() {
             binding.rvVacancy.isVisible = true
             vacanciesList.addAll(data)
             vacanciesAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun showFilter(state: Boolean) {
+        if (state) {
+            binding.ivFilter.setImageResource(R.drawable.main_filter_activated_icon)
+        } else {
+            binding.ivFilter.setImageResource(R.drawable.filter_icon)
         }
     }
 

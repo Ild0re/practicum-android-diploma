@@ -254,6 +254,7 @@ class FilterSettingFragment : Fragment() {
             isDrawableChanged = !isDrawableChanged
             binding.reset.isVisible = false
             binding.btApply.isVisible = false
+            viewModel.saveFilter(null, null, null, null, false)
         }
     }
 

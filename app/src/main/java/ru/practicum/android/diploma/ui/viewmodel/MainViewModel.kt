@@ -10,11 +10,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyList
+import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.SearchInteractor
 import ru.practicum.android.diploma.util.ScreenState
 
 class MainViewModel(
-    private val searchInteractor: SearchInteractor
+    private val searchInteractor: SearchInteractor,
+    private val filterInteractor: FilterInteractor
 ) : ViewModel() {
 
     companion object {
@@ -23,19 +25,26 @@ class MainViewModel(
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val FILTER_DEBOUNCE_DELAY = 100L
         private const val START_PAGE = 0
         private const val START_MAX_PAGE = 1
+    }
+
+    init {
+        getFilter()
     }
 
     private var currentPage = START_PAGE
     private var maxPage = START_MAX_PAGE
 
     private val state = MutableLiveData<ScreenState>()
+    private val filterFlagState = MutableLiveData<Boolean>()
     private var textInput = ""
     private var searchJob: Job? = null
     private var isNextPageLoading = false
 
     fun getState(): LiveData<ScreenState> = state
+    fun getFilterFlagState(): LiveData<Boolean> = filterFlagState
 
     fun loadData(expression: String, page: Int) {
         clearJob()
@@ -113,5 +122,20 @@ class MainViewModel(
 
     fun clearJob() {
         searchJob?.cancel()
+    }
+
+    fun getFilter() {
+        var filterIconFlag = false
+        viewModelScope.launch {
+            val filter = filterInteractor.getFilter()
+            delay(FILTER_DEBOUNCE_DELAY)
+            if (filter.country != null || filter.area != null || filter.scope != null || filter.salary != null || filter.isOnlyWithSalary ) {
+                filterIconFlag = true
+                filterFlagState.postValue(true)
+            } else {
+                filterIconFlag = false
+                filterFlagState.postValue(false)
+            }
+        }
     }
 }
