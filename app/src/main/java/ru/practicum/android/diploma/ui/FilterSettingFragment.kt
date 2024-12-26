@@ -274,4 +274,3 @@ class FilterSettingFragment : Fragment() {
         return current
     }
 }
-
