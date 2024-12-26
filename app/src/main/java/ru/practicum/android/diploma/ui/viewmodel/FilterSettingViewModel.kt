@@ -65,7 +65,8 @@ class FilterSettingViewModel(
 
     private fun getIndustriesIds() {
         viewModelScope.launch {
-            referencesInteractor.getIndustries().collect { data -> industryList = data }
+            referencesInteractor.getIndustries().collect { pair ->
+                industryList = pair.first }
         }
     }
 
