@@ -99,7 +99,6 @@ class ChoosingRegionFragment : Fragment() {
                 val query = p0.toString().lowercase()
                 val filteredList = regionList.filter { it.name.lowercase().contains(query) }
                 if (filteredList.isNotEmpty()) {
-                    adapter.updateItems(filteredList)
                     showData(filteredList)
                 } else {
                     showEmpty()
