@@ -23,6 +23,7 @@ import ru.practicum.android.diploma.util.IndustryState
 class ChoosingIndustryFragment : Fragment() {
     private var _binding: FragmentChoosingIndustryBinding? = null
     private var adapter = IndustryAdapter()
+    private var industryList = arrayListOf<Industry>()
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
     var isDrawableChanged = false
@@ -59,13 +60,13 @@ class ChoosingIndustryFragment : Fragment() {
 
                 is IndustryState.Content -> {
                     showData(state.data)
-
+                    industryList.addAll(state.data!!)
                 }
             }
         }
 
         adapter.onItemClickListener = IndustryViewHolder.OnItemClickListener { item ->
-            //updateList(item, industry)
+            updateList(item, industryList)
         }
     }
 
