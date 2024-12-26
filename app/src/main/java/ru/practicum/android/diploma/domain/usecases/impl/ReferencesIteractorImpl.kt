@@ -21,7 +21,6 @@ class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) 
     override suspend fun getIndustries(): Flow<Pair<List<Industry>?, String?>> {
         return areaRepository.getIndistries().map { result ->
             when (result) {
-
                 is Resource.Success -> {
                     Pair(result.data, null)
                 }
