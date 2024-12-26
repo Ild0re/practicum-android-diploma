@@ -94,6 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_industry"
         app:layout_constraintBottom_toTopOf="@id/salary_close"
+        android:textColorHint="?attr/colorOnSecondary"
         android:hint="@string/et_expected_salary_hint"
         android:background="@drawable/et_search_shape"
         app:hintTextAppearance="@style/input_text_hint"
@@ -108,6 +109,7 @@
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:hint="@string/et_expected_salary"/>
     </com.google.android.material.textfield.TextInputLayout>
     <ImageView
