@@ -83,7 +83,7 @@ class ChoosingCountryFragment : Fragment() {
         binding.tvCountry.isVisible = true
         binding.rvCountry.isVisible = false
         binding.ivCountry.setImageResource(R.drawable.main_image_empty)
-        binding.tvCountry.text = getString(R.string.tv_region_no_found)
+        binding.tvCountry.text = getString(R.string.tv_country_no_found)
     }
 
     private fun showError() {

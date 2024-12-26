@@ -41,10 +41,14 @@ class ReferencesRepositoryImpl(
 
         emit(handleResponse(response, ::toIndustryList))
     }
+
     private fun toAreaList(areaListDto: List<AreaDto>): List<Area> {
         return areaListDto.map { areaDto -> areaDto.toArea() }
     }
+
     private fun toIndustryList(industryListDto: List<IndustryDto>): List<Industry> {
         return industryListDto.map { industry -> industry.toIndustry() }
     }
 }
+
+

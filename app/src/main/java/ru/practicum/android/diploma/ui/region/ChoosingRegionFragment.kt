@@ -40,8 +40,17 @@ class ChoosingRegionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupTextWatcher()
         setupEventHandlers()
+
         // заглушка страны
-        val country = Area("1", "Россия", "url")
+
+        val subArea1 = Area(id = "1", name = "SubArea 1", url = "http://example.com/subarea1", areas = emptyList())
+        val subArea2 = Area(id = "2", name = "SubArea 2", url = "http://example.com/subarea2", areas = emptyList())
+        val country = Area(
+            id = "0",
+            name = "Main Area",
+            url = "http://example.com/mainarea",
+            areas = listOf(subArea1, subArea2)
+        )
         viewModel.loadData(country)
 
         binding.backArrow.setOnClickListener {

@@ -4,5 +4,5 @@ data class Area(
     val id: String,
     val name: String,
     val url: String,
-    val areas: List<Area>? = null
+    val areas: List<Area>
 )

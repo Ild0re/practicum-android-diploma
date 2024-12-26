@@ -9,7 +9,8 @@ fun AreaDto.toArea(): Area {
     return Area(
         id = this.id,
         name = this.name ?: "",
-        url = this.url ?: ""
+        url = this.url ?: "",
+        areas = this.areas.map { i -> i.toArea() }
     )
 }
 
