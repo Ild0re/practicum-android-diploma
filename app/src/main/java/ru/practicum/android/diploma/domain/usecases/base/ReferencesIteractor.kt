@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Industry
 
 interface ReferencesIteractor {
-    suspend fun getCountries(): Flow<List<Area>?>
+    suspend fun getCountries(): Flow<Pair<List<Area>?,String?>>
 
     suspend fun getRegions(country: Area): Flow<List<Area>?>
 
