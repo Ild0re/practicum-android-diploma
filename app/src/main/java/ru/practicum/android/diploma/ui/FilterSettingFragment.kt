@@ -21,7 +21,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSettingFilterBinding
 import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.ui.viewmodel.FilterSettingViewModel
-import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
 
 class FilterSettingFragment : Fragment() {
     companion object {
@@ -260,17 +259,17 @@ class FilterSettingFragment : Fragment() {
 
     private fun clickApply() {
         if (clickDebounce()) {
-                if (binding.etWorkingPlaceHint.text.toString() != "") {
-                    val listOfAreas = binding.etWorkingPlaceHint.text.toString().split(",")
-                    if (listOfAreas.size > 1) {
-                        country = listOfAreas[0]
-                        area = listOfAreas[1]
-                    } else {
-                        country = listOfAreas[0]
-                    }
+            if (binding.etWorkingPlaceHint.text.toString() != "") {
+                val listOfAreas = binding.etWorkingPlaceHint.text.toString().split(",")
+                if (listOfAreas.size > 1) {
+                    country = listOfAreas[0]
+                    area = listOfAreas[1]
                 } else {
-                    country = null
+                    country = listOfAreas[0]
                 }
+            } else {
+                country = null
+            }
             scope = if (binding.etIndustryHint.text.toString() != "") {
                 binding.etIndustryHint.text.toString()
             } else {
