@@ -9,5 +9,5 @@ interface ReferencesIteractor {
 
     suspend fun getRegions(country: Area): Flow<List<Area>?>
 
-    suspend fun getIndustries(): Flow<List<Industry>?>
+    suspend fun getIndustries(): Flow<Pair<List<Industry>?, String?>>
 }

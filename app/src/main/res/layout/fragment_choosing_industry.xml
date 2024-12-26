@@ -77,6 +77,34 @@
         tools:listitem="@layout/industry_item"
         android:layout_marginBottom="@dimen/dim32"
         />
+    <ImageView
+        android:id="@+id/iv_industry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_search"
+        android:layout_marginTop="@dimen/dim143"
+        android:layout_marginHorizontal="@dimen/dim16"
+        android:src="@drawable/main_image_empty"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/tv_industry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_industry"
+        android:layout_marginTop="@dimen/dim16"
+        android:layout_marginHorizontal="@dimen/dim46"
+        android:text="@string/tv_region_no_found"
+        android:gravity="center"
+        android:textSize="@dimen/text22"
+        android:textColor="?attr/colorOnPrimary"
+        android:fontFamily="@font/ys_display_medium"
+        android:visibility="gone"
+        />
     <android.widget.Button
         android:id="@+id/bt_apply"
         android:layout_width="0dp"
