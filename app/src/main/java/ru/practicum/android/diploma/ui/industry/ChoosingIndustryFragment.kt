@@ -69,7 +69,7 @@ class ChoosingIndustryFragment : Fragment() {
 
         adapter.onItemClickListener = IndustryViewHolder.OnItemClickListener { item ->
             if (filteredList.isNotEmpty()) {
-                updateList(item,filteredList)
+                updateList(item, filteredList)
             } else {
                 updateList(item, industryList)
             }
