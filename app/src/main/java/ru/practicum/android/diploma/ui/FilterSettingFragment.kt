@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,8 @@ class FilterSettingFragment : Fragment() {
     private var area: String? = null
     private var scope: String? = null
     private var salary: String? = null
-
+    private var bundle = Bundle()
+    private var textSearch = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
 
     override fun onCreateView(
@@ -56,6 +58,7 @@ class FilterSettingFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+        getSearchText()
     }
 
     private fun setupTextWatcher() {
@@ -284,10 +287,11 @@ class FilterSettingFragment : Fragment() {
             }
             val withSalary = isDrawableChanged
             viewModel.saveFilter(country, area, scope, salary, withSalary)
-            val bundle = Bundle()
+            bundle = Bundle()
             bundle.putBoolean("fromFragmentFilter", true)
             setFragmentResult("fromFilterFragment", bundle)
-            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
+            saveSearchText()
+            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment, bundle)
         }
     }
 
@@ -345,6 +349,18 @@ class FilterSettingFragment : Fragment() {
                 R.drawable.filter_square_disable_icon,
                 0
             )
+        }
+    }
+
+    private fun getSearchText() {
+        arguments?.let { bundle ->
+            textSearch = bundle.getString("search", null)
+        }
+    }
+
+    private fun saveSearchText() {
+        bundle = Bundle().apply {
+            putString("search", textSearch)
         }
     }
 }

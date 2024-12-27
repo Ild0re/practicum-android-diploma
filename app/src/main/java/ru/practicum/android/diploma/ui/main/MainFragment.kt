@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,8 @@ class MainFragment : Fragment() {
     private val vacanciesList = ArrayList<Vacancy>()
 
     private val vacanciesAdapter = MainAdapter(vacanciesList, ::onItemClickListener)
+    private var bundle = Bundle()
+    private var getText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +75,7 @@ class MainFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+        getSearchText()
     }
 
     override fun onDestroyView() {
@@ -134,7 +138,8 @@ class MainFragment : Fragment() {
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
         binding.ivFilter.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment)
+            saveSearchText()
+            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment, bundle)
         }
     }
 
@@ -311,5 +316,18 @@ class MainFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SAVED_INSTANCE_STATE_KEY, binding.etSearch.text.toString())
+    }
+
+    private fun saveSearchText() {
+        bundle = Bundle().apply {
+            putString("search", inputText)
+        }
+    }
+
+    private fun getSearchText() {
+        arguments?.let { bundle ->
+            getText = bundle.getString("search", "")
+        }
+        binding.etSearch.setText(getText)
     }
 }

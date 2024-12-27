@@ -24,6 +24,7 @@ class ChoosingIndustryFragment : Fragment() {
     private var _binding: FragmentChoosingIndustryBinding? = null
     private var adapter = IndustryAdapter()
     private var industryList = arrayListOf<Industry>()
+    private var filteredList = arrayListOf<Industry>()
 
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
@@ -67,7 +68,11 @@ class ChoosingIndustryFragment : Fragment() {
         }
 
         adapter.onItemClickListener = IndustryViewHolder.OnItemClickListener { item ->
-            updateList(item, industryList)
+            if (filteredList.isNotEmpty()) {
+                updateList(item,filteredList)
+            } else {
+                updateList(item, industryList)
+            }
         }
     }
 
@@ -128,7 +133,7 @@ class ChoosingIndustryFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 val query = p0.toString().lowercase()
-                val filteredList = industryList.filter { it.name.lowercase().contains(query) }
+                filteredList = industryList.filter { it.name.lowercase().contains(query) } as ArrayList<Industry>
                 if (filteredList.isNotEmpty()) {
                     showData(filteredList)
                 } else {
