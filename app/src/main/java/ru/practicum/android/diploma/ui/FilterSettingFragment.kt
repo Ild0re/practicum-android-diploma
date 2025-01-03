@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class FilterSettingFragment : Fragment() {
     private var salary: String? = null
     private var bundle = Bundle()
     private var textSearch = ""
+    private var industryApply = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
 
     override fun onCreateView(
@@ -58,6 +60,7 @@ class FilterSettingFragment : Fragment() {
         setupObservers()
         setupEventHandlers()
         getSearchText()
+        //getIndustryText()
     }
 
     private fun setupTextWatcher() {
@@ -356,6 +359,12 @@ class FilterSettingFragment : Fragment() {
             textSearch = bundle.getString("search", null)
         }
     }
+    private fun getIndustryText() {
+        arguments?.let { bundle ->
+            industryApply = bundle.getString("industry", null)
+        }
+    }
+
 
     private fun saveSearchText() {
         bundle = Bundle().apply {
