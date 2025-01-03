@@ -60,7 +60,7 @@ class FilterSettingFragment : Fragment() {
         setupObservers()
         setupEventHandlers()
         getSearchText()
-        //getIndustryText()
+        getIndustryText()
     }
 
     private fun setupTextWatcher() {
@@ -361,7 +361,7 @@ class FilterSettingFragment : Fragment() {
     }
     private fun getIndustryText() {
         arguments?.let { bundle ->
-            industryApply = bundle.getString("industry", null)
+            industryApply = bundle.getString("industry", "")
         }
     }
 
