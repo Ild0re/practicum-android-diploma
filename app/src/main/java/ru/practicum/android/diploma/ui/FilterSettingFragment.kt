@@ -229,6 +229,7 @@ class FilterSettingFragment : Fragment() {
                 isDrawableChanged
             )
             changeDrawableSalary()
+            viewModel.updateFilter(isDrawableChanged)
             isDrawableChanged = !isDrawableChanged
         }
     }

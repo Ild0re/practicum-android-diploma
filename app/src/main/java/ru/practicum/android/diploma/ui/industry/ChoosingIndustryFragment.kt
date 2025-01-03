@@ -113,7 +113,7 @@ class ChoosingIndustryFragment : Fragment() {
     private fun clickApply(item: Industry) {
         binding.btApply.setOnClickListener {
             viewModel.updateFilterIndustry(item)
-            findNavController().navigate(R.id.action_choosingIndustryFragment_to_filterSettingFragment)
+            findNavController().popBackStack()
         }
     }
 
