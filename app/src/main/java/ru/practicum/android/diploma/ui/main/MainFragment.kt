@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -84,6 +85,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
         viewModel.getFilter()
     }
 
