@@ -57,6 +57,10 @@ class ChoosingRegionFragment : Fragment() {
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
+        adapter.onItemClickListener = RegionViewHolder.OnItemClickListener { item ->
+            viewModel.updateRegionFilter(item)
+            findNavController().popBackStack()
+        }
         viewModel.getState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is CountryState.Error -> {
@@ -155,3 +159,4 @@ class ChoosingRegionFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 }
+
