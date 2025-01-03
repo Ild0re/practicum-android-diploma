@@ -19,6 +19,7 @@ import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.util.CountryState
+import ru.practicum.android.diploma.util.FilterField
 
 class ChoosingRegionFragment : Fragment() {
     private var _binding: FragmentChoosingRegionBinding? = null
@@ -55,6 +56,10 @@ class ChoosingRegionFragment : Fragment() {
         viewModel.loadData(country)
 
         binding.backArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        adapter.onItemClickListener = RegionViewHolder.OnItemClickListener { item ->
+            viewModel.updateRegionFilter(item)
             findNavController().popBackStack()
         }
         viewModel.getState().observe(viewLifecycleOwner) { state ->
@@ -155,3 +160,4 @@ class ChoosingRegionFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 }
+

@@ -59,7 +59,8 @@ class ChoosingCountryFragment : Fragment() {
         }
 
         adapter.onItemClickListener = CountryViewHolder.OnItemClickListener { item ->
-            // положить в SP
+            viewModel.updateCountryFilter(item)
+            findNavController().popBackStack()
         }
     }
 

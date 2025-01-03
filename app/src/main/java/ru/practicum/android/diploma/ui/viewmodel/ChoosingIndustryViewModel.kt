@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Industry
+import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
+import ru.practicum.android.diploma.util.FilterField
 import ru.practicum.android.diploma.util.IndustryState
 
-class ChoosingIndustryViewModel(private val referencesIteractor: ReferencesIteractor) : ViewModel() {
+class ChoosingIndustryViewModel(
+    private val referencesIteractor: ReferencesIteractor,
+    private val interactor: FilterInteractor
+) : ViewModel() {
     companion object {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
@@ -46,5 +51,9 @@ class ChoosingIndustryViewModel(private val referencesIteractor: ReferencesItera
                 state.postValue(content)
             }
         }
+    }
+
+     fun updateFilterIndustry(industry: Industry) {
+        interactor.updateFilter(FilterField.INDUSTRY, industry)
     }
 }

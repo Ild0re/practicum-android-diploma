@@ -97,7 +97,7 @@ class ChoosingIndustryFragment : Fragment() {
 
                 binding.btApply.isVisible = itemIndustry.isNotEmpty()
                 if (itemIndustry.isNotEmpty()) {
-                    clickApply(itemIndustry)
+                    clickApply(item)
                 }
                 adapter.updateItems(itemIndustry)
             }
@@ -110,11 +110,10 @@ class ChoosingIndustryFragment : Fragment() {
         isDrawableChanged = !isDrawableChanged
     }
 
-    private fun clickApply(item: List<Industry>) {
+    private fun clickApply(item: Industry) {
         binding.btApply.setOnClickListener {
-            for (i in item) {
-                binding.etSearch.setText(i.name)
-            }
+            viewModel.updateFilterIndustry(item)
+            findNavController().navigate(R.id.action_choosingIndustryFragment_to_filterSettingFragment)
         }
     }
 
