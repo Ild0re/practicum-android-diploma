@@ -3,8 +3,12 @@ package ru.practicum.android.diploma.data.filter
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.practicum.android.diploma.domain.models.Area
+import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filter
+import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.repository.FilterRepository
+import ru.practicum.android.diploma.util.FilterField
 
 class FilterRepositoryImpl(private val sharedPref: SharedPreferences) : FilterRepository {
 
@@ -36,5 +40,20 @@ class FilterRepositoryImpl(private val sharedPref: SharedPreferences) : FilterRe
             .apply()
 
         return filter
+    }
+
+    override fun updateFilter(field: FilterField, value: Any?): Filter {
+        val currentFilter = getFilter()
+
+        val updatedFilter = when (field) {
+            FilterField.COUNTRY -> currentFilter.copy(country = value as? Area)
+            FilterField.REGION -> currentFilter.copy(area = value as? Area)
+            FilterField.INDUSTRY -> currentFilter.copy(scope = value as? Industry)
+            FilterField.SALARY -> currentFilter.copy(salary = value as? String)
+            FilterField.ONLY_WITH_SALARY -> currentFilter.copy(isOnlyWithSalary = value as? Boolean ?: false)
+        }
+
+        saveFilter(updatedFilter)
+        return updatedFilter
     }
 }
