@@ -53,7 +53,7 @@ class ChoosingIndustryViewModel(
         }
     }
 
-     fun updateFilterIndustry(industry: Industry) {
+    fun updateFilterIndustry(industry: Industry) {
         interactor.updateFilter(FilterField.INDUSTRY, industry)
     }
 }
