@@ -19,7 +19,6 @@ import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.util.CountryState
-import ru.practicum.android.diploma.util.FilterField
 
 class ChoosingRegionFragment : Fragment() {
     private var _binding: FragmentChoosingRegionBinding? = null

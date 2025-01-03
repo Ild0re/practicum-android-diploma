@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Area
-import ru.practicum.android.diploma.domain.models.Region
 import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
 import ru.practicum.android.diploma.util.CountryState
