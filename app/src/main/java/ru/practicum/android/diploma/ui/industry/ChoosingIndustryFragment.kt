@@ -114,8 +114,6 @@ class ChoosingIndustryFragment : Fragment() {
         binding.btApply.setOnClickListener {
             for (i in item) {
                 binding.etSearch.setText(i.name)
-                saveIndustryText(i.name)
-                findNavController().navigate(R.id.action_choosingIndustryFragment_to_filterSettingFragment, bundle)
             }
         }
     }
@@ -187,11 +185,6 @@ class ChoosingIndustryFragment : Fragment() {
         binding.rvIndustry.isVisible = false
         binding.ivIndustry.setImageResource(R.drawable.region_not_found)
         binding.tvIndustry.text = getString(R.string.tv_region_empty)
-    }
-    private fun saveIndustryText(industry: String) {
-        bundle = Bundle().apply {
-            putString("industry", industry)
-        }
     }
 }
 

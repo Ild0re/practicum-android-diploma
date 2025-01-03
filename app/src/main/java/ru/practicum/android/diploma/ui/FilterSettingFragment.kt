@@ -42,7 +42,6 @@ class FilterSettingFragment : Fragment() {
     private var salary: String? = null
     private var bundle = Bundle()
     private var textSearch = ""
-    private var industryApply = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
 
     override fun onCreateView(
@@ -60,7 +59,6 @@ class FilterSettingFragment : Fragment() {
         setupObservers()
         setupEventHandlers()
         getSearchText()
-        //getIndustryText()
     }
 
     private fun setupTextWatcher() {
@@ -356,15 +354,9 @@ class FilterSettingFragment : Fragment() {
 
     private fun getSearchText() {
         arguments?.let { bundle ->
-            textSearch = bundle.getString("search", null)
+            textSearch = bundle.getString("search", "")
         }
     }
-    private fun getIndustryText() {
-        arguments?.let { bundle ->
-            industryApply = bundle.getString("industry", null)
-        }
-    }
-
 
     private fun saveSearchText() {
         bundle = Bundle().apply {
