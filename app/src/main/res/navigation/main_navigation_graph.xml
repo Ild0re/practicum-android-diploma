@@ -55,7 +55,11 @@
         android:id="@+id/choosingIndustryFragment"
         tools:layout="@layout/fragment_choosing_industry"
         android:name="ru.practicum.android.diploma.ui.industry.ChoosingIndustryFragment"
-        android:label="ChoosingIndustryFragment" />
+        android:label="ChoosingIndustryFragment" >
+        <action
+            android:id="@+id/action_choosingIndustryFragment_to_filterSettingFragment"
+            app:destination="@id/filterSettingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/choosingWorkingPlaceFragment"
         tools:layout="@layout/fragment_choosing_working_place"

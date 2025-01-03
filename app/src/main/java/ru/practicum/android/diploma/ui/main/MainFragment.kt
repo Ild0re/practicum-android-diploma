@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,6 +53,8 @@ class MainFragment : Fragment() {
     private val vacanciesList = ArrayList<Vacancy>()
 
     private val vacanciesAdapter = MainAdapter(vacanciesList, ::onItemClickListener)
+    private var bundle = Bundle()
+    private var getText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +75,7 @@ class MainFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+        getSearchText()
     }
 
     override fun onDestroyView() {
@@ -81,6 +85,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
         viewModel.getFilter()
     }
 
@@ -134,7 +139,8 @@ class MainFragment : Fragment() {
         }
         binding.etSearch.addTextChangedListener(simpleTextWatcher)
         binding.ivFilter.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment)
+            saveSearchText()
+            findNavController().navigate(R.id.action_mainFragment_to_filterSettingFragment, bundle)
         }
     }
 
@@ -311,5 +317,18 @@ class MainFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SAVED_INSTANCE_STATE_KEY, binding.etSearch.text.toString())
+    }
+
+    private fun saveSearchText() {
+        bundle = Bundle().apply {
+            putString("search", inputText)
+        }
+    }
+
+    private fun getSearchText() {
+        arguments?.let { bundle ->
+            getText = bundle.getString("search", "")
+        }
+        binding.etSearch.setText(getText)
     }
 }
