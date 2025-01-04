@@ -10,9 +10,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingIndustryBinding
@@ -21,11 +26,14 @@ import ru.practicum.android.diploma.ui.viewmodel.ChoosingIndustryViewModel
 import ru.practicum.android.diploma.util.IndustryState
 
 class ChoosingIndustryFragment : Fragment() {
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
     private var _binding: FragmentChoosingIndustryBinding? = null
     private var adapter = IndustryAdapter()
     private var industryList = arrayListOf<Industry>()
     private var filteredList = arrayListOf<Industry>()
-    private var bundle = Bundle()
 
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
@@ -112,8 +120,11 @@ class ChoosingIndustryFragment : Fragment() {
 
     private fun clickApply(item: Industry) {
         binding.btApply.setOnClickListener {
-            viewModel.updateFilterIndustry(item)
-            findNavController().popBackStack()
+            lifecycleScope.launch {
+                viewModel.updateFilterIndustry(item)
+                delay(CLICK_DEBOUNCE_DELAY)
+                findNavController().popBackStack()
+            }
         }
     }
 
