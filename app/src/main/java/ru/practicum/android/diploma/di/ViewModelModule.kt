@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingCountryViewModel
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingIndustryViewModel
+import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 import ru.practicum.android.diploma.ui.viewmodel.FavoriteViewModel
 import ru.practicum.android.diploma.ui.viewmodel.FilterSettingViewModel
 import ru.practicum.android.diploma.ui.viewmodel.MainViewModel
@@ -15,7 +16,8 @@ val viewModelModule = module {
     viewModel { (id: String) -> VacancyDetailViewModel(get(), id, get()) }
     viewModel { FavoriteViewModel(get()) }
     viewModel { FilterSettingViewModel(get(), get()) }
-    viewModel { ChoosingCountryViewModel(get()) }
-    viewModel { ChoosingRegionViewModel(get()) }
-    viewModel { ChoosingIndustryViewModel(get()) }
+    viewModel { ChoosingCountryViewModel(get(), get()) }
+    viewModel { ChoosingRegionViewModel(get(), get()) }
+    viewModel { ChoosingIndustryViewModel(get(), get()) }
+    viewModel { ChoosingWorkingPlaceViewModel(get()) }
 }

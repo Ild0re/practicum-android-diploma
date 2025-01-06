@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
@@ -21,6 +24,10 @@ import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.util.CountryState
 
 class ChoosingRegionFragment : Fragment() {
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
     private var _binding: FragmentChoosingRegionBinding? = null
     private var adapter = RegionAdapter()
     val binding: FragmentChoosingRegionBinding
@@ -56,6 +63,13 @@ class ChoosingRegionFragment : Fragment() {
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
+        }
+        adapter.onItemClickListener = RegionViewHolder.OnItemClickListener { item ->
+            lifecycleScope.launch {
+                viewModel.updateRegionFilter(item)
+                delay(CLICK_DEBOUNCE_DELAY)
+                findNavController().popBackStack()
+            }
         }
         viewModel.getState().observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -155,3 +169,4 @@ class ChoosingRegionFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 }
+

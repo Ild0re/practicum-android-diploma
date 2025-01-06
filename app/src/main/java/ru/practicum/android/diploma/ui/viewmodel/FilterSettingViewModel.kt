@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
+import ru.practicum.android.diploma.util.FilterField
 
 class FilterSettingViewModel(
     private val filterInteractor: FilterInteractor,
@@ -75,5 +76,8 @@ class FilterSettingViewModel(
         viewModelScope.launch {
             referencesInteractor.getRegions(country).collect { pair -> areaList = pair.first }
         }
+    }
+    fun updateFilter(bottom: Boolean) {
+        filterInteractor.updateFilter(FilterField.ONLY_WITH_SALARY, bottom)
     }
 }
