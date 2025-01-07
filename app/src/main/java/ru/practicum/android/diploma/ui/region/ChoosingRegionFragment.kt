@@ -20,7 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
 import ru.practicum.android.diploma.domain.models.Area
-import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.util.CountryState
 
