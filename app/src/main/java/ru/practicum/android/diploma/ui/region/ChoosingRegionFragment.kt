@@ -169,4 +169,3 @@ class ChoosingRegionFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 }
-

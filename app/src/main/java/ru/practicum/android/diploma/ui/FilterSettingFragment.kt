@@ -1,3 +1,5 @@
+@file:Suppress("LargeClass")
+
 package ru.practicum.android.diploma.ui
 
 import android.annotation.SuppressLint
@@ -180,6 +182,18 @@ class FilterSettingFragment : Fragment() {
     private fun setupObservers() {
         viewModel.getFilter().observe(viewLifecycleOwner) { filter ->
             loadFilter(filter)
+            val drawable = if (filter?.isOnlyWithSalary == true) {
+                R.drawable.filter_square_activated_icon
+            } else {
+                R.drawable.filter_square_disable_icon
+            }
+            isDrawableChanged = filter?.isOnlyWithSalary ?: false
+            binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                drawable,
+                0
+            )
         }
     }
 

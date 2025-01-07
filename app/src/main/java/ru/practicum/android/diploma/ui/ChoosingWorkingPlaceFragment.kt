@@ -78,4 +78,3 @@ class ChoosingWorkingPlaceFragment : Fragment() {
         }
     }
 }
-
