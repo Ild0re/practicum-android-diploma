@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Area
+import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
 import ru.practicum.android.diploma.util.CountryState
@@ -54,5 +55,9 @@ class ChoosingRegionViewModel(
     }
     fun updateRegionFilter(region: Area) {
         interactor.updateFilter(FilterField.REGION, region)
+    }
+
+    fun getFilter(): Filter {
+        return interactor.getFilter()
     }
 }

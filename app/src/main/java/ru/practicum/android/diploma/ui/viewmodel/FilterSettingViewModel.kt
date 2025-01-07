@@ -34,7 +34,7 @@ class FilterSettingViewModel(
 
     fun getFilter(): LiveData<Filter> = filterState
 
-    private fun loadFilter() {
+    fun loadFilter() {
         getCountryIds()
         getIndustriesIds()
         viewModelScope.launch {

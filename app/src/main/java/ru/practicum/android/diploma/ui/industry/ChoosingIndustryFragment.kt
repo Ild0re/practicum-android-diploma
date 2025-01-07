@@ -25,7 +25,7 @@ import ru.practicum.android.diploma.util.IndustryState
 
 class ChoosingIndustryFragment : Fragment() {
     companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val CLICK_DEBOUNCE_DELAY = 100L
     }
 
     private var _binding: FragmentChoosingIndustryBinding? = null

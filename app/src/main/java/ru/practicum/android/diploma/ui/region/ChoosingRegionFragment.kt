@@ -20,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingRegionBinding
 import ru.practicum.android.diploma.domain.models.Area
+import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingRegionViewModel
 import ru.practicum.android.diploma.util.CountryState
 
@@ -59,7 +60,7 @@ class ChoosingRegionFragment : Fragment() {
             url = "http://example.com/mainarea",
             areas = listOf(subArea1, subArea2)
         )
-        viewModel.loadData(country)
+        countryCheck(country)
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
@@ -167,5 +168,14 @@ class ChoosingRegionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
+    }
+
+    private fun countryCheck(country: Area) {
+        val countryCheck = viewModel.getFilter()
+        if (countryCheck.country != null) {
+            viewModel.loadData(countryCheck.country)
+        } else {
+            viewModel.loadData(country)
+        }
     }
 }
