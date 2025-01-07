@@ -195,4 +195,3 @@ class ChoosingIndustryFragment : Fragment() {
         binding.tvIndustry.text = getString(R.string.tv_region_empty)
     }
 }
-
