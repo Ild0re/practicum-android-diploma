@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBinding
@@ -34,6 +36,7 @@ class ChoosingWorkingPlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadCountries()
         setFilters()
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
@@ -60,6 +63,7 @@ class ChoosingWorkingPlaceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadCountries()
         setFilters()
     }
 
@@ -86,7 +90,6 @@ class ChoosingWorkingPlaceFragment : Fragment() {
         getRegionText()
         getCountryText()
         val filter = viewModel.getFilter()
-        val country = viewModel.getCountries()
         binding.etCountryHint.setText(filter.country?.name)
         binding.etRegionHint.setText(filter.area?.name)
         if (binding.etCountryHint.text.isNullOrEmpty() && binding.etRegionHint.text.isNullOrEmpty()) {
@@ -94,11 +97,15 @@ class ChoosingWorkingPlaceFragment : Fragment() {
         } else {
             binding.apply.isVisible = true
         }
-        if (filter.area != null && country != null) {
-            for (i in country) {
-                if (filter.area in i.areas) {
-                    binding.etCountryHint.setText(i.name)
-                    viewModel.updateCountryFilter(i)
+        lifecycleScope.launch {
+            viewModel.countryListNew.collect { country ->
+                if (filter.area != null && country != null) {
+                    for (i in country) {
+                        if (filter.area.parentId == i.id) {
+                            binding.etCountryHint.setText(i.name)
+                            viewModel.updateCountryFilter(i)
+                        }
+                    }
                 }
             }
         }

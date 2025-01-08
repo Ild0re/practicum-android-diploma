@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Filter
@@ -17,24 +20,21 @@ class ChoosingWorkingPlaceViewModel(
     private val referencesInteractor: ReferencesIteractor
 ) : ViewModel() {
 
-    private var countryList: List<Area>? = null
-
     private val state = MutableLiveData<CountryState>()
     fun getState(): LiveData<CountryState> = state
 
-    fun getFilter(): Filter {
-        return interactor.getFilter()
-    }
+    private val _countryListNew = MutableStateFlow<List<Area>?>(null)
+    val countryListNew: StateFlow<List<Area>?> get() = _countryListNew
 
-    private fun getCountryIds() {
+    fun loadCountries() {
         viewModelScope.launch {
-            referencesInteractor.getCountries().collect { pair -> countryList = pair.first }
+            val countries = referencesInteractor.getCountries().firstOrNull()
+            _countryListNew.value = countries?.first
         }
     }
 
-    fun getCountries(): List<Area>? {
-        getCountryIds()
-        return countryList
+    fun getFilter(): Filter {
+        return interactor.getFilter()
     }
 
     fun updateCountryFilter(country: Area) {
