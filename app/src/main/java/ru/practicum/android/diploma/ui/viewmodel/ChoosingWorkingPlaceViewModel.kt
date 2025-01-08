@@ -23,9 +23,8 @@ class ChoosingWorkingPlaceViewModel(
     fun getState(): LiveData<CountryState> = state
 
     private val _countryListNew = MutableStateFlow<List<Area>?>(null)
-    private val _regionListNew = MutableStateFlow<List<Area>?>(null)
-    val countryListNew: StateFlow<List<Area>?> get() = _countryListNew
-    val regionListNew: StateFlow<List<Area>?> get() = _regionListNew
+    private val _region = MutableStateFlow<Area?>(null)
+    val regionNew: StateFlow<Area?> get() = _region
 
     fun loadCountries() {
         viewModelScope.launch {
@@ -43,10 +42,10 @@ class ChoosingWorkingPlaceViewModel(
         interactor.updateFilter(FilterField.COUNTRY, country)
     }
 
-    fun loadRegion(region: Area) {
+    fun loadFilterRegion(region: String) {
         viewModelScope.launch {
-            referencesInteractor.getRegions(region).collect { pair ->
-                _regionListNew.value = pair.first
+            referencesInteractor.getRegion(region).collect { pair ->
+                _region.value = pair.first
             }
         }
     }

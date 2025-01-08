@@ -1,6 +1,6 @@
-package ru.practicum.android.diploma.data.network
+package ru.practicum.android.diploma.util
 
-import ru.practicum.android.diploma.util.Resource
+import ru.practicum.android.diploma.data.network.ResponseStatus
 
 fun <T, K> handleResponse(response: Result<T?>, mapper: (T) -> K): Resource<K> {
     return if (response.isSuccess) {

@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBinding
-import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
@@ -104,33 +103,20 @@ class ChoosingWorkingPlaceFragment : Fragment() {
 
     private fun getCountryFromList(filter: Filter) {
         lifecycleScope.launch {
-            viewModel.countryListNew.collect { countryList ->
-                if (filter.area != null && countryList != null) {
-                    processCountryList(filter, countryList)
-                }
-            }
-        }
-    }
-
-    private suspend fun processCountryList(filter: Filter, countryList: List<Area>) {
-        for (i in countryList) {
-            if (filter.area?.parentId == i.id) {
-                binding.etCountryHint.setText(i.name)
-                viewModel.updateCountryFilter(i)
-            } else {
-                viewModel.loadRegion(i)
-                getRegionRecursive(filter, i)
-            }
-        }
-    }
-
-    private suspend fun getRegionRecursive(filter: Filter, currentRegion: Area) {
-        viewModel.regionListNew.collect { regionList ->
-            if (regionList != null) {
-                for (region in regionList) {
-                    if (filter.area?.parentId == region.id) {
-                        binding.etCountryHint.setText(currentRegion.name)
-                        viewModel.updateCountryFilter(currentRegion)
+            if (filter.area != null) {
+                viewModel.loadFilterRegion(filter.area.parentId)
+                viewModel.regionNew.collect { region ->
+                    if (region != null && region.parentId.isEmpty()) {
+                        binding.etCountryHint.setText(region.name)
+                        viewModel.updateCountryFilter(region)
+                    } else if (region != null && region.parentId.isNotEmpty()) {
+                        viewModel.loadFilterRegion(region.id)
+                        viewModel.regionNew.collect { regionDetails ->
+                            if (regionDetails != null && regionDetails.parentId.isEmpty()) {
+                                binding.etCountryHint.setText(regionDetails.name)
+                                viewModel.updateCountryFilter(regionDetails)
+                            }
+                        }
                     }
                 }
             }

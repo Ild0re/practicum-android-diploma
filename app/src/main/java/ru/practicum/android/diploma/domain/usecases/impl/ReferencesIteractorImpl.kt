@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.domain.usecases.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.practicum.android.diploma.data.network.flowResultHandler
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.repository.ReferencesRepository
@@ -40,6 +39,20 @@ class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) 
 
     override suspend fun getIndustries(): Flow<Pair<List<Industry>?, String?>> {
         return areaRepository.getIndistries().map { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Pair(result.data, null)
+                }
+
+                is Resource.Error -> {
+                    Pair(null, result.message)
+                }
+            }
+        }
+    }
+
+    override suspend fun getRegion(country: String): Flow<Pair<Area?, String?>> {
+        return areaRepository.getRegion(country).map { result ->
             when (result) {
                 is Resource.Success -> {
                     Pair(result.data, null)
