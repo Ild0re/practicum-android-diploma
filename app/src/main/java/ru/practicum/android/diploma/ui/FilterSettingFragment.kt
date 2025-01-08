@@ -45,7 +45,7 @@ class FilterSettingFragment : Fragment() {
     private var bundle = Bundle()
     private var textSearch = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
-    lateinit var onBackPressedCallback: OnBackPressedCallback
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
