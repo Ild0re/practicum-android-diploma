@@ -7,21 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBinding
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
 class ChoosingWorkingPlaceFragment : Fragment() {
-
-    companion object {
-        const val DELAY = 100L
-    }
 
     private var _binding: FragmentChoosingWorkingPlaceBinding? = null
     private var region: String = ""
@@ -93,24 +86,19 @@ class ChoosingWorkingPlaceFragment : Fragment() {
         getRegionText()
         getCountryText()
         val filter = viewModel.getFilter()
-        lifecycleScope.launch {
-            val country = viewModel.getCountries()
-            delay(DELAY)
-            binding.etCountryHint.setText(filter.country?.name)
-            binding.etRegionHint.setText(filter.area?.name)
-            if (binding.etCountryHint.text.isNullOrEmpty() && binding.etRegionHint.text.isNullOrEmpty()) {
-                binding.apply.isVisible = false
-            } else {
-                binding.apply.isVisible = true
-            }
-            if (filter.area != null) {
-                if (country != null) {
-                    for (i in country) {
-                        if (filter.area in i.areas) {
-                            binding.etCountryHint.setText(i.name)
-                            viewModel.updateCountryFilter(i)
-                        }
-                    }
+        val country = viewModel.getCountries()
+        binding.etCountryHint.setText(filter.country?.name)
+        binding.etRegionHint.setText(filter.area?.name)
+        if (binding.etCountryHint.text.isNullOrEmpty() && binding.etRegionHint.text.isNullOrEmpty()) {
+            binding.apply.isVisible = false
+        } else {
+            binding.apply.isVisible = true
+        }
+        if (filter.area != null && country != null) {
+            for (i in country) {
+                if (filter.area in i.areas) {
+                    binding.etCountryHint.setText(i.name)
+                    viewModel.updateCountryFilter(i)
                 }
             }
         }
