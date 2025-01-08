@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBind
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
 class ChoosingWorkingPlaceFragment : Fragment() {
+
     private var _binding: FragmentChoosingWorkingPlaceBinding? = null
     private var region: String = ""
     private var country: String = ""
@@ -33,12 +34,7 @@ class ChoosingWorkingPlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getRegionText()
-        getCountryText()
-        val filter = viewModel.getFilter()
-        binding.etCountryHint.setText(filter.country?.name)
-        binding.etRegionHint.setText(filter.area?.name)
-
+        setFilters()
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -52,11 +48,19 @@ class ChoosingWorkingPlaceFragment : Fragment() {
                 findNavController().navigate(R.id.action_choosingWorkingPlaceFragment_to_choosingRegionFragment)
             }
         }
+        binding.apply.setOnClickListener {
+            findNavController().navigate(R.id.action_choosingWorkingPlaceFragment_to_filterSettingFragment)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFilters()
     }
 
     override fun onAttach(context: Context) {
@@ -75,6 +79,28 @@ class ChoosingWorkingPlaceFragment : Fragment() {
         arguments?.let { bundle ->
             country = bundle.getString("country", "")
             binding.etCountryHint.setText(country)
+        }
+    }
+
+    private fun setFilters() {
+        getRegionText()
+        getCountryText()
+        val filter = viewModel.getFilter()
+        val country = viewModel.getCountries()
+        binding.etCountryHint.setText(filter.country?.name)
+        binding.etRegionHint.setText(filter.area?.name)
+        if (binding.etCountryHint.text.isNullOrEmpty() && binding.etRegionHint.text.isNullOrEmpty()) {
+            binding.apply.isVisible = false
+        } else {
+            binding.apply.isVisible = true
+        }
+        if (filter.area != null && country != null) {
+            for (i in country) {
+                if (filter.area in i.areas) {
+                    binding.etCountryHint.setText(i.name)
+                    viewModel.updateCountryFilter(i)
+                }
+            }
         }
     }
 }

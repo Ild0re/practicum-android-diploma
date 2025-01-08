@@ -49,17 +49,7 @@ class ChoosingRegionFragment : Fragment() {
         setupTextWatcher()
         setupEventHandlers()
 
-        // заглушка страны
-
-        val subArea1 = Area(id = "1", name = "SubArea 1", url = "http://example.com/subarea1", areas = emptyList())
-        val subArea2 = Area(id = "2", name = "SubArea 2", url = "http://example.com/subarea2", areas = emptyList())
-        val country = Area(
-            id = "40",
-            name = "Main Area",
-            url = "http://example.com/mainarea",
-            areas = listOf(subArea1, subArea2)
-        )
-        viewModel.loadData(country)
+        countryCheck()
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
@@ -111,7 +101,7 @@ class ChoosingRegionFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 val query = p0.toString().lowercase()
-                val filteredList = regionList.filter { it.name.lowercase().contains(query) }
+                val filteredList = regionList.filter { it.name.lowercase().contains(query) }.distinct()
                 if (filteredList.isNotEmpty()) {
                     showData(filteredList)
                 } else {
@@ -167,5 +157,14 @@ class ChoosingRegionFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
+    }
+
+    private fun countryCheck() {
+        val countryCheck = viewModel.getFilter()
+        if (countryCheck.country != null) {
+            viewModel.loadData(countryCheck.country)
+        } else {
+            viewModel.getAllRegions()
+        }
     }
 }

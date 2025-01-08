@@ -207,6 +207,19 @@ class FilterSettingFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadFilter()
+        setupObservers()
+        setupEventHandlers()
+        getSearchText()
+    }
+
     private fun clearSalary() {
         binding.imageClear.setOnClickListener {
             binding.etSalaryHint.setText("")

@@ -19,5 +19,5 @@ val viewModelModule = module {
     viewModel { ChoosingCountryViewModel(get(), get()) }
     viewModel { ChoosingRegionViewModel(get(), get()) }
     viewModel { ChoosingIndustryViewModel(get(), get()) }
-    viewModel { ChoosingWorkingPlaceViewModel(get()) }
+    viewModel { ChoosingWorkingPlaceViewModel(get(), get()) }
 }
