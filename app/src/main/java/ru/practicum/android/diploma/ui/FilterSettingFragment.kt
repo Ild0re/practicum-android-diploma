@@ -236,6 +236,7 @@ class FilterSettingFragment : Fragment() {
 
     private fun clickSalaryClose() {
         binding.salaryClose.setOnClickListener {
+            isDrawableChanged = !isDrawableChanged
             visibleBottom(
                 binding.etWorkingPlaceHint.text.toString(),
                 binding.etIndustryHint.text.toString(),
@@ -244,7 +245,7 @@ class FilterSettingFragment : Fragment() {
             )
             changeDrawableSalary()
             viewModel.updateFilter(isDrawableChanged)
-            isDrawableChanged = !isDrawableChanged
+            binding.salaryClose.isClickable = true
         }
     }
 
