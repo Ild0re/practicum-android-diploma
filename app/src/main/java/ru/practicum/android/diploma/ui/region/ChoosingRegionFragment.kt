@@ -101,7 +101,7 @@ class ChoosingRegionFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 val query = p0.toString().lowercase()
-                val filteredList = regionList.filter { it.name.lowercase().contains(query) }
+                val filteredList = regionList.filter { it.name.lowercase().contains(query) }.distinct()
                 if (filteredList.isNotEmpty()) {
                     showData(filteredList)
                 } else {

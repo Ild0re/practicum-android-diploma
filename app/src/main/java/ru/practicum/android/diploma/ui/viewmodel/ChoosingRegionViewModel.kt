@@ -40,11 +40,13 @@ class ChoosingRegionViewModel(
     private fun processResult(data: List<Area>?, errorMessage: String?) {
         if (data != null) {
             for (i in data) {
-                if (i in vacancies) {
-                    vacancies.remove(i)
+                if (i.areas.isNotEmpty()) {
+                    vacancies.addAll(i.areas)
+                    loadData(i)
+                } else {
+                    vacancies.add(i)
                 }
             }
-            vacancies.addAll(data)
         }
         when {
             errorMessage == MainViewModel.VACANCIES_LOAD_ERROR -> {
