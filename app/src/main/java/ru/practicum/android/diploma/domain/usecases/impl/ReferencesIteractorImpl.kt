@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.domain.usecases.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ru.practicum.android.diploma.data.network.flowResultHandler
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.repository.ReferencesRepository
@@ -52,4 +51,3 @@ class ReferencesIteractorImpl(private val areaRepository: ReferencesRepository) 
         }
     }
 }
-

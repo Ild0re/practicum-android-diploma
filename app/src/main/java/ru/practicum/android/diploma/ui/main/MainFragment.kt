@@ -1,3 +1,5 @@
+@file:Suppress("LargeClass")
+
 package ru.practicum.android.diploma.ui.main
 
 import android.annotation.SuppressLint
