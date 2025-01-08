@@ -30,8 +30,9 @@ class ChoosingWorkingPlaceViewModel(
 
     fun loadCountries() {
         viewModelScope.launch {
-            val countries = referencesInteractor.getCountries().firstOrNull()
-            _countryListNew.value = countries?.first
+            referencesInteractor.getCountries().collect { pair ->
+                _countryListNew.value = pair.first
+            }
         }
     }
 
@@ -45,8 +46,9 @@ class ChoosingWorkingPlaceViewModel(
 
     fun loadRegion(region: Area) {
         viewModelScope.launch {
-            val regionBig = referencesInteractor.getRegions(region).firstOrNull()
-            _regionListNew.value = regionBig?.first
+            referencesInteractor.getRegions(region).collect { pair ->
+                _regionListNew.value = pair.first
+            }
         }
     }
 }

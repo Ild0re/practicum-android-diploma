@@ -45,7 +45,13 @@ class FilterSettingFragment : Fragment() {
     private var bundle = Bundle()
     private var textSearch = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
-    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            viewModel.updateSalaryFilter(salary)
+            viewModel.updateBooleanFilter(isDrawableChanged)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -184,13 +190,6 @@ class FilterSettingFragment : Fragment() {
         }
         binding.btApply.setOnClickListener {
             clickApply()
-        }
-
-        onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                viewModel.updateSalaryFilter(salary)
-                viewModel.updateBooleanFilter(isDrawableChanged)
-            }
         }
     }
 
