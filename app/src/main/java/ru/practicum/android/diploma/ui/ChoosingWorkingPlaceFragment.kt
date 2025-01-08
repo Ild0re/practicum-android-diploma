@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBinding
+import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
@@ -110,14 +111,20 @@ class ChoosingWorkingPlaceFragment : Fragment() {
                         binding.etCountryHint.setText(region.name)
                         viewModel.updateCountryFilter(region)
                     } else if (region != null && region.parentId.isNotEmpty()) {
-                        viewModel.loadFilterRegion(region.id)
-                        viewModel.regionNew.collect { regionDetails ->
-                            if (regionDetails != null && regionDetails.parentId.isEmpty()) {
-                                binding.etCountryHint.setText(regionDetails.name)
-                                viewModel.updateCountryFilter(regionDetails)
-                            }
-                        }
+                        getRegionDetails(region)
                     }
+                }
+            }
+        }
+    }
+
+    private fun getRegionDetails(region: Area) {
+        lifecycleScope.launch {
+            viewModel.loadFilterRegion(region.id)
+            viewModel.regionNew.collect { regionDetails ->
+                if (regionDetails != null && regionDetails.parentId.isEmpty()) {
+                    binding.etCountryHint.setText(regionDetails.name)
+                    viewModel.updateCountryFilter(regionDetails)
                 }
             }
         }
