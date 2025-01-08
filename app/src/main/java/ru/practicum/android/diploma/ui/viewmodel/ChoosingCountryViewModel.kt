@@ -18,6 +18,7 @@ class ChoosingCountryViewModel(
     companion object {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
+        const val NOT_USE = ""
     }
 
     private val state = MutableLiveData<CountryState>()
@@ -47,7 +48,7 @@ class ChoosingCountryViewModel(
             }
 
             else -> {
-                val content = CountryState.Content(data, FavoriteViewModel.NOT_USE)
+                val content = CountryState.Content(data, NOT_USE)
                 state.postValue(content)
             }
         }

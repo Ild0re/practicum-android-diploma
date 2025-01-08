@@ -49,17 +49,7 @@ class ChoosingRegionFragment : Fragment() {
         setupTextWatcher()
         setupEventHandlers()
 
-        // заглушка страны
-
-        val subArea1 = Area(id = "1", name = "SubArea 1", url = "http://example.com/subarea1", areas = emptyList())
-        val subArea2 = Area(id = "2", name = "SubArea 2", url = "http://example.com/subarea2", areas = emptyList())
-        val country = Area(
-            id = "40",
-            name = "Main Area",
-            url = "http://example.com/mainarea",
-            areas = listOf(subArea1, subArea2)
-        )
-        countryCheck(country)
+        countryCheck()
 
         binding.backArrow.setOnClickListener {
             findNavController().popBackStack()
@@ -169,12 +159,12 @@ class ChoosingRegionFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = false
     }
 
-    private fun countryCheck(country: Area) {
+    private fun countryCheck() {
         val countryCheck = viewModel.getFilter()
         if (countryCheck.country != null) {
             viewModel.loadData(countryCheck.country)
         } else {
-            viewModel.loadData(country)
+            viewModel.getAllRegions()
         }
     }
 }
