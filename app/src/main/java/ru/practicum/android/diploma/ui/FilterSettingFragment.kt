@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -44,6 +45,7 @@ class FilterSettingFragment : Fragment() {
     private var bundle = Bundle()
     private var textSearch = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
+    lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,7 +109,11 @@ class FilterSettingFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // в данный момент не используется
+                if (p0.isNullOrEmpty()) {
+                    salary = null
+                } else {
+                    salary = p0.toString()
+                }
             }
         }
         binding.etIndustryHint.addTextChangedListener(industryTextWatcher)
@@ -139,6 +145,8 @@ class FilterSettingFragment : Fragment() {
 
     private fun setupEventHandlers() {
         binding.backArrow.setOnClickListener {
+            viewModel.updateSalaryFilter(salary)
+            viewModel.updateBooleanFilter(isDrawableChanged)
             findNavController().popBackStack()
         }
         binding.etIndustryHint.setOnFocusChangeListener { _, hasFocus ->
@@ -177,6 +185,13 @@ class FilterSettingFragment : Fragment() {
         binding.btApply.setOnClickListener {
             clickApply()
         }
+
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.updateSalaryFilter(salary)
+                viewModel.updateBooleanFilter(isDrawableChanged)
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -209,6 +224,7 @@ class FilterSettingFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        onBackPressedCallback.remove()
         _binding = null
     }
 
@@ -226,6 +242,7 @@ class FilterSettingFragment : Fragment() {
             if (binding.etSalaryHint.text.isNullOrEmpty()) {
                 binding.imageClear.isVisible = false
             }
+            viewModel.updateSalaryFilter(null)
         }
     }
 
@@ -235,6 +252,8 @@ class FilterSettingFragment : Fragment() {
             if (binding.etWorkingPlaceHint.text.isNullOrEmpty()) {
                 binding.etWorkingPlace.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
             }
+            viewModel.updateCountryFilter(null)
+            viewModel.updateAreaFilter(null)
         }
     }
 
@@ -244,6 +263,7 @@ class FilterSettingFragment : Fragment() {
             if (binding.etIndustryHint.text.isNullOrEmpty()) {
                 binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
             }
+            viewModel.updateIndustryFilter(null)
         }
     }
 
@@ -257,7 +277,7 @@ class FilterSettingFragment : Fragment() {
                 isDrawableChanged
             )
             changeDrawableSalary()
-            viewModel.updateFilter(isDrawableChanged)
+            viewModel.updateBooleanFilter(isDrawableChanged)
             binding.salaryClose.isClickable = true
         }
     }

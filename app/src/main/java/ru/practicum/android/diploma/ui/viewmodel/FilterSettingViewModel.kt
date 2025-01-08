@@ -67,7 +67,23 @@ class FilterSettingViewModel(
         return filterInteractor.saveFilter(Filter(countryObject, areaObject, industryObject, salary, noSalary))
     }
 
-    fun updateFilter(bottom: Boolean) {
+    fun updateBooleanFilter(bottom: Boolean) {
         filterInteractor.updateFilter(FilterField.ONLY_WITH_SALARY, bottom)
+    }
+
+    fun updateIndustryFilter(industry: Industry?) {
+        filterInteractor.updateFilter(FilterField.INDUSTRY, industry)
+    }
+
+    fun updateCountryFilter(country: Area?) {
+        filterInteractor.updateFilter(FilterField.COUNTRY, country)
+    }
+
+    fun updateAreaFilter(region: Area?) {
+        filterInteractor.updateFilter(FilterField.REGION, region)
+    }
+
+    fun updateSalaryFilter(salary: String?) {
+        filterInteractor.updateFilter(FilterField.SALARY, salary)
     }
 }
