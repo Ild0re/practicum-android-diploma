@@ -6,7 +6,7 @@ import ru.practicum.android.diploma.data.dto.AreaDto
 import ru.practicum.android.diploma.data.dto.IndustryDto
 import ru.practicum.android.diploma.data.network.HeadHunterWebApiClient
 import ru.practicum.android.diploma.data.network.NetworkClient
-import ru.practicum.android.diploma.data.network.handleResponse
+import ru.practicum.android.diploma.util.handleResponse
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.repository.ReferencesRepository
@@ -40,6 +40,14 @@ class ReferencesRepositoryImpl(
         }
 
         emit(handleResponse(response, ::toIndustryList))
+    }
+
+    override suspend fun getRegion(country: String): Flow<Resource<Area>> = flow {
+        val response = networkClient.executeRequest {
+            webApiClient.getRegions(country)
+        }
+
+        emit(handleResponse(response, ::toArea))
     }
 
     private fun toArea(areaListDto: AreaDto): Area {

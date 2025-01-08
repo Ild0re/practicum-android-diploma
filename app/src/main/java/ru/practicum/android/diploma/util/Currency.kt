@@ -11,7 +11,7 @@ enum class Currency(val symbol: String) {
     AZN("₼"),
     UZS("сум"),
     GEL("₾"),
-    KGT("сом")
+    KGS("сом")
 }
 
 fun getCurrencySymbol(currencyCode: String): String? {

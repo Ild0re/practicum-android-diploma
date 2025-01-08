@@ -9,4 +9,5 @@ interface ReferencesRepository {
     suspend fun getCountries(): Flow<Resource<List<Area>>>
     suspend fun getRegions(country: Area): Flow<Resource<Area>>
     suspend fun getIndistries(): Flow<Resource<List<Industry>>>
+    suspend fun getRegion(country: String): Flow<Resource<Area>>
 }

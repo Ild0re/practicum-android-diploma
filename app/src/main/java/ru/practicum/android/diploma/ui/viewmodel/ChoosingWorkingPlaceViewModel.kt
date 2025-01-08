@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Filter
@@ -17,27 +19,34 @@ class ChoosingWorkingPlaceViewModel(
     private val referencesInteractor: ReferencesIteractor
 ) : ViewModel() {
 
-    private var countryList: List<Area>? = null
-
     private val state = MutableLiveData<CountryState>()
     fun getState(): LiveData<CountryState> = state
+
+    private val _countryListNew = MutableStateFlow<List<Area>?>(null)
+    private val _region = MutableStateFlow<Area?>(null)
+    val regionNew: StateFlow<Area?> get() = _region
+
+    fun loadCountries() {
+        viewModelScope.launch {
+            referencesInteractor.getCountries().collect { pair ->
+                _countryListNew.value = pair.first
+            }
+        }
+    }
 
     fun getFilter(): Filter {
         return interactor.getFilter()
     }
 
-    private fun getCountryIds() {
-        viewModelScope.launch {
-            referencesInteractor.getCountries().collect { pair -> countryList = pair.first }
-        }
-    }
-
-    fun getCountries(): List<Area>? {
-        getCountryIds()
-        return countryList
-    }
-
     fun updateCountryFilter(country: Area) {
         interactor.updateFilter(FilterField.COUNTRY, country)
+    }
+
+    fun loadFilterRegion(region: String) {
+        viewModelScope.launch {
+            referencesInteractor.getRegion(region).collect { pair ->
+                _region.value = pair.first
+            }
+        }
     }
 }

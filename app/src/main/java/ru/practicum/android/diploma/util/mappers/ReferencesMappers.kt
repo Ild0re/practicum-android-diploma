@@ -10,6 +10,7 @@ fun AreaDto.toArea(): Area {
         id = this.id ?: "0",
         name = this.name ?: "",
         url = this.url ?: "",
+        parentId = this.parentId ?: "",
         areas = this.areas?.map { i -> i.toArea() } ?: emptyList()
     )
 }

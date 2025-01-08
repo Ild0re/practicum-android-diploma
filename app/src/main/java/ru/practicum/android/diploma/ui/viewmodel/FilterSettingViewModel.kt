@@ -26,21 +26,21 @@ class FilterSettingViewModel(
         loadFilter()
     }
 
-    private var countryList: List<Area>? = null
-    private var areaList: List<Area>? = null
-    private var industryList: List<Industry>? = null
+    private var filter: Filter = Filter(null, null, null, null, false)
+    private var countryObject: Area? = null
+    private var areaObject: Area? = null
+    private var industryObject: Industry? = null
 
     private val filterState = MutableLiveData<Filter>()
 
     fun getFilter(): LiveData<Filter> = filterState
 
     fun loadFilter() {
-        getCountryIds()
-        getIndustriesIds()
         viewModelScope.launch {
-            val filter = filterInteractor.getFilter()
+            val filterObject = filterInteractor.getFilter()
+            filter = filterInteractor.getFilter()
             delay(SEARCH_DEBOUNCE_DELAY)
-            postFilter(filter)
+            postFilter(filterObject)
         }
     }
 
@@ -49,35 +49,41 @@ class FilterSettingViewModel(
     }
 
     fun saveFilter(country: String?, area: String?, scope: String?, salary: String?, noSalary: Boolean): Filter {
-        val countryObject = countryList?.find { it.name == country }
-        if (countryObject != null) {
-            getRegionId(countryObject)
+        countryObject = if (country == null) {
+            null
+        } else {
+            filter.country
         }
-        val industryObject = industryList?.find { it.name == scope }
-        val areaObject = areaList?.find { it.name == area }
+        areaObject = if (area == null) {
+            null
+        } else {
+            filter.area
+        }
+        industryObject = if (scope == null) {
+            null
+        } else {
+            filter.scope
+        }
         return filterInteractor.saveFilter(Filter(countryObject, areaObject, industryObject, salary, noSalary))
     }
 
-    private fun getCountryIds() {
-        viewModelScope.launch {
-            referencesInteractor.getCountries().collect { pair -> countryList = pair.first }
-        }
-    }
-
-    private fun getIndustriesIds() {
-        viewModelScope.launch {
-            referencesInteractor.getIndustries().collect { pair ->
-                industryList = pair.first
-            }
-        }
-    }
-
-    private fun getRegionId(country: Area) {
-        viewModelScope.launch {
-            referencesInteractor.getRegions(country).collect { pair -> areaList = pair.first }
-        }
-    }
-    fun updateFilter(bottom: Boolean) {
+    fun updateBooleanFilter(bottom: Boolean) {
         filterInteractor.updateFilter(FilterField.ONLY_WITH_SALARY, bottom)
+    }
+
+    fun updateIndustryFilter(industry: Industry?) {
+        filterInteractor.updateFilter(FilterField.INDUSTRY, industry)
+    }
+
+    fun updateCountryFilter(country: Area?) {
+        filterInteractor.updateFilter(FilterField.COUNTRY, country)
+    }
+
+    fun updateAreaFilter(region: Area?) {
+        filterInteractor.updateFilter(FilterField.REGION, region)
+    }
+
+    fun updateSalaryFilter(salary: String?) {
+        filterInteractor.updateFilter(FilterField.SALARY, salary)
     }
 }

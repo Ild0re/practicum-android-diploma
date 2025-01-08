@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -129,6 +130,7 @@ class MainViewModel(
         viewModelScope.launch {
             val filter = filterInteractor.getFilter()
             delay(FILTER_DEBOUNCE_DELAY)
+            Log.d("CONTEEEEEEEEEEEEENT", filter.toString())
             if (listOf(
                     filter.country,
                     filter.area,
