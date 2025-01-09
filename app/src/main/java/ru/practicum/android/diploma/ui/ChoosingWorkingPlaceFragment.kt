@@ -14,11 +14,16 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingWorkingPlaceBinding
-import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Filter
 import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
 class ChoosingWorkingPlaceFragment : Fragment() {
+
+    companion object {
+        const val ZERO = 0
+        const val THREE = 3
+        const val ONE = 1
+    }
 
     private var _binding: FragmentChoosingWorkingPlaceBinding? = null
     private var region: String = ""
@@ -105,26 +110,23 @@ class ChoosingWorkingPlaceFragment : Fragment() {
     private fun getCountryFromList(filter: Filter) {
         lifecycleScope.launch {
             if (filter.area != null) {
-                viewModel.loadFilterRegion(filter.area.parentId)
-                viewModel.regionNew.collect { region ->
-                    if (region != null && region.parentId.isEmpty()) {
-                        binding.etCountryHint.setText(region.name)
-                        viewModel.updateCountryFilter(region)
-                    } else if (region != null && region.parentId.isNotEmpty()) {
-                        getRegionDetails(region)
-                    }
-                }
+                loadRegionAndProcess(filter.area.parentId, ZERO)
             }
         }
     }
 
-    private fun getRegionDetails(region: Area) {
-        lifecycleScope.launch {
-            viewModel.loadFilterRegion(region.id)
-            viewModel.regionNew.collect { regionDetails ->
-                if (regionDetails != null && regionDetails.parentId.isEmpty()) {
-                    binding.etCountryHint.setText(regionDetails.name)
-                    viewModel.updateCountryFilter(regionDetails)
+    private suspend fun loadRegionAndProcess(regionId: String, recursion: Int) {
+        if (recursion > THREE) {
+            return
+        }
+        viewModel.loadFilterRegion(regionId)
+        viewModel.regionNew.collect { region ->
+            if (region != null) {
+                if (region.parentId.isEmpty()) {
+                    binding.etCountryHint.setText(region.name)
+                    viewModel.updateCountryFilter(region)
+                } else {
+                    loadRegionAndProcess(region.parentId, recursion + ONE)
                 }
             }
         }
