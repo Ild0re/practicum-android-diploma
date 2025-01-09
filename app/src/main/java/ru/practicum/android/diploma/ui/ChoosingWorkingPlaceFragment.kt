@@ -19,6 +19,12 @@ import ru.practicum.android.diploma.ui.viewmodel.ChoosingWorkingPlaceViewModel
 
 class ChoosingWorkingPlaceFragment : Fragment() {
 
+    companion object {
+        const val ZERO = 0
+        const val THREE = 3
+        const val ONE = 1
+    }
+
     private var _binding: FragmentChoosingWorkingPlaceBinding? = null
     private var region: String = ""
     private var country: String = ""
@@ -104,13 +110,13 @@ class ChoosingWorkingPlaceFragment : Fragment() {
     private fun getCountryFromList(filter: Filter) {
         lifecycleScope.launch {
             if (filter.area != null) {
-                loadRegionAndProcess(filter.area.parentId, 0)
+                loadRegionAndProcess(filter.area.parentId, ZERO)
             }
         }
     }
 
     private suspend fun loadRegionAndProcess(regionId: String, recursion: Int) {
-        if (recursion > 3) {
+        if (recursion > THREE) {
             return
         }
         viewModel.loadFilterRegion(regionId)
@@ -120,7 +126,7 @@ class ChoosingWorkingPlaceFragment : Fragment() {
                     binding.etCountryHint.setText(region.name)
                     viewModel.updateCountryFilter(region)
                 } else {
-                    loadRegionAndProcess(region.parentId, recursion + 1)
+                    loadRegionAndProcess(region.parentId, recursion + ONE)
                 }
             }
         }
