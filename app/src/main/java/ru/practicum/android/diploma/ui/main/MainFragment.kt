@@ -220,9 +220,11 @@ class MainFragment : Fragment() {
         binding.progressBar.isVisible = false
         binding.progressBarUnderRV.isVisible = false
         binding.rvVacancy.isVisible = false
+        hideKeyBoard()
     }
 
     private fun showError(text: String) {
+        hideKeyBoard()
         if (vacanciesList.isEmpty()) {
             binding.tvMainEmptyOrNoConnect.isVisible = true
             binding.ivMainImage.isVisible = true
