@@ -195,7 +195,6 @@ class MainFragment : Fragment() {
     }
 
     private fun showLoading() {
-        hideKeyBoard()
         if (vacanciesList.isEmpty()) {
             binding.progressBar.isVisible = true
             binding.progressBarUnderRV.isVisible = false
