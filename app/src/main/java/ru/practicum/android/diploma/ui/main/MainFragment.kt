@@ -168,9 +168,7 @@ class MainFragment : Fragment() {
             if (binding.etSearch.text.isBlank()) {
                 binding.imageSearchOrClear.setImageResource(R.drawable.search_icon)
             }
-            val inputMethodManager =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
+            hideKeyBoard()
             vacanciesList.clear()
             vacanciesAdapter.notifyDataSetChanged()
             binding.ivMainImage.setImageResource(R.drawable.main_image)
@@ -263,9 +261,11 @@ class MainFragment : Fragment() {
             binding.progressBarUnderRV.isVisible = false
             binding.ivMainImage.isVisible = false
             binding.rvVacancy.isVisible = true
+            hideKeyBoard()
             vacanciesList.addAll(data)
             vacanciesAdapter.notifyDataSetChanged()
         } else {
+            hideKeyBoard()
             binding.tvCountVacancySearch.isVisible = true
             binding.tvCountVacancySearch.text = "Найдено $found ${checkCount(found.toInt())}"
             binding.progressBar.isVisible = false
@@ -330,5 +330,11 @@ class MainFragment : Fragment() {
             getText = bundle.getString("search", "")
         }
         binding.etSearch.setText(getText)
+    }
+
+    private fun hideKeyBoard() {
+        val inputMethodManager =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(binding.etSearch.windowToken, ZERO)
     }
 }
