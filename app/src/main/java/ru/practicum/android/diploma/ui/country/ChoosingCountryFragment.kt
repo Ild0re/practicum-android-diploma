@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingCountryBinding
@@ -18,6 +21,10 @@ import ru.practicum.android.diploma.ui.viewmodel.ChoosingCountryViewModel
 import ru.practicum.android.diploma.util.CountryState
 
 class ChoosingCountryFragment : Fragment() {
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
     private var _binding: FragmentChoosingCountryBinding? = null
     val adapter = CountryAdapter()
     val binding: FragmentChoosingCountryBinding
@@ -59,7 +66,11 @@ class ChoosingCountryFragment : Fragment() {
         }
 
         adapter.onItemClickListener = CountryViewHolder.OnItemClickListener { item ->
-            // положить в SP
+            lifecycleScope.launch {
+                viewModel.updateCountryFilter(item)
+                delay(CLICK_DEBOUNCE_DELAY)
+                findNavController().popBackStack()
+            }
         }
     }
 

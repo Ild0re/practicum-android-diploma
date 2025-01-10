@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentChoosingIndustryBinding
@@ -21,9 +24,14 @@ import ru.practicum.android.diploma.ui.viewmodel.ChoosingIndustryViewModel
 import ru.practicum.android.diploma.util.IndustryState
 
 class ChoosingIndustryFragment : Fragment() {
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 100L
+    }
+
     private var _binding: FragmentChoosingIndustryBinding? = null
     private var adapter = IndustryAdapter()
     private var industryList = arrayListOf<Industry>()
+    private var filteredList = arrayListOf<Industry>()
 
     val binding: FragmentChoosingIndustryBinding
         get() = _binding!!
@@ -67,7 +75,11 @@ class ChoosingIndustryFragment : Fragment() {
         }
 
         adapter.onItemClickListener = IndustryViewHolder.OnItemClickListener { item ->
-            updateList(item, industryList)
+            if (filteredList.isNotEmpty()) {
+                updateList(item, filteredList)
+            } else {
+                updateList(item, industryList)
+            }
         }
     }
 
@@ -91,7 +103,7 @@ class ChoosingIndustryFragment : Fragment() {
 
                 binding.btApply.isVisible = itemIndustry.isNotEmpty()
                 if (itemIndustry.isNotEmpty()) {
-                    clickApply(itemIndustry)
+                    clickApply(item)
                 }
                 adapter.updateItems(itemIndustry)
             }
@@ -104,10 +116,12 @@ class ChoosingIndustryFragment : Fragment() {
         isDrawableChanged = !isDrawableChanged
     }
 
-    private fun clickApply(item: List<Industry>) {
+    private fun clickApply(item: Industry) {
         binding.btApply.setOnClickListener {
-            for (i in item) {
-                binding.etSearch.setText(i.name)
+            lifecycleScope.launch {
+                viewModel.updateFilterIndustry(item)
+                delay(CLICK_DEBOUNCE_DELAY)
+                findNavController().popBackStack()
             }
         }
     }
@@ -128,7 +142,7 @@ class ChoosingIndustryFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {
                 val query = p0.toString().lowercase()
-                val filteredList = industryList.filter { it.name.lowercase().contains(query) }
+                filteredList = industryList.filter { it.name.lowercase().contains(query) } as ArrayList<Industry>
                 if (filteredList.isNotEmpty()) {
                     showData(filteredList)
                 } else {
@@ -181,4 +195,3 @@ class ChoosingIndustryFragment : Fragment() {
         binding.tvIndustry.text = getString(R.string.tv_region_empty)
     }
 }
-

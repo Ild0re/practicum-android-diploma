@@ -6,13 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.models.Area
+import ru.practicum.android.diploma.domain.usecases.base.FilterInteractor
 import ru.practicum.android.diploma.domain.usecases.base.ReferencesIteractor
 import ru.practicum.android.diploma.util.CountryState
+import ru.practicum.android.diploma.util.FilterField
 
-class ChoosingCountryViewModel(private val referencesIteractor: ReferencesIteractor) : ViewModel() {
+class ChoosingCountryViewModel(
+    private val referencesIteractor: ReferencesIteractor,
+    private val interactor: FilterInteractor
+) : ViewModel() {
     companion object {
         const val VACANCIES_LOAD_ERROR = "Не удалось получить список вакансий"
         const val NOTHING_FOUND = "Ничего не нашлось"
+        const val NOT_USE = ""
     }
 
     private val state = MutableLiveData<CountryState>()
@@ -42,9 +48,13 @@ class ChoosingCountryViewModel(private val referencesIteractor: ReferencesIterac
             }
 
             else -> {
-                val content = CountryState.Content(data, FavoriteViewModel.NOT_USE)
+                val content = CountryState.Content(data, NOT_USE)
                 state.postValue(content)
             }
         }
+    }
+
+    fun updateCountryFilter(country: Area) {
+        interactor.updateFilter(FilterField.COUNTRY, country)
     }
 }

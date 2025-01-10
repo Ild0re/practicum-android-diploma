@@ -1,4 +1,5 @@
 @file:Suppress("ImportOrdering")
+
 package ru.practicum.android.diploma.di
 
 import org.koin.dsl.module
@@ -18,5 +19,5 @@ val interactorModule = module {
     single<VacancyDbInteractor> { VacancyDbInteractorImpl(get()) }
     single<VacancyDetailInteractor> { VacancyDetailInteractorImpl(get()) }
     single<ReferencesIteractor> { ReferencesIteractorImpl(get()) }
-    single<FilterInteractor> { FilterInteractorImpl(get()) }
+    single<FilterInteractor> { FilterInteractorImpl(get(), get()) }
 }

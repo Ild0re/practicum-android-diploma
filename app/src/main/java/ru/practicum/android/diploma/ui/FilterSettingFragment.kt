@@ -1,3 +1,5 @@
+@file:Suppress("LargeClass")
+
 package ru.practicum.android.diploma.ui
 
 import android.annotation.SuppressLint
@@ -9,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -39,8 +42,16 @@ class FilterSettingFragment : Fragment() {
     private var area: String? = null
     private var scope: String? = null
     private var salary: String? = null
-
+    private var bundle = Bundle()
+    private var textSearch = ""
     private val viewModel by viewModel<FilterSettingViewModel>()
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            viewModel.updateSalaryFilter(salary)
+            viewModel.updateBooleanFilter(isDrawableChanged)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +67,7 @@ class FilterSettingFragment : Fragment() {
         setupTextWatcher()
         setupObservers()
         setupEventHandlers()
+        getSearchText()
     }
 
     private fun setupTextWatcher() {
@@ -103,7 +115,11 @@ class FilterSettingFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // в данный момент не используется
+                if (p0.isNullOrEmpty()) {
+                    salary = null
+                } else {
+                    salary = p0.toString()
+                }
             }
         }
         binding.etIndustryHint.addTextChangedListener(industryTextWatcher)
@@ -135,6 +151,8 @@ class FilterSettingFragment : Fragment() {
 
     private fun setupEventHandlers() {
         binding.backArrow.setOnClickListener {
+            viewModel.updateSalaryFilter(salary)
+            viewModel.updateBooleanFilter(isDrawableChanged)
             findNavController().popBackStack()
         }
         binding.etIndustryHint.setOnFocusChangeListener { _, hasFocus ->
@@ -178,6 +196,18 @@ class FilterSettingFragment : Fragment() {
     private fun setupObservers() {
         viewModel.getFilter().observe(viewLifecycleOwner) { filter ->
             loadFilter(filter)
+            val drawable = if (filter?.isOnlyWithSalary == true) {
+                R.drawable.filter_square_activated_icon
+            } else {
+                R.drawable.filter_square_disable_icon
+            }
+            isDrawableChanged = filter?.isOnlyWithSalary ?: false
+            binding.salaryClose.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                0,
+                drawable,
+                0
+            )
         }
     }
 
@@ -191,12 +221,27 @@ class FilterSettingFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView).isVisible = true
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback.remove()
+        _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadFilter()
+        setupObservers()
+        setupEventHandlers()
+        getSearchText()
+    }
+
     private fun clearSalary() {
         binding.imageClear.setOnClickListener {
             binding.etSalaryHint.setText("")
             if (binding.etSalaryHint.text.isNullOrEmpty()) {
                 binding.imageClear.isVisible = false
             }
+            viewModel.updateSalaryFilter(null)
         }
     }
 
@@ -206,6 +251,8 @@ class FilterSettingFragment : Fragment() {
             if (binding.etWorkingPlaceHint.text.isNullOrEmpty()) {
                 binding.etWorkingPlace.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
             }
+            viewModel.updateCountryFilter(null)
+            viewModel.updateAreaFilter(null)
         }
     }
 
@@ -215,11 +262,13 @@ class FilterSettingFragment : Fragment() {
             if (binding.etIndustryHint.text.isNullOrEmpty()) {
                 binding.etIndustry.setEndIconDrawable(R.drawable.filter_arrow_right_icon)
             }
+            viewModel.updateIndustryFilter(null)
         }
     }
 
     private fun clickSalaryClose() {
         binding.salaryClose.setOnClickListener {
+            isDrawableChanged = !isDrawableChanged
             visibleBottom(
                 binding.etWorkingPlaceHint.text.toString(),
                 binding.etIndustryHint.text.toString(),
@@ -227,7 +276,8 @@ class FilterSettingFragment : Fragment() {
                 isDrawableChanged
             )
             changeDrawableSalary()
-            isDrawableChanged = !isDrawableChanged
+            viewModel.updateBooleanFilter(isDrawableChanged)
+            binding.salaryClose.isClickable = true
         }
     }
 
@@ -284,10 +334,11 @@ class FilterSettingFragment : Fragment() {
             }
             val withSalary = isDrawableChanged
             viewModel.saveFilter(country, area, scope, salary, withSalary)
-            val bundle = Bundle()
+            bundle = Bundle()
             bundle.putBoolean("fromFragmentFilter", true)
             setFragmentResult("fromFilterFragment", bundle)
-            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment)
+            saveSearchText()
+            findNavController().navigate(R.id.action_filterSettingFragment_to_mainFragment, bundle)
         }
     }
 
@@ -345,6 +396,18 @@ class FilterSettingFragment : Fragment() {
                 R.drawable.filter_square_disable_icon,
                 0
             )
+        }
+    }
+
+    private fun getSearchText() {
+        arguments?.let { bundle ->
+            textSearch = bundle.getString("search", "")
+        }
+    }
+
+    private fun saveSearchText() {
+        bundle = Bundle().apply {
+            putString("search", textSearch)
         }
     }
 }
